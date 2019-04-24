@@ -1,0 +1,18 @@
+.card{
+    width: 20%;
+    height: auto;
+    display: flex;
+    background-color: white;
+    box-shadow:0rem 0.1rem .4rem 0rem rgb(119, 118, 118);
+    border-radius: 4px;
+}
+
+.card:hover{
+    box-shadow:0rem 0.20rem .4rem .2rem rgb(94, 93, 93);
+}
+
+.card-icon{
+    font-size: 4rem;
+    padding: .5rem;
+}
+

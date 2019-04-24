@@ -1,13 +1,12 @@
 .navbar{
     display: flex;
     justify-content: flex-end;
-    box-shadow:0rem 0.2rem .3rem 0rem gainsboro; 
+    box-shadow:0rem 0.1rem .4rem 0rem rgb(119, 118, 118);
 }
 
 .logo{
-
     padding: .8rem .8rem 1rem .8rem;
-    height: 2.5rem;
+    height: 2.8rem;
     border-radius: 50%;
     margin-right: auto;
 }
