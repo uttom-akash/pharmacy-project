@@ -1,0 +1,11 @@
+.form .pro-pic {
+  width: 7.5rem;
+  height: 7.5rem;
+  border-radius: 50%;
+}
+
+.form #pro-icon {
+  font-size: 7.5rem;
+  color: var(--pro-icon-color);
+  border-radius: 50%;
+}

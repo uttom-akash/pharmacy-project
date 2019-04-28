@@ -1,23 +1,19 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter, BrowserRouter, HashRouter } from 'react-router-dom'
 import './Root.css'
 
-import background from './assets/background.jpg'
-
-import Navigation from './components/navigation/Navigation';
-import Route from './components/navigation/Route'
-
+import Navigation from './client/components/navigation/Navigation';
+import Route from './client/components/navigation/Route'
+import Footer from './client/components/unitComp/footer/Footer'
 export default () => {
   return (
-    <MemoryRouter>
+    <BrowserRouter>
       <div className="root">
-        <img src={background} alt="background" className="background-pic" />
-        <div className="content">
-          <Navigation />
-          <Route />
-        </div>
+        <Navigation />
+        <Route />
+        <Footer />
       </div>
-    </MemoryRouter>
+    </BrowserRouter>
   );
 }
 

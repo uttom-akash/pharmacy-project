@@ -1,0 +1,66 @@
+.community{
+    display: flex
+}
+
+
+
+
+.community .left{
+    width: 18%;
+    background-color:#39BC9C;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.community .left #edit,#tags{
+    width: 70%;
+}
+
+.community .left #edit{
+    margin-top: 50px;
+}
+
+
+.community .middle{
+    width: 50%;
+}
+
+.community .right{
+    width: 20%;
+}
+
+
+@media only screen and (max-width:800px){
+    
+    .community .left{
+        width: 30%;
+    }
+    
+    .community .middle{
+       width: 70%;
+    }
+    .community .right{
+        width: 0;
+    }
+}
+
+@media only screen and (max-width:480px){
+    .community{
+        flex-direction: column;
+    }
+
+    .community .left{
+        width: 100%;
+    }
+    
+    .community .middle{
+       width: 100%;
+    }
+    .community .right{
+        width: 0;
+    }
+}
+

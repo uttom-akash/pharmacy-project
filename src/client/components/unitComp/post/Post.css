@@ -1,0 +1,70 @@
+.post{
+    margin:2%;
+    padding: 2%;
+    background-color: white;
+    box-shadow:0rem 0.01rem .2rem .01rem rgb(119, 118, 118);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.post .author{
+    display: flex;
+    align-items: center;
+    margin: 1px;
+    padding: 1px;
+}
+
+.post .author img{
+
+}
+
+.post .author label{
+    margin-right:10px;
+}
+
+.post .author #name{
+    background-color:#39BC9C;
+    padding:0 2px 0 2px;
+    border-radius: 4px;
+}
+
+.post .images{
+    display: flex;
+}
+
+.post .images img{
+    margin: 2px;
+    width:400px;
+    height: 300px;
+}
+
+.post .description{
+
+}
+
+.post .tags{
+   display: flex;
+}
+
+.post .tags div{
+    margin: 2px;
+    padding:0 2px 0 2px;
+    border:.5px solid rgb(33, 100, 82);
+    border-radius: 5px;
+    background-color: rgb(49, 216, 174);
+    color: rgb(101, 102, 102);
+}
+
+.post .stats{
+
+}
+
+.post .stats i{
+    margin: 0 15px 0 5px;
+    font-size: 18px;
+    color: #39BC9C;
+}
+
+
+
+
