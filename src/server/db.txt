@@ -1,0 +1,140 @@
+
+create table employee
+(
+   Employee_ID int auto_increment primary key,
+   Name varchar(50),
+   Salary numeric(10,2),
+   NID varchar(50),
+   Mobile_no varchar(15),
+   Address text,
+   Ref_Name varchar(50),
+   Ref_Num varchar(15)
+);
+
+
+create table patient(
+    Patient_ID int auto_increment primary key,
+    Name varchar(50),
+    Mobile_no varchar(15)
+);
+
+
+create table manufacturer
+(
+   Manufacturer_ID int auto_increment primary key,
+   Name varchar(50),
+   Email varchar(70),
+   Mobile_no varchar(15),
+   Address text
+);
+
+CREATE TABLE supplier(
+   Supplier_ID int auto_increment primary key,
+   Supplier_Name varchar(100),
+   Mobile_no varchar(15),
+   Address varchar(100)
+);
+
+create table batch
+( 
+  Batch_ID varchar(100) primary key,
+  Mfg_Date date,
+  Exp_Date date
+);
+
+create table category
+(
+   Category_ID int auto_increment primary key,
+   Name varchar(50),
+   Remedies text
+);
+
+
+create table drug
+(
+ Drug_ID int auto_increment primary key,
+ Batch_ID varchar(100),
+ Drug_Name varchar(100),
+ Supplier_ID int,
+ Manufacturer_ID int,
+ Category_ID int,
+ Price numeric(5,3),
+ Dose numeric(5,4),
+ Sub1_Drug_ID int,
+ Sub2_Drug_ID int,
+ 
+ foreign key(Batch_ID) references batch(Batch_ID) on delete cascade,
+ foreign key(Supplier_ID) references supplier(Supplier_ID) on delete set null,
+ foreign key(Manufacturer_ID) references manufacturer(Manufacturer_ID) on delete set null,
+ foreign key(Sub1_Drug_ID) references drug(Drug_ID) on delete set null,
+ foreign key(Sub2_Drug_ID) references drug(Drug_ID) on delete set null,
+ foreign key(Category_ID) references category(Category_ID) on delete set null
+ );
+
+CREATE TABLE inventory(
+   Drug_ID int,
+   Quantity int,
+   FOREIGN KEY(Drug_ID) REFERENCES drug(Drug_ID) on delete cascade
+);
+
+
+create table supply
+(
+   Supply_ID int auto_increment primary key,
+   Drug_ID int,
+   Supply_Date date,
+   Quantity int,
+   Supplier_Price numeric(10,3),
+   Supplier_ID int,
+   foreign key(Drug_ID) references drug(Drug_ID) on delete set null,
+   foreign key(Supplier_ID) references supplier(Supplier_ID) on delete set null
+);
+
+create table sales(
+   Drug_ID int,
+   Quantity int,
+   Date_Time DATETIME,
+   Patient_ID int,
+   Employee_ID int,
+   
+   foreign key(Drug_ID) references drug(Drug_ID) on delete cascade,
+   foreign key(Patient_ID) references patient(Patient_ID) on delete cascade,
+   foreign key(Employee_ID) references employee(Employee_ID) on delete cascade
+);
+
+
+CREATE TABLE contract(
+   Contract_ID int,
+   Initiate_Date Date,
+   Expire_Date Date,
+   Supply_ID int,
+   PRIMARY KEY (Contract_ID),
+   FOREIGN KEY(Supply_ID) REFERENCES supply(Supply_ID) on delete set null 
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
