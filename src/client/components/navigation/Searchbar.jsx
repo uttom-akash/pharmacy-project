@@ -1,8 +1,8 @@
 import React from "react";
 import "./css/Searchbar.css";
-export default ({ query, onChange }) => {
+export default ({ query, onChange,id }) => {
     return (
-        <div className="search-container">
+        <div className="search-container" id={id}>
             <input
                 type="text"
                 placeholder="Search product..."

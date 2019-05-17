@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./css/Register.css";
+// import "./css/Register.css";
 import "./css/Form.css";
 import validator from "validator";
 import { Spinner, Modal, ModalHeader, Button, ModalBody, ModalFooter } from "reactstrap";
@@ -77,14 +77,11 @@ class RegisterForm extends Component {
     const closeBtn = <button className="close" onClick={this.props.toggle}>&times;</button>;
 
     return (
-
-
-
       <Modal isOpen={this.props.modal} centered={true} fade={true} toggle={this.props.toggle}>
         <ModalHeader toggle={this.props.toggle} close={closeBtn}>Register</ModalHeader>
         <ModalBody>
           <form onSubmit={this.onSubmit} className="form">
-            {!!this.state.profilePicture ? (
+            {/* {!!this.state.profilePicture ? (
               <img src={profilePicture} alt="user-pro-pic" className="pro-pic" />
             ) : (
                 <i className="fas fa-user" id="pro-icon" />
@@ -100,7 +97,7 @@ class RegisterForm extends Component {
             <label htmlFor="pic" className="file-chooser">
               <i className="far fa-image" />
               <p>{pictureName}</p>
-            </label>
+            </label> */}
 
             <input
               type="text"
@@ -144,6 +141,8 @@ class RegisterForm extends Component {
 
             )}
           </form>
+
+          { this.props.children}
         </ModalBody>
       </Modal>
 

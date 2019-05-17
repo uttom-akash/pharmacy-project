@@ -1,6 +1,12 @@
 .root{
     width: 100%;
     height: auto;
+    position: relative;
+}
+
+
+.root .content{
+    padding-top: 3.4rem;
 }
 
 

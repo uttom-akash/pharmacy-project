@@ -73,6 +73,7 @@ class Login extends Component {
             />
             <button className="btn">Login</button>
           </form>
+          { this.props.children}
         </ModalBody>
       </Modal>
     );
