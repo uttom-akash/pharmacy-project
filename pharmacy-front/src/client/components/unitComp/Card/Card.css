@@ -1,0 +1,29 @@
+.card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 22rem;
+    min-width: 20rem;
+    background-color: white;
+    box-shadow:.2rem .2rem 1.5rem .2rem var(--shadow);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 3.5px;
+    padding: 5px;
+}
+
+.card:hover{
+    box-shadow:.2rem .2rem 1.8rem .5rem var(--shadow);
+    cursor: pointer;
+}
+
+.card-icon{
+    font-size: 3.5rem;
+    color: var(--card-icon);
+    padding: .5rem;
+}
+
+
+.card h4{
+    color: var(--card-font-header);
+}

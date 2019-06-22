@@ -1,0 +1,46 @@
+:root{
+   --navbar-font:		#00BFFF;
+   --navbar-font-hover: #606B76;
+   --navbar-font-active:#606B76;
+
+
+   --border-color:#606B76;
+
+   --font-color:#606B76;
+   --font-hover:#87CEFA;  
+   --font-white:white;
+   --font-heading:#00BFFF;
+
+   
+   --search-button:#00BFFF;
+   --button:#00BFFF;
+   --button-hover:#606B76;
+
+   --shadow:rgb(208, 211, 211);
+   --shadow-hover:rgb(194, 197, 197);
+   --highlighter:#00BFFF;
+  
+   --card-icon:#00BFFF;
+   --card-font-header:#00BFFF;
+
+   --footer-highlighter:#00BFFF;
+   --footer-font:white;
+
+   --error:rgb(221, 71, 116);
+}
+
+
+
+
+.root{
+    width: 100%;
+    height: auto;
+    position: relative;
+    color: var(--font-gen);
+}
+
+
+.root .content{
+    padding-top: 3.4rem;
+    width: 100%;
+}

@@ -1,0 +1,47 @@
+.askme-content{
+    display: flex;
+    align-items: center;
+}
+
+
+.ask{
+    width: 3.3rem;
+    height: 3.3rem;
+    border-radius: 50%;
+    box-shadow:.2rem .2rem 2rem .1rem var(--shadow);
+}
+
+.askme-content label{
+   margin: 5px;
+   padding: 5px 20px 5px 20px;
+   color: var(--font-white);
+   background-color:var(--highlighter);
+   border-radius: 0 15px 0 15px;
+   box-shadow:.2rem .2rem 2rem .1rem var(--shadow);
+   transition: all ease-in-out .5s;
+ 
+}
+
+.ask:hover{
+    cursor: pointer;
+}
+ 
+ .ask-container:hover label{
+       border-radius: 15px 0 15px 0;
+ }
+ 
+ iframe {
+    margin-top: 0;
+    border-radius: 12px;
+} 
+
+
+.b-agent-demo{
+    border-radius: 12px; 
+ }   
+
+
+ .b-agent-demo_header-agent-name{
+     color: blueviolet;
+ }
+ 

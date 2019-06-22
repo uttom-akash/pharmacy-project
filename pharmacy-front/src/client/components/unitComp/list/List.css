@@ -1,0 +1,32 @@
+
+.list .list-row{
+    margin: 6px;
+    box-shadow: .001rem .001rem .5rem .03rem var(--shadow);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+
+.list-row label{
+    margin: 0;
+    padding: 2px;
+}
+
+
+.list-row div{
+    background-color: var(--button);
+    padding: 0 2px 0 2px;
+    border-radius: 5px;
+    font-size: 13px;
+    color: var(--font-white);
+    box-shadow: .1rem .1rem .5rem .1rem var(--shadow);
+}
+
+
+.list-row div:hover{
+    cursor: pointer;
+    background-color: var(--button-hover)
+}
+

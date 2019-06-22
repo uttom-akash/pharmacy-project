@@ -1,0 +1,17 @@
+
+.vouchar h6{
+   color: var(--font-heading);
+   margin-top: 2rem;
+}
+.vouchar .selected-list label{
+    display: block;
+    margin: 5px 0 5px 0;
+}
+
+
+.vouchar #confirm-order{
+    width: 100px;
+    margin-left: auto;
+}
+
+

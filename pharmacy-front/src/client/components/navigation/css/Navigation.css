@@ -1,0 +1,57 @@
+.navigation-bar{
+    width:100%;
+    background-color: white; 
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    box-shadow:0rem 0.1rem 1.5rem .2rem var(--shadow);
+    /* overflow: hidden; */
+    position: fixed;
+    z-index: 2;
+}
+
+.banner{
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+}
+
+.banner .logo{
+    margin-left: 5px;
+    margin-right: 3px;
+    height: 3.5rem;
+    border-radius: 50%;
+}
+
+.banner h5{
+    color: var(--navbar-font)
+}
+
+#search{
+     margin-right: auto;
+}
+
+.Link{
+    border-left: 1px solid rgb(238, 236, 236);
+}
+
+.Link i{
+     margin-right: 5px;
+     font-size: 20px;
+}
+
+.Link label{
+    margin: 0;
+    padding: 0;
+}
+
+#authfalse,#authtrue{
+    margin: 0;
+    margin-right: 2rem;
+    cursor: pointer;
+}
+
+
+#authtrue{
+  color:var(--navbar-font-active);
+}

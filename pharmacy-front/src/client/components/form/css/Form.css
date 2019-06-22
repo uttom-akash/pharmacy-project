@@ -1,0 +1,88 @@
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form input {
+  width: 40%;
+  margin: 5px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  color: var(--font-color);
+  box-shadow: 0.01rem 0.01rem 0.5rem .1px var(--shadow);
+  transition: all 500ms ease;
+}
+
+.form input:focus {
+  width: 70%;
+  outline: none;
+}
+
+.form .btn {
+  color: var(--font-white);
+  margin: 5px;
+  padding: 2px 12px 2px 12px;
+  background-color:var(--button);
+  box-shadow: 0.01rem 0.01rem 0.3rem 0.1rem var(--shadow);
+  border-radius: 4px;
+}
+
+.form .btn:hover {
+  color: var(--font-white);
+  background-color: var(--button-hover);
+  box-shadow: 0.02rem 0.02rem 0.4rem 0.2rem var(--shadow);
+}
+
+.no-account{
+  display: flex;
+}
+
+.no-account .optional{
+  color: var(--highlighter);
+  padding-left: 10px;
+}
+
+
+
+.form .true {
+  border: 0.5px solid var(--error);
+  border-radius: 7px;
+  /* background-color: var(--app-screen); */
+}
+
+.form .pro-pic {
+  width: 7.5rem;
+  height: 7.5rem;
+  /* border: 1.5px solid var(--border); */
+  border-radius: 50%;
+}
+
+.form .error {
+  border: 2px solid var(--error);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  color: var(--error);
+}
+
+.spinner {
+  color: var(--spinner);
+}
+
+.form .file-chooser {
+  display: flex;
+}
+
+.file-chooser i {
+  font-size: 1.5rem;
+  margin: 2px;
+  color: #6d7680;
+}
+
+.file-chooser p {
+  margin: 2px;
+}

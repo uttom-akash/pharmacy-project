@@ -1,0 +1,18 @@
+.tool{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    margin: 3px;
+    
+    background-color: var(--footer-highlighter);
+    border-radius: 50%;
+}
+
+.tool .anchor{
+    font-size: 18px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;    
+    color:var(--footer-font);
+}

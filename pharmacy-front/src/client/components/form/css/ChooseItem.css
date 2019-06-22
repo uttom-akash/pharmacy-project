@@ -1,0 +1,46 @@
+.choose-med-form h6{
+    color: var(--font-heading);
+}
+
+.check-row{
+    box-shadow: .001rem .001rem .3rem .01rem var(--shadow);
+}
+
+.check-row td{
+    text-align: center;
+    padding:2px 12px 2px 12px;
+}
+
+.check-control label{
+    margin: 0;
+}
+
+.choose-med-form .check-btn{
+    margin: 0 5px 0 5px;
+    background-color: var(--button);
+    padding: 0 8px 0 8px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--font-white);
+    box-shadow: .01rem .01rem .3rem .01rem var(--shadow);
+}
+
+
+.choose-med-form .check-btn:hover{
+    cursor: pointer;
+    background-color: var(--button-hover)
+}
+
+
+.check-row .total{
+    font-weight: bold;
+}
+
+.choose-med-form button{
+    border: none;
+    width: 50px;
+    height: 22px;
+    margin-right: auto;
+}
+
