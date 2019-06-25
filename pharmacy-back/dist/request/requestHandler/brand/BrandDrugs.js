@@ -24,7 +24,7 @@ var BrandDrugs = /** @class */ (function (_super) {
     }
     BrandDrugs.prototype.handle = function (req, res) {
         var BRAND = req.body.BRAND;
-        this.getDrug(BRAND).then(function (drugsList) { return res.json(drugsList); });
+        this.getDrug(BRAND).then(function (drugsList) { return res.json({ DRUGS: drugsList }); });
     };
     BrandDrugs.prototype.getDrug = function (BRAND) {
         var query = "select DRUG_ID,DRUG_NAME,IMAGE_SRC,PRICE from Drugs where BRAND=? limit 30";

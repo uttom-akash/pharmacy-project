@@ -16,6 +16,8 @@ var Drugs_1 = __importDefault(require("./requestHandler/drugs/Drugs"));
 // brand
 var BrandOverview_1 = __importDefault(require("./requestHandler/brand/BrandOverview"));
 var BrandDrugs_1 = __importDefault(require("./requestHandler/brand/BrandDrugs"));
+// filtering
+var FilterSearch_1 = __importDefault(require("./requestHandler/filtering/FilterSearch"));
 var Requests = /** @class */ (function () {
     function Requests() {
         this.router = express_1.default.Router();
@@ -33,6 +35,8 @@ var Requests = /** @class */ (function () {
         // Brands
         this.router.get("/brand_overview", function (req, res) { return new BrandOverview_1.default().handle(req, res); });
         this.router.post("/brand_drugs", function (req, res) { return new BrandDrugs_1.default().handle(req, res); });
+        // Filter search
+        this.router.post("/filter_search", function (req, res) { return new FilterSearch_1.default().handle(req, res); });
     };
     Requests.prototype.getRouter = function () {
         return this.router;

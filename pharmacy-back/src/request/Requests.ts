@@ -17,6 +17,9 @@ import Drugs from './requestHandler/drugs/Drugs'
 import BrandOverview from './requestHandler/brand/BrandOverview'
 import BrandDrugs from './requestHandler/brand/BrandDrugs'
 
+
+// filtering
+import FilterSearch from './requestHandler/filtering/FilterSearch'
 class Requests{
     private router:any;
 
@@ -41,6 +44,9 @@ class Requests{
         // Brands
         this.router.get("/brand_overview",(req:any,res:any)=>new BrandOverview().handle(req,res))
         this.router.post("/brand_drugs",(req:any,res:any)=>new BrandDrugs().handle(req,res))
+    
+        // Filter search
+        this.router.post("/filter_search",(req:any,res:any)=>new FilterSearch().handle(req,res))
     
     }
 
