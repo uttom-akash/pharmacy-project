@@ -1,12 +1,12 @@
 import express from 'express'
-import requests from './request/AuthRequest'
 import autoRoute from './dev/automate'
+import routes from './request/Requests'
 
 const app = express();
 const port = 8081;
 
 app.use(express.json());
-app.use('/api',requests)
+app.use("/api",routes)
 
 // dev insert
 app.use('/auto',autoRoute)
