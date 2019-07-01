@@ -1,0 +1,203 @@
+create table Users(
+    USER_ID varchar(300) primary key,
+    FIRST_NAME varchar(50) not null,
+    LAST_NAME varchar(50) not null,
+    PROFILE_PIC varchar(300),
+    ADDRESS varchar(1000),
+    CONTACT_NUMBER varchar(15) not null unique,
+    PASSWORD varchar(300)
+    
+);
+
+
+select count(*) as id FROM Users where PASSWORD='a6eac1a0ae42d3e466b45dd4610e18decdb339b59bda075853ae0229fd4edc35'; 
+select * from Users;
+
+create table Admin(
+    ADMIN_ID varchar(300) primary key,
+    FIRST_NAME varchar(50) not null,
+    LAST_NAME varchar(50) not null,
+    ADDRESS varchar(1000),
+    CONTACT_NUMBER varchar(15) not null unique,
+    PASSWORD varchar(300)
+);
+
+
+
+create table Employee
+(
+   EMPLOYEE_ID varchar(300) primary key,
+   FIRST_NAME varchar(50) not null,
+   LAST_NAME varchar(50) not null,
+   SALARY numeric(10,2),
+   NID varchar(50),
+   MOBILE_NO varchar(15),
+   ADDRESS text,
+   REF_NAME varchar(50),
+   REF_NUM varchar(15)
+);
+
+
+create table Supplier(
+   SUPPLIER_ID varchar(300) primary key,
+   SUPPLIER_Name varchar(100),
+   MOBILE_NO varchar(15),
+   ADDRESS varchar(100)
+);
+
+
+
+
+create table Manufacturer
+(
+   MENUFACTURER_ID varchar(300) primary key,
+   NAME varchar(50),
+   EMAIL varchar(70),
+   MOBILE_NO varchar(15),
+   ADDRESS text
+);
+
+
+create table Batch
+( 
+  BATCH_ID int auto_increment primary key,
+  BATCH varchar(100),
+  MFG_DATE date,
+  EXP_DATE date
+);
+
+
+
+create table Category
+(
+   CATEGORY_ID int auto_increment primary key,
+   CATEGORY_NAME varchar(50),
+   Remedies text
+);
+
+
+
+create table Orders(
+
+    ORDER_ID int primary key auto_increment,
+    USER_ID varchar(300),
+    TOTAL_PRICE numeric(8,2),
+    DATE date,
+    TIME time,
+    EMPLOYEE_ID varchar(300),
+    foreign key(EMPLOYEE_ID) references Employee(EMPLOYEE_ID) on delete set null,
+    foreign key(USER_ID) references Users(USER_ID) on delete set null
+);
+
+
+
+
+create table Drugs(
+    DRUG_ID int primary key auto_increment,
+    BATCH_ID int,
+    DRUG_NAME varchar(100) unique,
+    BRAND_NAME varchar(100),
+    MENUFACTURER_ID varchar(300),
+    BRAND varchar(100),
+    DAR varchar(100),
+    PRICE numeric(6,2),
+    IMAGE_SRC varchar(300),
+    foreign key(BATCH_ID)  references Batch(BATCH_ID) on delete set null,
+    foreign key(MENUFACTURER_ID) references Manufacturer(MENUFACTURER_ID) on delete set null
+    );
+    
+select * from Drugs;    
+insert into Drugs(DRUG_NAME,BRAND_NAME,BRAND,DAR,PRICE,IMAGE_SRC) values(?,?,?,?,?,?,?);
+select DRUG_ID,DRUG_NAME,BRAND_NAME,MENUFACTURER_ID,BRAND,DAR,PRICE,IMAGE_SRC from Drugs where DRUG_ID=1;
+create table Supply
+(
+   SUPPLY_ID int auto_increment primary key,
+   DRUG_ID int,
+   SUPPLY_DATE date,
+   QUANTITY int,
+   SUPPLIER_PRICE numeric(10,3),
+   SUPPLIER_ID varchar(300),
+   foreign key(DRUG_ID) references Drugs(DRUG_ID) on delete set null,
+   foreign key(SUPPLIER_ID) references Supplier(SUPPLIER_ID) on delete set null
+);
+
+
+create table DrugCategory(
+    DRUG_ID int,
+    CATEGORY_ID int,
+    foreign key(CATEGORY_ID)  references Category(CATEGORY_ID) on delete set null,
+    foreign key(DRUG_ID) references Drugs(DRUG_ID) on delete set null
+);    
+
+select count(*) as cnt from DrugCategory where CATEGORY_ID=1;
+
+create table DrugSales(
+    ORDER_ID int,
+    DRUG_ID int,
+    QUANTITY int default 0,
+    foreign key(ORDER_ID) references Orders(ORDER_ID) on delete set null,
+    foreign key(DRUG_ID) references Drugs(DRUG_ID) on delete set null
+    );
+
+
+create table DrugStates(
+    DRUG_ID int,
+    REMAIN_QTY int default 0,
+    SOLD_QTY int default 0,
+    foreign key(DRUG_ID) references Drugs(DRUG_ID) on delete set null
+);
+
+
+
+create table Posts(
+    POST_ID int auto_increment primary key,
+    POST_NAME varchar(300),
+    DATE date,
+    TIME time,
+    PARAGRAPH text,
+    USER_ID varchar(300),
+    PARENT int default 0,
+    foreign key(USER_ID) references Users(USER_ID) on delete set null
+);
+
+drop table Posts;
+
+
+create table PostImage(
+    IMAGE_ID int auto_increment primary key,
+    IMAGE_REF varchar(300),
+    POST_ID int,
+    foreign key(POST_ID) references Posts(POST_ID) on delete set null
+);
+
+
+drop table PostImage;
+
+create table HashTags(
+    HASHTAGS_ID int auto_increment primary key,
+    HASHTAGS varchar(50),
+    POST_ID int,
+    foreign key(POST_ID) references Posts(POST_ID) on delete set null
+);
+
+
+drop table HashTags;
+
+
+
+create table Cart(
+    USER_ID varchar(300),
+    DRUG_ID int,
+    DATE date,
+    UNIQUE(USER_ID,DRUG_ID),
+    foreign key(USER_ID) references Users(USER_ID) on delete set null,
+    foreign key(DRUG_ID) references Drugs(DRUG_ID) on delete set null
+);
+
+ALTER TABLE Cart ADD UNIQUE `unique_index`(USER_ID,DRUG_ID);
+drop table Cart;
+select * from Cart;
+
+delete from Cart;
+describe Cart;
+insert into Cart values("4f0216a420f7806aa6cb1d7337f84e4181a5a6f8a6ec38a3ca65bd8e63620fd8",4,'2019-07-01');

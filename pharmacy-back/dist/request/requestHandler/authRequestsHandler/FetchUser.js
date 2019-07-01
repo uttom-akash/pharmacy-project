@@ -24,7 +24,7 @@ var FetchUser = /** @class */ (function (_super) {
     }
     FetchUser.prototype.handle = function (req, res) {
         var phoneNumber = req.body.phoneNumber;
-        var query = "select FIRST_NAME,LAST_NAME,ADDRESS,CONTACT_NUMBER from Users where CONTACT_NUMBER=?";
+        var query = "select USER_ID,FIRST_NAME,LAST_NAME,ADDRESS,CONTACT_NUMBER from Users where CONTACT_NUMBER=?";
         this.pool.query(query, [phoneNumber]).then(function (user) {
             if (user.length)
                 res.json({ user: user[0] });

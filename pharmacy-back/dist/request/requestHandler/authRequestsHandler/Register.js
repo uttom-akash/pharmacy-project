@@ -17,6 +17,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var RequestHandler_1 = __importDefault(require("../RequestHandler"));
+var Hash256_1 = __importDefault(require("../../../processing/crypto/functionality/Hash256"));
+var RandomGenerator_1 = __importDefault(require("../../../processing/randomization/RandomGenerator"));
 var Register = /** @class */ (function (_super) {
     __extends(Register, _super);
     function Register() {
@@ -24,8 +26,10 @@ var Register = /** @class */ (function (_super) {
     }
     Register.prototype.handle = function (req, res) {
         var _a = req.body, FirstName = _a.FirstName, LastName = _a.LastName, phoneNumber = _a.phoneNumber, password = _a.password;
-        var qs = "insert into Users(FIRST_NAME,LAST_NAME,CONTACT_NUMBER,PASSWORD) values(?,?,?,?)";
-        this.pool.query(qs, [FirstName, LastName, phoneNumber, password])
+        var qs = "insert into Users(USER_ID,FIRST_NAME,LAST_NAME,CONTACT_NUMBER,PASSWORD) values(?,?,?,?,?)";
+        var userID = Hash256_1.default.getInstance().execute(RandomGenerator_1.default.getInstance().getNumber());
+        var passwordhash = Hash256_1.default.getInstance().execute(password);
+        this.pool.query(qs, [userID, FirstName, LastName, phoneNumber, passwordhash])
             .then(function (result) {
             return setTimeout(function () {
                 res.json({ user: {

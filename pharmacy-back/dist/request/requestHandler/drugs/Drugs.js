@@ -27,7 +27,7 @@ var Drugs = /** @class */ (function (_super) {
         this.getDrug(DRUG_ID).then(function (drug) { return res.json({ drug: drug }); }).catch(function (err) { return res.json({ error: err }); });
     };
     Drugs.prototype.getDrug = function (DRUG_ID) {
-        var query = "select DRUG_ID,DRUG_NAME,BRAND_NAME,MENUFACTURER,BRAND,DAR,PRICE,IMAGE_SRC from Drugs where DRUG_ID=?";
+        var query = "select DRUG_ID,DRUG_NAME,BRAND_NAME,MENUFACTURER_ID,BRAND,DAR,PRICE,IMAGE_SRC from Drugs where DRUG_ID=?";
         return this.pool.query(query, [DRUG_ID]).then(function (drug) { return ({
             DRUG_ID: drug[0]['DRUG_ID'],
             DRUG_NAME: drug[0]['DRUG_NAME'],

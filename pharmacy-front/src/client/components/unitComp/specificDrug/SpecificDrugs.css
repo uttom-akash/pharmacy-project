@@ -1,0 +1,55 @@
+.drugs-list-container{
+    margin: 5% 5% 5% 15%;
+    border-bottom: 1px solid var(--border-color);
+
+}
+
+
+.drugs-list-container .drugs-list{
+    display: flex;
+}
+
+
+.drugs-list .drug{
+    margin: 0 3% 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+
+
+.drug .name{
+    font-weight: bold;
+} 
+
+.drug img{
+    width: 9rem;
+}
+
+
+.drug .add-cart{
+    box-shadow: .01rem .01rem .4rem .05rem var(--shadow);
+    width: 4rem;
+    margin-top: auto;
+    color: var(--font-heading);
+
+}
+
+.add-cart i{
+    font-size: .8rem;
+    padding: 5px;
+    margin: 0 5px 0 10px;
+    border-right: 2px solid var(--border-color);
+}
+
+.category #more{
+    color: var(--font-heading);
+    font-weight: bold;
+}
+
+
+.category #more,.drug .add-cart,.drug .name:hover{
+    cursor: pointer;
+}
+

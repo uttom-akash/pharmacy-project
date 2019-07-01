@@ -35,10 +35,6 @@ router.get('/cat', (req, res) =>{
 
 router.get("/drug",(req,res)=>{
 
-
-
-
-
    let data=fs.readFileSync(path.join(__dirname,"drugs.json"),"utf8")
    let jdata=JSON.parse(data)
    let drug=jdata["drugs"]
@@ -47,8 +43,8 @@ router.get("/drug",(req,res)=>{
 
     for(let i:number=0;i<length;i++)
     {
-        let q=`insert into Drugs(DRUG_NAME,BRAND_NAME,MENUFACTURER,BRAND,DAR,PRICE,IMAGE_SRC) values(?,?,?,?,?,?,?)`;
-        pool.query(q,[drug[i].title,drug[i]["brand name"],drug[i].menufacturer,drug[i].brand,drug[i].DAR,drug[i].price,drug[i].image_src])
+        let q=`insert into Drugs(DRUG_NAME,BRAND_NAME,BRAND,DAR,PRICE,IMAGE_SRC) values(?,?,?,?,?,?)`;
+        pool.query(q,[drug[i].title,drug[i]["brand name"],drug[i].brand,drug[i].DAR,drug[i].price,drug[i].image_src])
         .then(result=>console.log("ok"))
         .catch(err=>{if(err)throw err;})
     }

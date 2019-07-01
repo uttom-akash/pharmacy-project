@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../css/Order.css'
+import '../css/Cart.css'
 import List from '../../unitComp/list/List'
 import Table from '../../unitComp/table/Table'
 import Modal from '../../unitComp/modal/Modal'
@@ -42,32 +42,28 @@ class Cart extends Component {
     render() {
         const { curOrder,pastOrder,cart,modal,cartlist,cartHeader}=this.state;
         return (
-        <div className="orders">
-            <div className="new-order">
-               <h6>New Order</h6>
-               <div className="make-order" onClick={this.toggle}>Create</div>
-               <Modal modal={modal} toggle={this.toggle}><VoucharForm onSubmit={this.onPlaceOrder}/> </Modal> 
+        <div className="cart">
+
+            <div className="cart-header"></div>
+            
+            <div className="cart-body">
+                <div className="new-order">
+                    <label>New Order</label>
+                    <hr/>
+                    <div className="make-order" onClick={this.toggle}>Create</div>
+                    <Modal modal={modal} toggle={this.toggle}><VoucharForm onSubmit={this.onPlaceOrder}/> </Modal> 
+                </div>
+
+                <div className="cart-content">
+                    <label>Cart</label>
+                    <hr/>
+                    <List header={cartHeader} list={cartlist} onClick={this.onClick}></List>
+                    <div className="less" onClick={()=>this.onClick({"cart":!cart})}>
+                        {cart ? "Less" : "More"}
+                    </div>     
+                </div>
             </div>
-            <div className="cart">
-              <h6>Cart</h6>
-              <Table>
-                <React.Fragment>
-                      <tr>
-                     {cartHeader.map(head=><th>{head}</th>)}
-                   </tr>
-                    {
-                    cartlist.map((row,index)=>
-                        <tr className="table-row" key={index}>
-                            {row.map((col,index)=><td key={index}>{col}</td>)}
-                            <div onClick={this.onClick}>remove</div>
-                        </tr>)
-                    }
-                </React.Fragment>    
-              </Table>
-              <div className="less" onClick={()=>this.onClick({"cart":!cart})}>
-                  {cart ? "Less" : "More"}
-               </div>     
-            </div>
+            
             
         </div>);
     }

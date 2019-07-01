@@ -17,6 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var RequestHandler_1 = __importDefault(require("../RequestHandler"));
+var Hash256_1 = __importDefault(require("../../../processing/crypto/functionality/Hash256"));
 var Login = /** @class */ (function (_super) {
     __extends(Login, _super);
     function Login() {
@@ -24,8 +25,9 @@ var Login = /** @class */ (function (_super) {
     }
     Login.prototype.handle = function (req, res) {
         var _a = req.body, phoneNumber = _a.phoneNumber, password = _a.password;
-        var query = "select FIRST_NAME,LAST_NAME,ADDRESS,CONTACT_NUMBER from Users where CONTACT_NUMBER=? and password=?";
-        this.pool.query(query, [phoneNumber, password]).then(function (user) {
+        var query = "select USER_ID,FIRST_NAME,LAST_NAME,ADDRESS,CONTACT_NUMBER from Users where CONTACT_NUMBER=? and password=?";
+        var passwordHash = Hash256_1.default.getInstance().execute(password);
+        this.pool.query(query, [phoneNumber, passwordHash]).then(function (user) {
             if (user.length)
                 res.json({ user: user[0] });
             else

@@ -29,8 +29,8 @@ router.get("/drug", function (req, res) {
     var drug = jdata["drugs"];
     var length = drug.length;
     for (var i = 0; i < length; i++) {
-        var q = "insert into Drugs(DRUG_NAME,BRAND_NAME,MENUFACTURER,BRAND,DAR,PRICE,IMAGE_SRC) values(?,?,?,?,?,?,?)";
-        pool.query(q, [drug[i].title, drug[i]["brand name"], drug[i].menufacturer, drug[i].brand, drug[i].DAR, drug[i].price, drug[i].image_src])
+        var q = "insert into Drugs(DRUG_NAME,BRAND_NAME,BRAND,DAR,PRICE,IMAGE_SRC) values(?,?,?,?,?,?)";
+        pool.query(q, [drug[i].title, drug[i]["brand name"], drug[i].brand, drug[i].DAR, drug[i].price, drug[i].image_src])
             .then(function (result) { return console.log("ok"); })
             .catch(function (err) { if (err)
             throw err; });

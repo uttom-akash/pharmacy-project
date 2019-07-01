@@ -1,7 +1,10 @@
+.list{
+    border: 1px solid var(--shadow); 
+}
 
 .list .list-row{
     margin: 6px;
-    box-shadow: .001rem .001rem .5rem .03rem var(--shadow);
+    box-shadow: .0001rem .0001rem .3rem .02rem var(--shadow);
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -12,6 +15,10 @@
 .list-row label{
     margin: 0;
     padding: 2px;
+}
+
+.list-row .header{
+    font-weight: bold;
 }
 
 

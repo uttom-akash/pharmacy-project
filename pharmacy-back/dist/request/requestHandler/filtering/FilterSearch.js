@@ -28,7 +28,6 @@ var FilterSearch = /** @class */ (function (_super) {
         BRAND = '^' + BRAND + '.*';
         if (!PRICE)
             PRICE = 100000;
-        console.log(BRAND, PRICE);
         this.getDrugsbymoreCategory(CATEGORY, PRICE, BRAND).then(function (DrugsList) { return res.json(DrugsList); });
     };
     FilterSearch.prototype.getDrugsbymoreCategory = function (category, price, brand) {
@@ -41,17 +40,7 @@ var FilterSearch = /** @class */ (function (_super) {
             wherePart += whereConcat;
         }
         var query = selectPart + "  " + wherePart + " and d.PRICE<" + mysql_1.default.escape(price) + " and d.BRAND regexp " + mysql_1.default.escape(brand) + "  limit 2";
-        console.log(query);
         return this.pool.query(query, category).then(function (drugsList) { return drugsList; });
-    };
-    FilterSearch.prototype.getDrug = function (DRUG_ID) {
-        var query = "select DRUG_ID,DRUG_NAME,IMAGE_SRC,PRICE from Drugs where DRUG_ID=?";
-        return this.pool.query(query, [DRUG_ID]).then(function (drug) { return ({
-            DRUG_ID: drug[0]['DRUG_ID'],
-            DRUG_NAME: drug[0]['DRUG_NAME'],
-            IMAGE_SRC: drug[0]['IMAGE_SRC'],
-            PRICE: drug[0]['PRICE']
-        }); });
     };
     return FilterSearch;
 }(RequestHandler_1.default));

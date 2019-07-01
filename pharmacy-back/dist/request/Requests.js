@@ -6,18 +6,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 // auth
-var Register_1 = __importDefault(require("./requestHandler/authRequestsHandler/Register"));
-var Login_1 = __importDefault(require("./requestHandler/authRequestsHandler/Login"));
-var FetchUser_1 = __importDefault(require("./requestHandler/authRequestsHandler/FetchUser"));
-// drugs
-var CategoriesOverview_1 = __importDefault(require("./requestHandler/categoryRequestsHandler/CategoriesOverview"));
-var CategoryDrugs_1 = __importDefault(require("./requestHandler/categoryRequestsHandler/CategoryDrugs"));
-var Drugs_1 = __importDefault(require("./requestHandler/drugs/Drugs"));
+var Register_1 = __importDefault(require("./requestHandler/userRequest/authRequestsHandler/Register"));
+var Login_1 = __importDefault(require("./requestHandler/userRequest/authRequestsHandler/Login"));
+var FetchUser_1 = __importDefault(require("./requestHandler/userRequest/authRequestsHandler/FetchUser"));
+// category
+var CategoriesOverview_1 = __importDefault(require("./requestHandler/userRequest/categoryRequestsHandler/CategoriesOverview"));
+var CategoryDrugs_1 = __importDefault(require("./requestHandler/userRequest/categoryRequestsHandler/CategoryDrugs"));
+var Categories_1 = __importDefault(require("./requestHandler/userRequest/categoryRequestsHandler/Categories"));
+// drug
+var Drugs_1 = __importDefault(require("./requestHandler/userRequest/drugs/Drugs"));
 // brand
-var BrandOverview_1 = __importDefault(require("./requestHandler/brand/BrandOverview"));
-var BrandDrugs_1 = __importDefault(require("./requestHandler/brand/BrandDrugs"));
+var BrandOverview_1 = __importDefault(require("./requestHandler/userRequest/brand/BrandOverview"));
+var BrandDrugs_1 = __importDefault(require("./requestHandler/userRequest/brand/BrandDrugs"));
+var Brands_1 = __importDefault(require("./requestHandler/userRequest/brand/Brands"));
 // filtering
-var FilterSearch_1 = __importDefault(require("./requestHandler/filtering/FilterSearch"));
+var FilterSearch_1 = __importDefault(require("./requestHandler/userRequest/filtering/FilterSearch"));
+// cart
+var AddToCart_1 = __importDefault(require("./requestHandler/userRequest/cart/AddToCart"));
 var Requests = /** @class */ (function () {
     function Requests() {
         this.router = express_1.default.Router();
@@ -37,6 +42,12 @@ var Requests = /** @class */ (function () {
         this.router.post("/brand_drugs", function (req, res) { return new BrandDrugs_1.default().handle(req, res); });
         // Filter search
         this.router.post("/filter_search", function (req, res) { return new FilterSearch_1.default().handle(req, res); });
+        this.router.get("/categories", function (req, res) { return new Categories_1.default().handle(req, res); });
+        this.router.get("/brands", function (req, res) { return new Brands_1.default().handle(req, res); });
+        // cart
+        this.router.post('/add-cart', function (req, res) { return new AddToCart_1.default().handle(req, res); });
+        this.router.post('/remove-cart', function (req, res) { return new AddToCart_1.default().handle(req, res); });
+        this.router.post('/get-cart', function (req, res) { return new AddToCart_1.default().handle(req, res); });
     };
     Requests.prototype.getRouter = function () {
         return this.router;

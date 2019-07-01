@@ -3,23 +3,32 @@
 import express  from 'express'
 
 // auth
-import Register from './requestHandler/authRequestsHandler/Register'
-import Login from './requestHandler/authRequestsHandler/Login'
-import FetchUser from './requestHandler/authRequestsHandler/FetchUser'
+import Register from './requestHandler/userRequest/authRequestsHandler/Register'
+import Login from './requestHandler/userRequest/authRequestsHandler/Login'
+import FetchUser from './requestHandler/userRequest/authRequestsHandler/FetchUser'
 
-// drugs
-import CategoriesOverview from './requestHandler/categoryRequestsHandler/CategoriesOverview'
-import CategoryDrugs from './requestHandler/categoryRequestsHandler/CategoryDrugs'
+// category
+import CategoriesOverview from './requestHandler/userRequest/categoryRequestsHandler/CategoriesOverview'
+import CategoryDrugs from './requestHandler/userRequest/categoryRequestsHandler/CategoryDrugs'
+import Categories from './requestHandler/userRequest/categoryRequestsHandler/Categories'
 
-import Drugs from './requestHandler/drugs/Drugs'
+
+// drug
+import Drugs from './requestHandler/userRequest/drugs/Drugs'
 
 // brand
-import BrandOverview from './requestHandler/brand/BrandOverview'
-import BrandDrugs from './requestHandler/brand/BrandDrugs'
+import BrandOverview from './requestHandler/userRequest/brand/BrandOverview'
+import BrandDrugs from './requestHandler/userRequest/brand/BrandDrugs'
+import Brands from './requestHandler/userRequest/brand/Brands'
 
 
 // filtering
-import FilterSearch from './requestHandler/filtering/FilterSearch'
+import FilterSearch from './requestHandler/userRequest/filtering/FilterSearch'
+
+
+// cart
+import AddToCart from './requestHandler/userRequest/cart/AddToCart'
+
 class Requests{
     private router:any;
 
@@ -47,6 +56,14 @@ class Requests{
     
         // Filter search
         this.router.post("/filter_search",(req:any,res:any)=>new FilterSearch().handle(req,res))
+    
+        this.router.get("/categories",(req:any,res:any)=>new Categories().handle(req,res))
+        this.router.get("/brands",(req:any,res:any)=>new Brands().handle(req,res))
+
+        // cart
+        this.router.post('/add-cart',(req:any,res:any)=>new AddToCart().handle(req,res))
+        this.router.post('/remove-cart',(req:any,res:any)=>new AddToCart().handle(req,res))
+        this.router.post('/get-cart',(req:any,res:any)=>new AddToCart().handle(req,res))
     
     }
 

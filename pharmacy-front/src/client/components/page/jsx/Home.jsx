@@ -3,6 +3,7 @@ import Card from '../../unitComp/Card/Card'
 import '../css/Home.css'
 import Ask from './Ask'
 import Searchbar from '../../unitComp/search/Searchbar'
+import FilterSearch from '../../form/filterSearchForm'
 
 
 class Home extends Component {
@@ -12,7 +13,8 @@ class Home extends Component {
         this.state = {
             lat: 24,
             lng: 91,
-            query:""
+            query:"",
+            filterModal:false
         }
 
         this.geoOptions = {
@@ -125,6 +127,9 @@ class Home extends Component {
 
     onRoute = (path) => this.props.history.push(path)
 
+
+    toggleFilterSearch=()=>this.setState({filterModal:!this.state.filterModal})
+
     render() {
         return (
             <div className="home">
@@ -133,18 +138,19 @@ class Home extends Component {
                 <div className="home-card">
                     {/* <Card onClick={() => this.onRoute('/order')} icon="fas fa-gift" title="My Orders" description="Get your medicine at home" /> 
                     <Card onClick={() => this.onRoute('/cart')} icon="fa fa-shopping-cart" title="Cart" description="Get your medicine at home" /> */}
-                    <Card onClick={() => this.onRoute('/catagories')} icon="fa fa-shopping-cart" title="Catagories" description="Browse by catagories" />
-                    <Card onClick={() => this.onRoute('/brands')} icon="fas fa-briefcase-medical" title="Brands" description="Browse by brands" />
-                    <Card onClick={() => this.onRoute('/filterSearch')} icon="fa fa-search-plus" title="Filter Search" description="Search medicine with extensive filter" />
+                    <Card onClick={() => this.onRoute('/categories-overview')} icon="fas fa-code-branch" title="Catagories" description="Browse by catagories" />
+                    <Card onClick={() => this.onRoute('/brands-overview')} icon="fas fa-briefcase-medical" title="Brands" description="Browse by brands" />
+                    <Card onClick={this.toggleFilterSearch} icon="fa fa-search-plus" title="Filter Search" description="Search medicine with extensive filter" />
 
 
-                    <Card onClick={this.onFindPharmacy} icon="fas fa-medkit" title="Nearest Pharmacy" description="Find your nearest pharmacy" />
-                    <Card onClick={this.onFindMe} icon="fas fa-map-marker-alt" title="Location" description="Find your location" />
+                    <Card onClick={this.onFindPharmacy} icon="fas fa-search-location" title="Nearest Pharmacy" description="Find your nearest pharmacy" />
+                    <Card onClick={this.onFindMe} icon="far fa-compass" title="Location" description="Find your location" />
 
                 </div>
                 <div className="map-container">
                     <div id="map"></div>
                 </div>
+                <FilterSearch onRoute={this.onRoute} modal={this.state.filterModal} toggle={this.toggleFilterSearch}/>
             </div>
         );
     }

@@ -8,11 +8,14 @@ import Community from '../page/jsx/Community'
 import Contact from '../page/jsx/Contact'
 import About from '../page/jsx/About'
 import Cart from '../page/jsx/Cart'
-import Catagories from '../page/jsx/Catagories'
+import CatagoriesOverview from '../page/jsx/CatagoriesOverview'
+import BrandOverview from '../page/jsx/BrandOverview'
 import Brands from '../page/jsx/Brands'
-import FilterSearch from '../page/jsx/filterSearch'
+import FilterSearch from '../page/jsx/FilterSearch'
 import Orders from '../page/jsx/Orders'
 import  UserProfile from '../page/jsx/UserProfile'
+import Categories from '../page/jsx/Categories';
+import Drug from '../page/jsx/Drug'
 
 export default () => {
     return (
@@ -27,10 +30,13 @@ export default () => {
 
             <Route path="/cart" exact component={Cart} />
             <Route path="/order" exact component={Orders} />
-            <Route path="/catagories" exact component={Catagories} />
-            <Route path="/brands" exact component={Brands} />
-            <Route path="/filterSearch" exact component={FilterSearch} />
-
+            <Route path="/categories-overview" exact component={CatagoriesOverview} />
+            <Route path="/categories/:category" exact component={Categories}/>
+            <Route path="/brands-overview" exact component={BrandOverview} />
+            <Route path="/brands/:brand" exact component={Brands} />
+            <Route path="/filter-search/:category/:brand/:price" exact component={FilterSearch} />
+            <Route path="/drug/:drugID" exact component={Drug} />
+            
         </Switch>
     )
 }
