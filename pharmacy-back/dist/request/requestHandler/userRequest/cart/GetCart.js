@@ -23,30 +23,10 @@ var GetCart = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     GetCart.prototype.handle = function (req, res) {
-        var _this = this;
         var userID = req.body.userID;
-        this.getDrugsID(userID).then(function (drugsList) {
-            var drugs = drugsList.map(function (drugID) { return _this.getDrug(drugID["DRUG_ID"]); });
-            Promise.all(drugs).then(function (DRUGS_LIST) { return res.json({ MORE: DRUGS_LIST }); });
-        });
-    };
-    GetCart.prototype.getDrugsID = function (userID) {
-        var query = 'select DRUG_ID from Cart where USER_ID=?';
-        return this.pool.query(query, [userID]);
-    };
-    GetCart.prototype.getDrug = function (DRUG_ID) {
-        var query = "select PRICE,BRAND from Drugs where DRUG_ID=?";
-        return this.pool.query(query, [DRUG_ID]).then(function (drug) {
-            if (drug.length) {
-                return {
-                    PRICE: drug[0]['PRICE'],
-                    BRAND: drug[0]['BRAND']
-                };
-            }
-            else {
-                return {};
-            }
-        });
+        console.log("having");
+        var query = 'select d.DRUG_NAME,d.BRAND,d.PRICE from Drugs as d inner join Cart as c using(DRUG_ID)  where c.USER_ID=?';
+        this.pool.query(query, [userID]).then(function (DRUGS_LIST) { return res.json(DRUGS_LIST); });
     };
     return GetCart;
 }(RequestHandler_1.default));

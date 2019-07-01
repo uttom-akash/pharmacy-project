@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import '../css/Cart.css'
 import List from '../../unitComp/list/List'
-import Table from '../../unitComp/table/Table'
 import Modal from '../../unitComp/modal/Modal'
 import VoucharForm from '../../form/VoucharForm'
+
+
+import {connect} from 'react-redux'
+
+import {getCart} from '../../action/DrugsAction'
+
+
 
 class Cart extends Component {
     
@@ -11,19 +17,28 @@ class Cart extends Component {
         curOrder:false,
         pastOrder:false,
         cart:false,
-        cartHeader:["item","price/unit","action"],
+        cartHeader:["item","brand","price/unit","action"],
         header:["#","","/-"],
         list:[
             [1,"10-10-19",100],
             [2,"10-10-19",122]
         ],
-        cartlist:[
-            ["napa",3],
-            ["tuska",40]
+        listIndex:[
+            'DRUG_NAME',
+            'BRAND',
+            'PRICE'
         ],
         presentOrders:[
         ],
         modal:false
+    }
+
+
+    componentWillMount=()=>{
+          const {userID}=this.props.match.params
+          console.log(userID);
+          
+          this.props.getCart({userID})
     }
 
     onClick=(ev)=>this.setState(ev);
@@ -40,7 +55,9 @@ class Cart extends Component {
     }
     
     render() {
-        const { curOrder,pastOrder,cart,modal,cartlist,cartHeader}=this.state;
+        const { curOrder,pastOrder,cart,modal,cartlist,cartHeader,listIndex}=this.state;
+        // const {cart} =this.props
+
         return (
         <div className="cart">
 
@@ -57,7 +74,7 @@ class Cart extends Component {
                 <div className="cart-content">
                     <label>Cart</label>
                     <hr/>
-                    <List header={cartHeader} list={cartlist} onClick={this.onClick}></List>
+                    <List header={cartHeader} list={this.props.cart} listIndex={listIndex} onClick={this.onClick}></List>
                     <div className="less" onClick={()=>this.onClick({"cart":!cart})}>
                         {cart ? "Less" : "More"}
                     </div>     
@@ -69,4 +86,12 @@ class Cart extends Component {
     }
 }
 
-export default Cart;
+const mapStatesToProps=state=>(
+    {
+        cart:state.Cart,
+        user:state.User
+    }
+)
+
+
+export default connect(mapStatesToProps,{getCart})(Cart);

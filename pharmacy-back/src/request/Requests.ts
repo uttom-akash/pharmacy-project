@@ -28,6 +28,8 @@ import FilterSearch from './requestHandler/userRequest/filtering/FilterSearch'
 
 // cart
 import AddToCart from './requestHandler/userRequest/cart/AddToCart'
+import GetCart from './requestHandler/userRequest/cart/GetCart'
+import RemoveCart from './requestHandler/userRequest/cart/RemoveCart'
 
 class Requests{
     private router:any;
@@ -62,8 +64,8 @@ class Requests{
 
         // cart
         this.router.post('/add-cart',(req:any,res:any)=>new AddToCart().handle(req,res))
-        this.router.post('/remove-cart',(req:any,res:any)=>new AddToCart().handle(req,res))
-        this.router.post('/get-cart',(req:any,res:any)=>new AddToCart().handle(req,res))
+        this.router.post('/remove-cart',(req:any,res:any)=>new RemoveCart().handle(req,res))
+        this.router.post('/get-cart',(req:any,res:any)=>new GetCart().handle(req,res))
     
     }
 

@@ -28,7 +28,7 @@ export default () => {
             <Route path="/profile" exact component={UserProfile} />
             
 
-            <Route path="/cart" exact component={Cart} />
+            <Route path="/cart/:userID" exact component={Cart} />
             <Route path="/order" exact component={Orders} />
             <Route path="/categories-overview" exact component={CatagoriesOverview} />
             <Route path="/categories/:category" exact component={Categories}/>

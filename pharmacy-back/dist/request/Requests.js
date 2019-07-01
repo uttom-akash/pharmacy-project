@@ -23,6 +23,8 @@ var Brands_1 = __importDefault(require("./requestHandler/userRequest/brand/Brand
 var FilterSearch_1 = __importDefault(require("./requestHandler/userRequest/filtering/FilterSearch"));
 // cart
 var AddToCart_1 = __importDefault(require("./requestHandler/userRequest/cart/AddToCart"));
+var GetCart_1 = __importDefault(require("./requestHandler/userRequest/cart/GetCart"));
+var RemoveCart_1 = __importDefault(require("./requestHandler/userRequest/cart/RemoveCart"));
 var Requests = /** @class */ (function () {
     function Requests() {
         this.router = express_1.default.Router();
@@ -46,8 +48,8 @@ var Requests = /** @class */ (function () {
         this.router.get("/brands", function (req, res) { return new Brands_1.default().handle(req, res); });
         // cart
         this.router.post('/add-cart', function (req, res) { return new AddToCart_1.default().handle(req, res); });
-        this.router.post('/remove-cart', function (req, res) { return new AddToCart_1.default().handle(req, res); });
-        this.router.post('/get-cart', function (req, res) { return new AddToCart_1.default().handle(req, res); });
+        this.router.post('/remove-cart', function (req, res) { return new RemoveCart_1.default().handle(req, res); });
+        this.router.post('/get-cart', function (req, res) { return new GetCart_1.default().handle(req, res); });
     };
     Requests.prototype.getRouter = function () {
         return this.router;
