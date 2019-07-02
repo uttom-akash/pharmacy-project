@@ -14,7 +14,7 @@
 
 .list-row label{
     margin: 0;
-    padding: 2px;
+    width: 3rem;
 }
 
 .list-row .header{

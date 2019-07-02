@@ -25,7 +25,7 @@ var GetCart = /** @class */ (function (_super) {
     GetCart.prototype.handle = function (req, res) {
         var userID = req.body.userID;
         console.log("having");
-        var query = 'select d.DRUG_NAME,d.BRAND,d.PRICE from Drugs as d inner join Cart as c using(DRUG_ID)  where c.USER_ID=?';
+        var query = 'select d.DRUG_ID,d.DRUG_NAME,d.PRICE from Drugs as d inner join Cart as c using(DRUG_ID)  where c.USER_ID=?';
         this.pool.query(query, [userID]).then(function (DRUGS_LIST) { return res.json(DRUGS_LIST); });
     };
     return GetCart;

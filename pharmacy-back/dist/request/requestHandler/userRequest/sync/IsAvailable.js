@@ -17,17 +17,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var RequestHandler_1 = __importDefault(require("../../RequestHandler"));
-var GetCart_1 = __importDefault(require("./GetCart"));
-var RemoveCart = /** @class */ (function (_super) {
-    __extends(RemoveCart, _super);
-    function RemoveCart() {
+var IsAvailable = /** @class */ (function (_super) {
+    __extends(IsAvailable, _super);
+    function IsAvailable() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    RemoveCart.prototype.handle = function (req, res) {
-        var _a = req.body, userID = _a.userID, drugID = _a.drugID;
-        var query = 'delete from Cart where USER_ID=? and DRUG_ID=?';
-        this.pool.query(query, [userID, drugID]).then(function (result) { return new GetCart_1.default().handle(req, res); });
+    IsAvailable.prototype.handle = function (req, res) {
+        var drugID = req.body.drugID;
+        var query = "select REMAIN_QTY from DrugStates where DRUG_ID=?";
+        this.pool.query(query, [drugID]).then(function (result) { return res.json({ available: result[0]['REMAIN_QTY'] }); });
     };
-    return RemoveCart;
+    return IsAvailable;
 }(RequestHandler_1.default));
-exports.default = RemoveCart;
+exports.default = IsAvailable;

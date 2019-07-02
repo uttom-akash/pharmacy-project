@@ -7,7 +7,7 @@ import VoucharForm from '../../form/VoucharForm'
 
 import {connect} from 'react-redux'
 
-import {getCart} from '../../action/DrugsAction'
+import {getCart,removeCart} from '../../action/DrugsAction'
 
 
 
@@ -17,7 +17,7 @@ class Cart extends Component {
         curOrder:false,
         pastOrder:false,
         cart:false,
-        cartHeader:["item","brand","price/unit","action"],
+        cartHeader:["  item  ","price","action"],
         header:["#","","/-"],
         list:[
             [1,"10-10-19",100],
@@ -25,7 +25,6 @@ class Cart extends Component {
         ],
         listIndex:[
             'DRUG_NAME',
-            'BRAND',
             'PRICE'
         ],
         presentOrders:[
@@ -41,7 +40,7 @@ class Cart extends Component {
           this.props.getCart({userID})
     }
 
-    onClick=(ev)=>this.setState(ev);
+    onClick=(drugID)=>  this.props.history.push(`/Drug/${drugID}`)
     
     toggle=()=>this.setState({modal:!this.state.modal})
     
@@ -53,10 +52,12 @@ class Cart extends Component {
         this.setState({list,presentOrders})
         this.toggle();
     }
+
+    remove=(drugID)=>this.props.removeCart({drugID,userID:this.props.user.USER_ID})
     
     render() {
         const { curOrder,pastOrder,cart,modal,cartlist,cartHeader,listIndex}=this.state;
-        // const {cart} =this.props
+        const {cartList} =this.props
 
         return (
         <div className="cart">
@@ -74,10 +75,10 @@ class Cart extends Component {
                 <div className="cart-content">
                     <label>Cart</label>
                     <hr/>
-                    <List header={cartHeader} list={this.props.cart} listIndex={listIndex} onClick={this.onClick}></List>
-                    <div className="less" onClick={()=>this.onClick({"cart":!cart})}>
+                    <List header={cartHeader} list={cartList} listIndex={listIndex} onClick={this.onClick} clickValue={"DRUG_ID"} label={'view'} onClick1={this.remove} clickValue1={"DRUG_ID"} label1={'remove'}></List>
+                    {/* <div className="less" onClick={()=>this.onClick({"cart":!cart})}>
                         {cart ? "Less" : "More"}
-                    </div>     
+                    </div>      */}
                 </div>
             </div>
             
@@ -88,10 +89,10 @@ class Cart extends Component {
 
 const mapStatesToProps=state=>(
     {
-        cart:state.Cart,
+        cartList:state.Cart,
         user:state.User
     }
 )
 
 
-export default connect(mapStatesToProps,{getCart})(Cart);
+export default connect(mapStatesToProps,{getCart,removeCart})(Cart);

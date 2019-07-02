@@ -1,4 +1,5 @@
 import RequestHandlers from '../../RequestHandler'
+import GetCart from './GetCart'
 
 export default class RemoveCart extends RequestHandlers{
     
@@ -6,6 +7,6 @@ export default class RemoveCart extends RequestHandlers{
         const {userID,drugID}=req.body
         
         const query='delete from Cart where USER_ID=? and DRUG_ID=?'
-        this.pool.query(query,[userID,drugID]).then((res:any)=>res.jason({result:'ok'}))    
+        this.pool.query(query,[userID,drugID]).then((result:any)=>new GetCart().handle(req,res))    
     }
 }

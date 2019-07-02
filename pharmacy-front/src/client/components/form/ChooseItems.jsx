@@ -1,82 +1,119 @@
 import React, { Component } from 'react'
 import './css/ChooseItem.css'
+import {connect} from 'react-redux'
+import Button from '../unitComp/button/Button'
+import {isAvailable} from './../action/DrugsAction'
+import api from '../api/Api'
 
-export default class ChooseItems extends Component {
+
+class ChooseItems extends Component {
     
     state={
-        medicine:[],
-        list:{},
+        list:[],
+        listIndex:['name','quantity','price','total'],
+        header:['name','quantity','price','total'],
         total:0
     }
     
     componentDidMount=()=>{
-        let medicine=Object.keys(this.props.list);
-        this.setState({medicine,list:this.props.list});
+        const {cartList}=this.props
+        let list=[]
+        cartList.map(drug=>list[drug['DRUG_ID']]={name:drug['DRUG_NAME'],status:false,quantity:0,price:drug['PRICE'],total:0})
+        this.setState({list});
+
+        list.map((row,index)=>{console.log(row['name'])})
     }
 
     onChange=(ev)=>{
-        let list={...this.state.list}
-        list[ev.target.name].status=!this.state.list[[ev.target.name]].status
+        let list=this.state.list.slice(0)
+
+        list[parseInt(ev.target.name)].status=!this.state.list[[parseInt(ev.target.name)]].status
         this.setState({list});
     }
     
-    onIncDec=(name,op,price)=>{
-        
-        // checker
+    onIncDec=(drugID,op)=>{
 
-        let list={...this.state.list}
-        list[name].quantity=this.state.list[[name]].quantity+op;
-        let total=this.state.total;
-        total=total+price*op;
-        this.setState({list,total});
+                let list=this.state.list.slice(0)
+        
+                list[drugID].quantity=list[drugID].quantity+op;
+                list[drugID].total=list[drugID].quantity*list[drugID].price;
+
+                let total=this.state.total;
+                total=total+list[drugID].price*op;
+
+                this.setState({list,total});
     }
+
+    onInc=(drugID)=>{
+        
+        if(this.state.list[drugID].status){
+            this.props.isAvailable({drugID}).then(res=>{
+                let quantity=this.state.list[drugID].quantity
+                if(quantity+1<=res){
+                    api.decrement({drugID}).then(result=>{
+                        this.onIncDec(drugID,+1)})  
+                }
+            })
+        }else alert("please check the box first")
+
+    }
+
+
+    onDec=(drugID)=>{
+
+        if(this.state.list[drugID].status){
+                let quantity=this.state.list[drugID].quantity
+                if(quantity-1>=0){
+                    api.increment({drugID}).then(result=>{
+                        this.onIncDec(drugID,-1)})  
+                }
+        }else alert("please check the box first")
+    }
+
     
     onSubmit=(ev)=>{
+
         ev.preventDefault();
-        let {medicine,list}=this.state;
+        let {list,total}=this.state;
         let vouchar=[]
         
-        medicine.filter(med=>list[med].status && list[med].quantity)
-        .map(med=>vouchar.push({"name":med,"quantity":list[med].quantity,"price":list[med].quantity*list[med].price}))
-        
-        this.props.onStateChange({list})
-        this.props.onSubmit(vouchar,this.state.total);
+        vouchar=list.filter(drug=>drug.status && drug.quantity)
+        this.props.onSubmit(vouchar,total);
+    
     }
 
     render() {
-        const {medicine,list}=this.state;
+        const {list,listIndex,header,total}=this.state;
         return (
             <form className="choose-med-form" onSubmit={this.onSubmit}>
-            <table>
-            <h6>Cart</h6>   
-            {
-                medicine.map((name,key)=>
-                    !!list[name] &&   
-                    <tr className="check-row" key={key}>
-                            <td><input type="checkbox"  name={name} checked={list[name].status}  onChange={this.onChange} className="checkbox"/> </td>
-                            <td className="desc">{name}</td>
-                            { 
-                    !!list[name] &&    list[name].status &&
-                            <React.Fragment>
-                                <td className="check-control">
-                                    <label className="check-btn" onClick={()=>this.onIncDec(name,-1,list[name].price)}>-</label>
-                                    <label>{list[name].quantity}</label>
-                                    <label className="check-btn" onClick={()=>this.onIncDec(name,+1,list[name].price)}>+</label>
-                                </td>
-                                <td className="desc">{list[name].quantity}*{list[name].price}</td>
-                                <td className="desc">{list[name].quantity*list[name].price} taka</td>
-                            </React.Fragment>
-                            }
-                    </tr>    
-                )  
-           }
-           <tr className="check-row">
-               <td className="total" colSpan="4">Total</td>
-               <td className="total">{this.state.total}</td>    
-           </tr>
-           </table>
-            <button className="check-btn">OK</button>
+
+                <div className="header">
+                    {header.map(head=><label className="head">{head}</label>)}
+                </div >
+                <div className="choose-content">
+                {
+                    list.map((row,rowIndex)=>
+                        <div className="choose-row">
+                            <input type="checkbox" name={rowIndex} checked={row['status']}  onChange={this.onChange} className="checkbox" />
+                            <label className="drug-name">{row[listIndex[0]]}</label>
+                            <label >{row[listIndex[1]]}</label>
+                            <label >{row[listIndex[2]]}</label>
+                            <label >{row[listIndex[3]]}</label>
+
+                            <Button onClick={()=>this.onDec(rowIndex)} id="incdec" text=' - '/>
+                            <Button onClick={()=>this.onInc(rowIndex)} id="incdec" text=' + '/>
+                        </div>
+                    )
+                }
+                <label className="total">TOTAL : {total}</label>
+                </div>  
+                <button className="check-btn">OK</button>
             </form>
         )
   }
 }
+
+const mapStateToProps=state=>({
+    cartList:state.Cart
+})
+export default  connect(mapStateToProps,{isAvailable})(ChooseItems)

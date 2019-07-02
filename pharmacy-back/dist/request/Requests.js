@@ -25,6 +25,10 @@ var FilterSearch_1 = __importDefault(require("./requestHandler/userRequest/filte
 var AddToCart_1 = __importDefault(require("./requestHandler/userRequest/cart/AddToCart"));
 var GetCart_1 = __importDefault(require("./requestHandler/userRequest/cart/GetCart"));
 var RemoveCart_1 = __importDefault(require("./requestHandler/userRequest/cart/RemoveCart"));
+var IsAvailable_1 = __importDefault(require("./requestHandler/userRequest/sync/IsAvailable"));
+// 
+var Increment_1 = __importDefault(require("./requestHandler/userRequest/order/Increment"));
+var Decrement_1 = __importDefault(require("./requestHandler/userRequest/order/Decrement"));
 var Requests = /** @class */ (function () {
     function Requests() {
         this.router = express_1.default.Router();
@@ -50,6 +54,9 @@ var Requests = /** @class */ (function () {
         this.router.post('/add-cart', function (req, res) { return new AddToCart_1.default().handle(req, res); });
         this.router.post('/remove-cart', function (req, res) { return new RemoveCart_1.default().handle(req, res); });
         this.router.post('/get-cart', function (req, res) { return new GetCart_1.default().handle(req, res); });
+        this.router.post('/is-available', function (req, res) { return new IsAvailable_1.default().handle(req, res); });
+        this.router.post('/increment', function (req, res) { return new Increment_1.default().handle(req, res); });
+        this.router.post('/decrement', function (req, res) { return new Decrement_1.default().handle(req, res); });
     };
     Requests.prototype.getRouter = function () {
         return this.router;

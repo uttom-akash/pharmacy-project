@@ -2,18 +2,49 @@
     color: var(--font-heading);
 }
 
-.check-row{
-    box-shadow: .001rem .001rem .3rem .01rem var(--shadow);
+
+.choose-content .choose-row{
+    margin: 6px;
+    box-shadow: .0001rem .0001rem .3rem .02rem var(--shadow);
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+
 }
 
-.check-row td{
-    text-align: center;
-    padding:2px 12px 2px 12px;
+.choose-med-form .header{
+    margin-left: 3rem;
+    font-weight: bold;
+}
+.header label{
+    margin: 8px;
 }
 
-.check-control label{
-    margin: 0;
+.choose-row label{
+    width: 2.5rem;
+    margin: 2px;
 }
+
+.choose-row .drug-name{
+    width: 7rem;
+    margin-left: 5px;
+}
+
+
+
+.choose-med-form .total{
+    margin-left: 10.5rem;
+    font-weight: bold;
+}
+
+
+
+#incdec{
+   width: 1.6rem;
+   margin: 2px;
+}
+
+
 
 .choose-med-form .check-btn{
     margin: 0 5px 0 5px;
@@ -23,24 +54,11 @@
     font-size: 13px;
     font-weight: bold;
     color: var(--font-white);
-    box-shadow: .01rem .01rem .3rem .01rem var(--shadow);
+    /* box-shadow: .01rem .01rem .3rem .01rem var(--shadow); */
 }
 
-
-.choose-med-form .check-btn:hover{
+#incdec:hover,.check-btn:hover{
     cursor: pointer;
     background-color: var(--button-hover)
 }
-
-
-.check-row .total{
-    font-weight: bold;
-}
-
-.choose-med-form button{
-    border: none;
-    width: 50px;
-    height: 22px;
-    margin-right: auto;
-}
-
+ 

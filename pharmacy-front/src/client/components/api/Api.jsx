@@ -20,7 +20,13 @@ const api={
     
     addToCart:(data)=>axios.post('/api/add-cart',data).then(res=>res.data),
     removeFromCart:(data)=>axios.post('/api/remove-cart',data).then(res=>res.data),
-    getCart:(data)=>axios.post('/api/get-cart',data).then(res=>res.data)
+    getCart:(data)=>axios.post('/api/get-cart',data).then(res=>res.data),
+    
+    
+    isAvailable:(data)=>axios.post('/api/is-available',data).then(res=>res.data),
+    increment:(data)=>axios.post('/api/increment',data).then(res=>res.data),
+    decrement:(data)=>axios.post('/api/decrement',data).then(res=>res.data),
+    
 }
 
 

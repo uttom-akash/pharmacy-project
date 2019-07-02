@@ -8,7 +8,7 @@ export default (state={},action={})=>{
         case BRANDOVERVIEW : return {BrandOverview:action.payload}
         case BRAND :  return {Brand:action.payload};
         case FILTER :return {Filter:action.payload};
-        case DRUG :return {Drug:action.payload}
+        case DRUG :return {Drug:action.payload};
         default : return state;
     }
 }

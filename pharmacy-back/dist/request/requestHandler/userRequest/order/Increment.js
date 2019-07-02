@@ -17,17 +17,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var RequestHandler_1 = __importDefault(require("../../RequestHandler"));
-var GetCart_1 = __importDefault(require("./GetCart"));
-var RemoveCart = /** @class */ (function (_super) {
-    __extends(RemoveCart, _super);
-    function RemoveCart() {
+var Increment = /** @class */ (function (_super) {
+    __extends(Increment, _super);
+    function Increment() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    RemoveCart.prototype.handle = function (req, res) {
-        var _a = req.body, userID = _a.userID, drugID = _a.drugID;
-        var query = 'delete from Cart where USER_ID=? and DRUG_ID=?';
-        this.pool.query(query, [userID, drugID]).then(function (result) { return new GetCart_1.default().handle(req, res); });
+    Increment.prototype.handle = function (req, res) {
+        var drugID = req.body.drugID;
+        var query = "update DrugStates set REMAIN_QTY=REMAIN_QTY+1 where DRUG_ID=?";
+        this.pool.query(query, [drugID]).then(function (result) { return res.json({ result: 'ok' }); });
     };
-    return RemoveCart;
+    return Increment;
 }(RequestHandler_1.default));
-exports.default = RemoveCart;
+exports.default = Increment;

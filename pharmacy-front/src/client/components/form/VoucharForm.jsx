@@ -41,6 +41,7 @@ export default class VoucharForm extends Component {
     }
 
     onChoose=(selectedlist,total)=>{
+        
         this.setState({selectedlist,total})
         this.toggle();
     }
@@ -67,7 +68,7 @@ export default class VoucharForm extends Component {
                    <label>Date :{new Date().getDate()}</label>
                    <label>Time :{new Date().getTime()}</label>
                    {
-                    <Table>
+                    <table>
                            <React.Fragment>
                             <tr>
                                 {header.map(head=><th>{head}</th>)}
@@ -86,7 +87,7 @@ export default class VoucharForm extends Component {
                                 <td>{total}</td>
                             </tr>    
                         </React.Fragment>
-                    </Table>
+                    </table>
                    }
               </div>
             </div>

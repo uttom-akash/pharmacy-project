@@ -1,5 +1,5 @@
 import api from '../api/Api'
-import {GET_TO_CART,ADD_TO_CART,DRUG,CATOVERVIEW,BRANDOVERVIEW,CATEGORY,BRAND,FILTER, REMOVE_FROM_CART} from '../type/Type'
+import {IS_AVAILABLE,GET_TO_CART,ADD_TO_CART,DRUG,CATOVERVIEW,BRANDOVERVIEW,CATEGORY,BRAND,FILTER, REMOVE_FROM_CART} from '../type/Type'
 
 
 // action
@@ -45,11 +45,20 @@ export const getCartAction=(data)=>({
     type:GET_TO_CART
 })
 
-export const removeCartAction=(data)=>({
+// export const removeCartAction=(data)=>({
+//     payload:data,
+//     type:REMOVE_FROM_CART
+// })
+
+export const getChooseItemAction=(data)=>({
     payload:data,
     type:REMOVE_FROM_CART
 })
 
+export const isAvailableAction=(data)=>({
+    payload:data,
+    type:IS_AVAILABLE
+})
 
 // async action
 export const getCategoryDrugsOverview=()=>dispatch=>api.getCategoryDrugsOverview().then(drugs=>dispatch(catOverviewAction(drugs)))
@@ -58,5 +67,9 @@ export const getBrandDrugsOverview=()=>dispatch=>api.getBrandDrugsOverview().the
 export const getBrandDrugs=(data)=>dispatch=>api.getBrandDrugs(data).then(drugs=>dispatch(brandDrugAction(drugs)))
 export const getFilterSearchDrugs=(data)=>dispatch=>api.getFilterSearch(data).then(drugs=>dispatch(filterAction(drugs)))
 export const getDrug=(data)=>dispatch=>api.getDrug(data).then(drug=>dispatch(drugAction(drug)))
+
 export const getCart=(data)=>dispatch=>api.getCart(data).then(drug=>dispatch(getCartAction(drug)))
-export const removeCart=(data)=>dispatch=>api.removeCart(data).then(drug=>dispatch(removeCartAction(drug)))
+export const removeCart=(data)=>dispatch=>api.removeFromCart(data).then(drug=>dispatch(getCartAction(drug)))
+
+
+export const isAvailable=(data)=>dispatch=>api.isAvailable(data).then(res=>res['available'])

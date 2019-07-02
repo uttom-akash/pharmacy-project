@@ -31,6 +31,14 @@ import AddToCart from './requestHandler/userRequest/cart/AddToCart'
 import GetCart from './requestHandler/userRequest/cart/GetCart'
 import RemoveCart from './requestHandler/userRequest/cart/RemoveCart'
 
+
+import IsAvailable from './requestHandler/userRequest/sync/IsAvailable'
+
+// 
+import Increment from './requestHandler/userRequest/order/Increment'
+import Decrement from './requestHandler/userRequest/order/Decrement'
+
+
 class Requests{
     private router:any;
 
@@ -66,7 +74,12 @@ class Requests{
         this.router.post('/add-cart',(req:any,res:any)=>new AddToCart().handle(req,res))
         this.router.post('/remove-cart',(req:any,res:any)=>new RemoveCart().handle(req,res))
         this.router.post('/get-cart',(req:any,res:any)=>new GetCart().handle(req,res))
-    
+        
+        this.router.post('/is-available',(req:any,res:any)=>new IsAvailable().handle(req,res))
+        
+        this.router.post('/increment',(req:any,res:any)=>new Increment().handle(req,res))
+        this.router.post('/decrement',(req:any,res:any)=>new Decrement().handle(req,res))
+        
     }
 
     public getRouter():express.Application{
