@@ -12,6 +12,7 @@ export default class NewOrderInitialize extends RequestHandlers{
         
         const query=`insert into Orders(USER_ID,DATE,TIME) values(?,?,?)`
         
-        this.pool.query(query,[userID,date,time]).then((result:any)=>res.json({ORDER_ID:result['insertId']}))    
+        this.pool.query(query,[userID,date,time]).then((order:any)=>res.json({ORDER_ID:order['insertId'],DATE:date,TIME:time}))    
     }
+
 }

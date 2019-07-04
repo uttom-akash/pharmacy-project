@@ -71,7 +71,7 @@ class Cart extends Component {
                     <label>New Order</label>
                     <hr/>
                     <div className="make-order" onClick={this.toggle}>Create</div>
-                    <Modal modal={modal} toggle={this.toggle}><VoucharForm onSubmit={this.onPlaceOrder} toggle={this.toggle} userID={user['USER_ID']}/> </Modal> 
+                    <Modal modal={modal}><VoucharForm onSubmit={this.onPlaceOrder} toggle={this.toggle} userID={user['USER_ID']} address={user['ADDRESS']} contactNumber={user['CONTACT_NUMBER']}/> </Modal> 
                 </div>
 
                 <div className="cart-content">

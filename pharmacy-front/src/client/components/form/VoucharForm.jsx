@@ -4,6 +4,7 @@ import Modal from '../unitComp/modal/Modal'
 import Button from '../unitComp/button/Button'
 import './css/VoucharForm.css'
 import api from '../api/Api'
+
 export default class VoucharForm extends Component {
     
     constructor(props){
@@ -15,16 +16,17 @@ export default class VoucharForm extends Component {
             list:{},
             selectedlist:[],
             modal:false,
-            location:{
-                address:"nurani 6,subidbazar"
-            },
-            orderID:null
+            address:"nurani 6,subidbazar",
+            contactNumber:'0000000000',
+            orderID:null,
+            date:null,
+            time:null
         }
     }
 
     componentDidMount=()=>{
-           const {userID}=this.props
-           api.newOrderInit({userID}).then(res=>this.setState({orderID:res['ORDER_ID']}))
+           const {userID,address,contactNumber}=this.props
+           api.newOrderInit({userID}).then(res=>this.setState({orderID:res['ORDER_ID'],date:res['DATE'],time:res['TIME'],address,contactNumber}))
     }
 
     toggle=()=>this.setState({modal:!this.state.modal})
@@ -41,7 +43,7 @@ export default class VoucharForm extends Component {
 
     
     // onHandleChange=(event)=>[...event.target.options].filter(({selected})=>selected).map(({value})=>console.log(value))
-    onChange=(event)=>console.log(event.target);
+    onChange=(event)=>this.setState({[event.target.name] :event.target.value});
     
     onSubmit=(ev)=>{
         ev.preventDefault();
@@ -55,7 +57,7 @@ export default class VoucharForm extends Component {
     }
 
     render() {
-        const {selectedlist,header,total,location,orderID}=this.state;
+        const {selectedlist,header,total,address,contactNumber,orderID,date,time}=this.state;
     return (
       <form className="vouchar">
           <div className="selected-list">
@@ -65,8 +67,8 @@ export default class VoucharForm extends Component {
                     <ChooseItems onSubmit={this.onChoose}  list={this.state.list} orderID={orderID}/>  
               </Modal>
               <div className="vouchar-list">
-                   <label>Date :{new Date().getDate()}</label>
-                   <label>Time :{new Date().getTime()}</label>
+                   <label>Date :{date}</label>
+                   <label>Time :{time}</label>
                    {
                     <table>
                            <React.Fragment>
@@ -94,11 +96,11 @@ export default class VoucharForm extends Component {
             <div className="delivery-loc">
                 <h6>Delivery</h6>
                  <code>duration:40min</code>
-                 <address>adress: <input type="text" name="address" value={location.address}></input></address>
+                 <address>adress: <input type="text" name="address" value={address}  onChange={this.onChange}></input></address>
             </div>
             <div className="personal-info">
                    <h6>Personal Info</h6>
-                   <code>Number: <input type="text" name="contact-no"   placeholder="01797544036" value="01797544036"></input></code>
+                   <code>Number: <input type="text" name="contactNumber" value={contactNumber} onChange={this.onChange}></input></code>
             </div>
             <div className="payment">
                   <h6>Payment</h6>
