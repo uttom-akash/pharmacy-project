@@ -45,14 +45,14 @@ class ChooseItems extends Component {
     }
 
     onInc=(drugID)=>{
-        
+        const {orderID}=this.props
         if(this.state.list[drugID].status){
             this.props.isAvailable({drugID}).then(res=>{
                 let quantity=this.state.list[drugID].quantity
                 if(quantity+1<=res){
-                    api.decrement({drugID}).then(result=>{
+                    api.decrement({drugID,orderID}).then(result=>{
                         this.onIncDec(drugID,+1)})  
-                }
+                }else alert('Sorry..No more drugs of this are available')
             })
         }else alert("please check the box first")
 
@@ -61,10 +61,11 @@ class ChooseItems extends Component {
 
     onDec=(drugID)=>{
 
+        const {orderID}=this.props
         if(this.state.list[drugID].status){
                 let quantity=this.state.list[drugID].quantity
                 if(quantity-1>=0){
-                    api.increment({drugID}).then(result=>{
+                    api.increment({drugID,orderID}).then(result=>{
                         this.onIncDec(drugID,-1)})  
                 }
         }else alert("please check the box first")
@@ -82,10 +83,19 @@ class ChooseItems extends Component {
     
     }
 
+    onCancel=(ev)=>{
+        ev.preventDefault();
+
+        api.cancelOrder({orderID:this.props.orderID})
+        this.props.onSubmit([],0)
+    }
+
+
+
     render() {
         const {list,listIndex,header,total}=this.state;
         return (
-            <form className="choose-med-form" onSubmit={this.onSubmit}>
+            <form className="choose-med-form" >
 
                 <div className="header">
                     {header.map(head=><label className="head">{head}</label>)}
@@ -107,7 +117,10 @@ class ChooseItems extends Component {
                 }
                 <label className="total">TOTAL : {total}</label>
                 </div>  
-                <button className="check-btn">OK</button>
+                <div className="choose-btn">
+                        <Button onClick={this.onSubmit} id="check-btn" text="Confirm"></Button>
+                        <Button onClick={this.onCancel} id="check-btn" text="Cancel"></Button>     
+                </div>
             </form>
         )
   }

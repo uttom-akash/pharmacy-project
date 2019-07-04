@@ -57,7 +57,9 @@ class Cart extends Component {
     
     render() {
         const { curOrder,pastOrder,cart,modal,cartlist,cartHeader,listIndex}=this.state;
-        const {cartList} =this.props
+        const {cartList,user} =this.props
+        console.log(user['USER_ID']);
+        
 
         return (
         <div className="cart">
@@ -69,7 +71,7 @@ class Cart extends Component {
                     <label>New Order</label>
                     <hr/>
                     <div className="make-order" onClick={this.toggle}>Create</div>
-                    <Modal modal={modal} toggle={this.toggle}><VoucharForm onSubmit={this.onPlaceOrder}/> </Modal> 
+                    <Modal modal={modal} toggle={this.toggle}><VoucharForm onSubmit={this.onPlaceOrder} toggle={this.toggle} userID={user['USER_ID']}/> </Modal> 
                 </div>
 
                 <div className="cart-content">

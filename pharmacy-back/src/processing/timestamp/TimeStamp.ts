@@ -17,6 +17,10 @@ export default class TimeStamp{
             1}-${this.date.getDate()} ${this.date.getHours()}:${this.date.getMinutes()}:${this.date.getSeconds()}`;        
     }
 
+    public time():string{
+        return `${this.date.getHours()}:${this.date.getMinutes()}:${this.date.getSeconds()}`
+    }
+
     public dateMonthYear():string{
         return `${this.date.getFullYear()}-${this.date.getMonth() + 1}-${this.date.getDate()}`;
     }

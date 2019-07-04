@@ -26,6 +26,15 @@ const api={
     isAvailable:(data)=>axios.post('/api/is-available',data).then(res=>res.data),
     increment:(data)=>axios.post('/api/increment',data).then(res=>res.data),
     decrement:(data)=>axios.post('/api/decrement',data).then(res=>res.data),
+
+    newOrderInit:(data)=>axios.post('/api/new-order-init',data).then(res=>res.data),
+    cancelOrder:(data)=>axios.post('/api/cancel-order',data).then(res=>res.data),
+    confirmOrder:(data)=>axios.post('/api/confirm-order',data).then(res=>res.data),
+
+    getCurrentOrders:(data)=>axios.post('/api/current-order',data).then(res=>res.data),
+    getPastOrders:(data)=>axios.post('/api/past-order',data).then(res=>res.data),
+    orderRecieved:(data)=>axios.post('/api/order-recieved',data).then(res=>res.data)
+
     
 }
 

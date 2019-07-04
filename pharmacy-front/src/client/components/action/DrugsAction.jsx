@@ -1,5 +1,5 @@
 import api from '../api/Api'
-import {IS_AVAILABLE,GET_TO_CART,ADD_TO_CART,DRUG,CATOVERVIEW,BRANDOVERVIEW,CATEGORY,BRAND,FILTER, REMOVE_FROM_CART} from '../type/Type'
+import {CURRENT_ORDER,PAST_ORDER,IS_AVAILABLE,GET_TO_CART,ADD_TO_CART,DRUG,CATOVERVIEW,BRANDOVERVIEW,CATEGORY,BRAND,FILTER, REMOVE_FROM_CART} from '../type/Type'
 
 
 // action
@@ -60,6 +60,18 @@ export const isAvailableAction=(data)=>({
     type:IS_AVAILABLE
 })
 
+// 
+export const currentOrderAction=(data)=>({
+    payload:data,
+    type:CURRENT_ORDER
+})
+
+export const pastOrderAction=(data)=>({
+    payload:data,
+    type:PAST_ORDER
+})
+
+
 // async action
 export const getCategoryDrugsOverview=()=>dispatch=>api.getCategoryDrugsOverview().then(drugs=>dispatch(catOverviewAction(drugs)))
 export const getCategoryDrugs=(data)=>dispatch=>api.getCategoryDrugs(data).then(drugs=>dispatch(categoryDrugAction(drugs)))
@@ -72,4 +84,7 @@ export const getCart=(data)=>dispatch=>api.getCart(data).then(drug=>dispatch(get
 export const removeCart=(data)=>dispatch=>api.removeFromCart(data).then(drug=>dispatch(getCartAction(drug)))
 
 
-export const isAvailable=(data)=>dispatch=>api.isAvailable(data).then(res=>res['available'])
+export const isAvailable=(data)=>api.isAvailable(data).then(res=>res['available'])
+
+export const getCurrentOrders=data=>dispatch=>api.getCurrentOrders(data).then(res=>dispatch(currentOrderAction(res)))
+export const getPastOrders=data=>dispatch=>api.getPastOrders(data).then(res=>dispatch(pastOrderAction(res)))

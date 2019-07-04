@@ -13,8 +13,7 @@
 
 
 .list-row label{
-    margin: 0;
-    width: 3rem;
+    width: 8rem;
 }
 
 .list-row .header{
@@ -31,8 +30,11 @@
     box-shadow: .1rem .1rem .5rem .1rem var(--shadow);
 }
 
+/* .list-row #list-btn{
+    background-color: blue;
+} */
 
-.list-row div:hover{
+.list-row #list-btn:hover{
     cursor: pointer;
     background-color: var(--button-hover)
 }

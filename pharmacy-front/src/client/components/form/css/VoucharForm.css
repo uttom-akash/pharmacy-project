@@ -8,10 +8,14 @@
     margin: 5px 0 5px 0;
 }
 
+.vouchar .vouchar-btn{    
+    display: flex;
+    width: 11rem;
+    margin-left: auto
+}
 
-.vouchar #confirm-order{
-    width: 100px;
-    margin-left: auto;
+.vouchar-btn #check-btn{
+    width: 5rem;
 }
 
 

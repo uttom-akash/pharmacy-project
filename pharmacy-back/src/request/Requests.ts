@@ -35,8 +35,20 @@ import RemoveCart from './requestHandler/userRequest/cart/RemoveCart'
 import IsAvailable from './requestHandler/userRequest/sync/IsAvailable'
 
 // 
-import Increment from './requestHandler/userRequest/order/Increment'
-import Decrement from './requestHandler/userRequest/order/Decrement'
+import Increment from './requestHandler/userRequest/sync/Increment'
+import Decrement from './requestHandler/userRequest/sync/Decrement'
+
+
+// 
+import NewOrderInitialize from './requestHandler/userRequest/order/NewOrderInitialize'
+import CancelOrder from './requestHandler/userRequest/order/CancelOrder'
+import ConfirmOrder from './requestHandler/userRequest/order/ConfirmOrder'
+
+// Order
+import CurrentOrder from './requestHandler/userRequest/order/CurrentOrder'
+import PastOrder from './requestHandler/userRequest/order/PastOrder'
+import OrderRecieved from './requestHandler/userRequest/order/OrderRecieved'
+import OrderDetails from './requestHandler/userRequest/order/OrderDetails'
 
 
 class Requests{
@@ -79,7 +91,17 @@ class Requests{
         
         this.router.post('/increment',(req:any,res:any)=>new Increment().handle(req,res))
         this.router.post('/decrement',(req:any,res:any)=>new Decrement().handle(req,res))
-        
+
+        this.router.post('/new-order-init',(req:any,res:any)=>new NewOrderInitialize().handle(req,res))
+        this.router.post('/cancel-order',(req:any,res:any)=>new CancelOrder().handle(req,res))
+        this.router.post('/confirm-order',(req:any,res:any)=>new ConfirmOrder().handle(req,res))
+
+        this.router.post('/current-order',(req:any,res:any)=>new CurrentOrder().handle(req,res))
+        this.router.post('/past-order',(req:any,res:any)=>new PastOrder().handle(req,res))
+
+        this.router.post('/order-recieved',(req:any,res:any)=>new OrderRecieved().handle(req,res))
+        this.router.post('/order-details',(req:any,res:any)=>new OrderDetails().handle(req,res))
+
     }
 
     public getRouter():express.Application{

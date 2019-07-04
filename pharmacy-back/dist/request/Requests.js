@@ -27,8 +27,17 @@ var GetCart_1 = __importDefault(require("./requestHandler/userRequest/cart/GetCa
 var RemoveCart_1 = __importDefault(require("./requestHandler/userRequest/cart/RemoveCart"));
 var IsAvailable_1 = __importDefault(require("./requestHandler/userRequest/sync/IsAvailable"));
 // 
-var Increment_1 = __importDefault(require("./requestHandler/userRequest/order/Increment"));
-var Decrement_1 = __importDefault(require("./requestHandler/userRequest/order/Decrement"));
+var Increment_1 = __importDefault(require("./requestHandler/userRequest/sync/Increment"));
+var Decrement_1 = __importDefault(require("./requestHandler/userRequest/sync/Decrement"));
+// 
+var NewOrderInitialize_1 = __importDefault(require("./requestHandler/userRequest/order/NewOrderInitialize"));
+var CancelOrder_1 = __importDefault(require("./requestHandler/userRequest/order/CancelOrder"));
+var ConfirmOrder_1 = __importDefault(require("./requestHandler/userRequest/order/ConfirmOrder"));
+// Order
+var CurrentOrder_1 = __importDefault(require("./requestHandler/userRequest/order/CurrentOrder"));
+var PastOrder_1 = __importDefault(require("./requestHandler/userRequest/order/PastOrder"));
+var OrderRecieved_1 = __importDefault(require("./requestHandler/userRequest/order/OrderRecieved"));
+var OrderDetails_1 = __importDefault(require("./requestHandler/userRequest/order/OrderDetails"));
 var Requests = /** @class */ (function () {
     function Requests() {
         this.router = express_1.default.Router();
@@ -57,6 +66,13 @@ var Requests = /** @class */ (function () {
         this.router.post('/is-available', function (req, res) { return new IsAvailable_1.default().handle(req, res); });
         this.router.post('/increment', function (req, res) { return new Increment_1.default().handle(req, res); });
         this.router.post('/decrement', function (req, res) { return new Decrement_1.default().handle(req, res); });
+        this.router.post('/new-order-init', function (req, res) { return new NewOrderInitialize_1.default().handle(req, res); });
+        this.router.post('/cancel-order', function (req, res) { return new CancelOrder_1.default().handle(req, res); });
+        this.router.post('/confirm-order', function (req, res) { return new ConfirmOrder_1.default().handle(req, res); });
+        this.router.post('/current-order', function (req, res) { return new CurrentOrder_1.default().handle(req, res); });
+        this.router.post('/past-order', function (req, res) { return new PastOrder_1.default().handle(req, res); });
+        this.router.post('/order-recieved', function (req, res) { return new OrderRecieved_1.default().handle(req, res); });
+        this.router.post('/order-details', function (req, res) { return new OrderDetails_1.default().handle(req, res); });
     };
     Requests.prototype.getRouter = function () {
         return this.router;

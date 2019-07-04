@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import ChooseItems from './ChooseItems'
 import Modal from '../unitComp/modal/Modal'
-import Table from '../unitComp/table/Table'
 import Button from '../unitComp/button/Button'
 import './css/VoucharForm.css'
-
+import api from '../api/Api'
 export default class VoucharForm extends Component {
     
     constructor(props){
@@ -18,27 +17,21 @@ export default class VoucharForm extends Component {
             modal:false,
             location:{
                 address:"nurani 6,subidbazar"
-            }
+            },
+            orderID:null
         }
     }
 
     componentDidMount=()=>{
-        let cartlist=[
-            ["Napa",3],
-            ["Tuska",40],
-            ["Etorix",8]
-        ]
-
-        let  list={};
-        cartlist.map((med)=>list[med[0]]={status:false,quantity:0,price:med[1]})
-        this.setState({list})
+           const {userID}=this.props
+           api.newOrderInit({userID}).then(res=>this.setState({orderID:res['ORDER_ID']}))
     }
 
     toggle=()=>this.setState({modal:!this.state.modal})
      
-    onStateChange=(param)=>{
-           this.setState(param);
-    }
+    // onStateChange=(param)=>{
+    //        this.setState(param);
+    // }
 
     onChoose=(selectedlist,total)=>{
         
@@ -46,23 +39,30 @@ export default class VoucharForm extends Component {
         this.toggle();
     }
 
+    
     // onHandleChange=(event)=>[...event.target.options].filter(({selected})=>selected).map(({value})=>console.log(value))
     onChange=(event)=>console.log(event.target);
     
     onSubmit=(ev)=>{
         ev.preventDefault();
-        this.props.onSubmit({order:this.state.selectedlist,total:this.state.total});        
+        // this.props.onSubmit({order:this.state.selectedlist,total:this.state.total});
+        api.confirmOrder({orderID:this.state.orderID,totalPrice:this.state.total}).then(res=>this.props.toggle())        
+    }
+
+    onCancel=(ev)=>{
+        ev.preventDefault();
+        api.cancelOrder({orderID:this.state.orderID}).then(res=>this.props.toggle())
     }
 
     render() {
-        const {selectedlist,header,total,location}=this.state;
+        const {selectedlist,header,total,location,orderID}=this.state;
     return (
       <form className="vouchar">
           <div className="selected-list">
               <h6>Vouchar</h6>
               <Button onClick={this.toggle} id="choose-cart-btn" text="Choose from cart"></Button>
-              <Modal modal={this.state.modal} toggle={this.toggle}>
-                    <ChooseItems onSubmit={this.onChoose} onStateChange={this.onStateChange} list={this.state.list}/>  
+              <Modal modal={this.state.modal}>
+                    <ChooseItems onSubmit={this.onChoose}  list={this.state.list} orderID={orderID}/>  
               </Modal>
               <div className="vouchar-list">
                    <label>Date :{new Date().getDate()}</label>
@@ -104,7 +104,11 @@ export default class VoucharForm extends Component {
                   <h6>Payment</h6>
                   <label>Cash on Delivary</label>
             </div>
-            <Button onClick={this.onSubmit} id="confirm-order" text="Confirm"></Button>
+            <div className="voucher-btn">
+                        <Button onClick={this.onSubmit} id="check-btn" text="Confirm"></Button>
+                        <Button onClick={this.onCancel} id="check-btn" text="Cancel"></Button>     
+            </div>
+            
       </form>
     )
   }
