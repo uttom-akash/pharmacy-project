@@ -11,6 +11,7 @@
 
 # production
 /build
+/pharmacy-back/dist
 
 # misc
 .DS_Store
