@@ -4,18 +4,20 @@ import {connect} from 'react-redux'
 import {getBrandDrugs} from '../../action/DrugsAction' 
 import Drugs from '../../unitComp/specificDrug/SpecificDrugs'
 import api from '../../api/Api'
-
+import {Spinner} from 'reactstrap'
 
 class Brands extends Component {
     
-    // state={
-    //     offset:0
-    // }
+    state={
+        offset:0,
+        loading:false
+    }
 
     componentWillMount=()=>{
         const {brand}=this.props.match.params;
-
-        this.props.getBrandDrugs({brand}) 
+        this.setState({loading:true})
+       
+        this.props.getBrandDrugs({brand}).then(res=> this.setState({loading:false})) 
     }
     
     // onMore=async ()=>{
@@ -39,8 +41,8 @@ class Brands extends Component {
         return (
             <div>
                 {
-                    !!drugs && <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart}/>
-            
+                   this.state.loading && !(!!drugs) ?  <Spinner type="grow" color="primary" /> :
+                    <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart}/>
                 }
                 </div>
         )

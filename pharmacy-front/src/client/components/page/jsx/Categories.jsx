@@ -3,15 +3,19 @@ import {connect} from 'react-redux'
 import {getCategoryDrugs} from '../../action/DrugsAction' 
 import Drugs from '../../unitComp/specificDrug/SpecificDrugs'
 import api from '../../api/Api'
+import {Spinner} from 'reactstrap'
 
 
 class Categories extends Component {
     
+    state={
+        loading:false
+    }
 
     componentWillMount=()=>{
         const {category}=this.props.match.params;
-        
-        this.props.getCategoryDrugs({categoryID:category}) 
+        this.setState({loading:true})
+        this.props.getCategoryDrugs({categoryID:category}).then(res=>this.setState({loading:false})) 
     }
     
     // onMore=async ()=>{
@@ -35,12 +39,11 @@ class Categories extends Component {
         const {drugs}=this.props
         return (
             <div>
-                {
-                    !!drugs && <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart}/>
-            
-                }
-                {/* <Drugs/> */}
-                </div>
+               {
+                   this.state.loading && !(!!drugs) ?  <Spinner type="grow" color="primary" /> :
+                   <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart}/>
+               } 
+               </div>
         )
     }
 }

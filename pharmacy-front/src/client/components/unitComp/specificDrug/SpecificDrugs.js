@@ -8,7 +8,7 @@ export default class SpecificDrugs extends Component {
     constructor(props){
         super(props)
         this.state={
-            columnWidth:320,
+            columnWidth:300,
             height:250,
             gutter:10
         }
@@ -58,12 +58,14 @@ export default class SpecificDrugs extends Component {
 
         return (
             <CellMeasurer cache={this._cache} key={key} index={index} parent={parent}>
-                    <div  style={{...style,width:columnWidth,height:height,border:"1px solid black"}}>
-                            <div className="drug">
-                                <img src={drug['IMAGE_SRC']}></img><br/>
-                                <label onClick={()=>onDrugClick(drug['DRUG_ID'])} className="name">{drug['DRUG_NAME']}</label>
-                                <label className="price">{drug['PRICE']}</label>
-                                <div className="add-cart" onClick={()=>onAddCart(drug["DRUG_ID"])}><i className="fas fa-shopping-cart"></i>+</div>
+                    <div  style={{...style,width:columnWidth,height:height,border:"1px solid #D3D3D3"}}>
+                            <div className="sp-drug" >
+                                <div id="image-container" onClick={()=>onDrugClick(drug['DRUG_ID'])}>
+                                    <img src={drug['IMAGE_SRC']}></img><br/>
+                                    <label className="price">৳&nbsp;{drug['PRICE']}</label>
+                                    <label className="name">{drug['DRUG_NAME']}</label>
+                                </div>
+                                <div className="add-cart" onClick={()=>onAddCart(drug["DRUG_ID"]) }><i className="fas fa-shopping-cart"></i>+</div>
                             </div>    
                     </div>
             </CellMeasurer>

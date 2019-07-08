@@ -13,14 +13,14 @@ export default class Register extends RequestHandler{
             
             this.UniqueID().then((userID:string)=>this.pool.query(qs,[userID,FirstName,LastName,"",phoneNumber,passwordhash])
             .then((result:any)=>
-                setTimeout(()=>{
+                
                     res.json({user :{
                         FIRST_NAME: FirstName,
                         LAST_NAME: LastName,
                         ADDRESS: "",
                         CONTACT_NUMBER:phoneNumber}}),10000 
-                }))
-            .catch((err:any)=>setTimeout(()=>res.status(400).json({error:err}),10000))
+                )
+            .catch((err:any)=>res.status(400).json({error:err}))
 )
     }
 

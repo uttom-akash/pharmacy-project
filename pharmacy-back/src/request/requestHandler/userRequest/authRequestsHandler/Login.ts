@@ -13,8 +13,8 @@ export default class Login extends RequestHandler{
         
         this.pool.query(query,[phoneNumber,passwordHash]).then((user:any)=>{
             if(user.length)res.json({user:user[0]})
-            else setTimeout(()=>res.status(400).json({error:"invalid credentails"}),10000)
-        }).catch((err:any)=>setTimeout(()=>res.status(400).json({error:err}),10000))
+            else res.status(400).json({error:"invalid credentails"})
+        }).catch((err:any)=>res.status(400).json({error:err}),10000)
     }
 
 }
