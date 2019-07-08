@@ -12,14 +12,60 @@
 
 .category .drugs-list{
     display: flex;
+    overflow-x: auto;
+    margin-left:5%;
+    margin-right: 5%;
+    padding-bottom: 3rem;
+}
+
+.category .drugs-list::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 4px rgba(173, 172, 172, 0.521);
+	background-color: #F5F5F5;
+}
+
+.category .drugs-list::-webkit-scrollbar
+{
+    width: 10px;
+    height: 6px;
+	background-color: #F5F5F5;
+}
+
+.category .drugs-list::-webkit-scrollbar-thumb
+{
+	background-color:var(--highlighter);	
+	background-image: -webkit-gradient(linear, 0 0, 0 100%,
+	                   color-stop(.5, rgba(255, 255, 255, .2)),
+					   color-stop(.5, transparent), to(transparent));
 }
 
 
+
 .drugs-list .drug{
-    margin: 0 3% 0 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+}
+
+.image-container{
+    position: relative;
+}
+
+.image-container #image{
+    width:16rem;
+    height: 12rem;
+    border: 1px solid var(--border-color);
+}
+
+.image-container .price{
+    position: absolute;
+    top: 3px;
+    background-color: var(--highlighter);
+    color: var(--font-white);
+    width: 3rem;
+    padding-left: 5px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 
@@ -28,9 +74,6 @@
     font-weight: bold;
 } 
 
-.drug img{
-    width: 9rem;
-}
 
 
 .drug .add-cart{

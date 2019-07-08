@@ -7,26 +7,22 @@ import api from '../../api/Api'
 
 class Categories extends Component {
     
-    state={
-        offset:0
-    }
 
     componentWillMount=()=>{
         const {category}=this.props.match.params;
-        const {offset}=this.state
-
-        this.props.getCategoryDrugs({categoryID:category,offset}) 
+        
+        this.props.getCategoryDrugs({categoryID:category}) 
     }
     
-    onMore=async ()=>{
-        const {category}=this.props.match.params;
-        console.log(this.props.drugs.More);
+    // onMore=async ()=>{
+    //     const {category}=this.props.match.params;
+    //     console.log(this.props.drugs.More);
         
-        if(this.props.drugs.MORE) await this.setState({offset:this.state.offset+15})
-        else if(this.state.offset-15>=0)await this.setState({offset:this.state.offset-15})
+    //     if(this.props.drugs.MORE) await this.setState({offset:this.state.offset+15})
+    //     else if(this.state.offset-15>=0)await this.setState({offset:this.state.offset-15})
         
-        this.props.getCategoryDrugs({categoryID:category,offset:this.state.offset})         
-    }
+    //     this.props.getCategoryDrugs({categoryID:category,offset:this.state.offset})         
+    // }
 
     onDrugClick=(drugID)=>{
         this.props.history.push(`/Drug/${drugID}`)
@@ -40,9 +36,10 @@ class Categories extends Component {
         return (
             <div>
                 {
-                    !!drugs && <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart} onMore={this.onMore} more={drugs.MORE}/>
+                    !!drugs && <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart}/>
             
                 }
+                {/* <Drugs/> */}
                 </div>
         )
     }

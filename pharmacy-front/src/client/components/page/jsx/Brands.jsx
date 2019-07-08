@@ -8,25 +8,24 @@ import api from '../../api/Api'
 
 class Brands extends Component {
     
-    state={
-        offset:0
-    }
+    // state={
+    //     offset:0
+    // }
 
     componentWillMount=()=>{
         const {brand}=this.props.match.params;
-        const {offset}=this.state
 
-        this.props.getBrandDrugs({brand,offset}) 
+        this.props.getBrandDrugs({brand}) 
     }
     
-    onMore=async ()=>{
-        const {brand}=this.props.match.params;
+    // onMore=async ()=>{
+    //     const {brand}=this.props.match.params;
         
-        if(this.props.drugs.MORE) await this.setState({offset:this.state.offset+15})
-        else if(this.state.offset-15>=0)await this.setState({offset:this.state.offset-15})
+    //     if(this.props.drugs.MORE) await this.setState({offset:this.state.offset+15})
+    //     else if(this.state.offset-15>=0)await this.setState({offset:this.state.offset-15})
         
-        this.props.getBrandDrugs({brand,offset:this.state.offset})         
-    }
+    //     this.props.getBrandDrugs({brand,offset:this.state.offset})         
+    // }
 
     onDrugClick=(drugID)=>{
         this.props.history.push(`/Drug/${drugID}`)
@@ -40,7 +39,7 @@ class Brands extends Component {
         return (
             <div>
                 {
-                    !!drugs && <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart} onMore={this.onMore} more={drugs.MORE}/>
+                    !!drugs && <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart}/>
             
                 }
                 </div>

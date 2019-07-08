@@ -11,9 +11,11 @@ export default ({drugs,onDrugClick,onAddCart,onMore,title})=>{
                 {
                     drug["DRUGS"].map(drug=>
                     <div className="drug">
-                        <img src={drug['IMAGE_SRC']}></img><br/>
+                        <div className="image-container">
+                            <img src={drug['IMAGE_SRC']}  id="image"></img><br/>
+                            <label className="price">{drug['PRICE']}</label>
+                        </div>
                         <label onClick={()=>onDrugClick(drug['DRUG_ID'])} className="name">{drug['DRUG_NAME']}</label>
-                        <label className="price">{drug['PRICE']}</label>
                         <div className="add-cart" onClick={()=>onAddCart(drug["DRUG_ID"])}><i className="fas fa-shopping-cart"></i>+</div>
                     </div>)
                 }

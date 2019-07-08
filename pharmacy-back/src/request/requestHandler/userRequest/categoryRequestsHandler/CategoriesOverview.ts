@@ -44,7 +44,7 @@ export default class CategoriesOverview extends RequestHandler{
     }
 
     private getDrugsID(category:number){
-        let query=`select DRUG_ID from DrugCategory where CATEGORY_ID=? limit 5`;
+        let query=`select DRUG_ID from DrugCategory where CATEGORY_ID=? limit 4`;
         return this.pool.query(query,[category]);
     }
 

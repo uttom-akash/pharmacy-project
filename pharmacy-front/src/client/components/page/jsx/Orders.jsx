@@ -19,8 +19,8 @@ class Orders extends Component {
 
     getOrderOverview=()=>{
         const USER_ID=sessionStorage.number
-        this.props.getCurrentOrders({userID:USER_ID})
-        this.props.getPastOrders({userID:USER_ID})
+        this.props.getCurrentOrders({userID:USER_ID,offset:0})
+        this.props.getPastOrders({userID:USER_ID,offset:0})
     }
    
     viewDetails=(orderID)=>{
@@ -30,6 +30,10 @@ class Orders extends Component {
     comfirmRecieve=(orderID)=>{
         api.orderRecieved({orderID}).then(res=>this.getOrderOverview())
     }
+
+    moreCurrentOrders=()=>{};
+
+    morePastOrders=()=>{};
 
     render() {
         const {curOrderMore,pastOrderMore,listIndex,header}=this.state

@@ -23,7 +23,7 @@ export default class BrandOverview extends RequestHandler{
     }
 
     private getDrugs(brand:string){
-        let query=`select DRUG_ID,DRUG_NAME,IMAGE_SRC,PRICE,BRAND from Drugs where BRAND=? limit 2`
+        let query=`select DRUG_ID,DRUG_NAME,IMAGE_SRC,PRICE,BRAND from Drugs where BRAND=? limit 4`
 
         return this.pool.query(query,[brand])
 
