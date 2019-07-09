@@ -3,6 +3,7 @@
 # dependencies
 /pharmacy-back/node_modules
 /pharmacy-front/node_modules
+/pharmacy-admin/node_modules
 /.pnp
 .pnp.js
 

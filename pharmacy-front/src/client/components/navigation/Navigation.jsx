@@ -8,8 +8,12 @@ import Login from '../form/Login'
 import DropDown from '../unitComp/dropDown/DropDown' 
 
 import {connect} from 'react-redux'
-import {logoutAction} from '../action/AuthActions'
+import {logoutAction,register,login} from '../action/AuthActions'
 
+const banner=<React.Fragment>
+                <img src={logo} className="logo" alt='logo' />
+                {window.innerWidth>600 && <h5>Oushudh</h5>}
+            </React.Fragment>
 
 class Navigation extends Component {
     state = {
@@ -24,7 +28,7 @@ class Navigation extends Component {
     onDropToggle=()=>this.setState({dropdownOpen:!this.state.dropdownOpen})
     onLogout=()=>{
          sessionStorage.removeItem("number");
-         this.props.logoutAction(); 
+         window.location.reload(); 
     }
 
     onSignToggle = () =>{
@@ -40,29 +44,25 @@ class Navigation extends Component {
         
         return (
             <div className="navigation-bar">
-                {/* Logo */}
-                <div className="banner">
-                    <img src={logo} className="logo" alt='logo' />
-                    {window.innerWidth>600 && <h5>Oushudh</h5>}
-                </div>        
                 
+                <CustomNavlink  Cpath="/" classname={"banner"}>{banner}</CustomNavlink>            
                 
                 {/* nav link */}
-                <CustomNavlink Cpath="/community" Cname='Community' />
+                <CustomNavlink Cpath="/community" Cname='Community' classname={"Link"}/>
+                
                 {
                 !!this.props.userName ? 
                     <DropDown cname="Link" idname={`auth${this.state.loginToggle}`} dropdownOpen={this.state.dropdownOpen} dropToggle={this.onDropToggle} userName={this.props.userName} onLogout={this.onLogout}></DropDown>
-                    // <CustomNavlink Cpath="/profile" ><i className="far fa-user"></i><label>{this.props.userName}</label></CustomNavlink>
                     :
                     <div className="Link" id={`auth${this.state.loginToggle}`} onClick={this.onLoginToggle}><i className="far fa-user"></i><label>Login</label></div>
                 }
 
                 {/* modal */}
-                {this.state.signinToggle && <RegisterForm modal={this.state.signinToggle} toggle={this.onSignToggle}> </RegisterForm>}
+                {this.state.signinToggle && <RegisterForm register={this.props.register} modal={this.state.signinToggle} toggle={this.onSignToggle}> </RegisterForm>}
                 
 
                 
-                {this.state.loginToggle && <Login modal={this.state.loginToggle} toggle={this.onLoginToggle}>
+                {this.state.loginToggle && <Login login={this.props.login} modal={this.state.loginToggle} toggle={this.onLoginToggle}>
                    <div className="optional" id={`auth${this.state.signinToggle}`} onClick={this.onSignToggle}>Signin</div>
                 </Login>
                 }
@@ -76,4 +76,4 @@ const mapStateToProps=state=>({
     userName:state.User.LAST_NAME
 })
 
-export default connect(mapStateToProps,{logoutAction})(Navigation);
+export default connect(mapStateToProps,{logoutAction,register,login})(Navigation);

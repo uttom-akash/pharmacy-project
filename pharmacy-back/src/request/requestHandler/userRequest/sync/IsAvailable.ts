@@ -4,6 +4,7 @@ export default class IsAvailable extends RequestHandlers{
     
     handle(req: any, res: any): void {
         const {drugID}=req.body
+        console.log(drugID);
         
         const query=`select REMAIN_QTY from DrugStates where DRUG_ID=?`
         

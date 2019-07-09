@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 import {getCurrentOrders,getPastOrders} from '../../action/DrugsAction'
 import api from '../../api/Api'
+import Restrict from '../../unitComp/restriction/Restriction'
 
 
 class Orders extends Component {
@@ -12,11 +13,13 @@ class Orders extends Component {
         curOrderMore:false,
         pastOrderMore:false,
         header:["#","","/-"],
-        listIndex:['DATE','TIME','TOTAL_PRICE','REC_STATUS']
+        listIndex:['DATE','TIME','TOTAL_PRICE']
     }
 
-    componentWillMount=()=>this.getOrderOverview()
-
+    componentWillMount=()=>{
+        Restrict(this.props)
+        this.getOrderOverview()
+    }
     getOrderOverview=()=>{
         const USER_ID=sessionStorage.number
         this.props.getCurrentOrders({userID:USER_ID,offset:0})

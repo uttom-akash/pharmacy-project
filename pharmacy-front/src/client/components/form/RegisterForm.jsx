@@ -4,7 +4,6 @@ import "./css/Form.css";
 import validator from "validator";
 import { Spinner, Modal, ModalHeader, Button, ModalBody, ModalFooter } from "reactstrap";
 import {connect} from 'react-redux'
-import {register} from '../action/AuthActions'
 
 
 class RegisterForm extends Component {
@@ -185,4 +184,4 @@ class RegisterForm extends Component {
   }
 }
 
-export default connect(null,{register})(RegisterForm);
+export default RegisterForm;

@@ -6,7 +6,7 @@ export default class Login extends RequestHandler{
     
     handle(req: any, res: any): void {
         const {phoneNumber,password}=req.body;
-        let query=`select USER_ID,FIRST_NAME,LAST_NAME,ADDRESS,CONTACT_NUMBER from Users where CONTACT_NUMBER=? and PASSWORD=?`;
+        let query=`select USER_ID,FIRST_NAME,LAST_NAME,ADDRESS,CONTACT_NUMBER,APPROVED from Users where CONTACT_NUMBER=? and PASSWORD=?`;
         let passwordHash:string=Hash.getInstance().execute(password)        
         
         console.log(passwordHash);

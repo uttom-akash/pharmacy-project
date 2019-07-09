@@ -23,7 +23,7 @@ const api={
     getCart:(data)=>axios.post('/api/get-cart',data).then(res=>res.data),
     
     
-    isAvailable:(data)=>axios.post('/api/is-available',data).then(res=>res.data),
+    isAvailable:(data)=>axios.post('/api/is-available',data).then(res=>res.data['available']),
     increment:(data)=>axios.post('/api/increment',data).then(res=>res.data),
     decrement:(data)=>axios.post('/api/decrement',data).then(res=>res.data),
 

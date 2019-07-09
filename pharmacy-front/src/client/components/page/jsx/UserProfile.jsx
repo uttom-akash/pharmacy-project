@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import '../css/UserProfile.css'
-
+import Restrict from '../../unitComp/restriction/Restriction'
 
 class UserProfile extends Component {
     state = {}
+
+    componentWillMount=()=>{
+        Restrict(this.props)
+    }
+
+
     render() {
         const {firstName,lastName,address,contactNumber}=this.props;
 

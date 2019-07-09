@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import "./css/Form.css";
-import {login} from '../action/AuthActions'
 import validator from "validator";
-
-import {connect} from 'react-redux'
 import { Spinner, Modal, ModalHeader, Button, ModalBody, ModalFooter } from "reactstrap";
 
 
@@ -99,4 +96,4 @@ class Login extends Component {
   }
 }
 
-export default connect(null,{login})(Login);
+export default Login;

@@ -15,11 +15,11 @@ class DropDown extends Component {
       </DropdownToggle>
 
       <DropdownMenu>
-        <DropdownItem><CustomNavlink Cpath="/profile" Cname="Profile"/></DropdownItem>
+        <DropdownItem><CustomNavlink Cpath="/profile" Cname="Profile" classname='Link'/></DropdownItem>
         <DropdownItem divider />
-        <DropdownItem><CustomNavlink Cpath="/order" Cname="Orders"/></DropdownItem>
+        <DropdownItem><CustomNavlink Cpath="/order" Cname="Orders" classname='Link'/></DropdownItem>
         <DropdownItem divider />
-        <DropdownItem><CustomNavlink Cpath={`/cart/${user.USER_ID}`} Cname="Cart"/></DropdownItem>
+        <DropdownItem><CustomNavlink Cpath={`/cart/${user.USER_ID}`} Cname="Cart" classname='Link'/></DropdownItem>
         <DropdownItem divider />
         <DropdownItem><div className="Link"  onClick={onLogout}>LogOut</div></DropdownItem>
       </DropdownMenu>

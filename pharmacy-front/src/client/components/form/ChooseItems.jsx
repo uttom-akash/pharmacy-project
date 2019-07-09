@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './css/ChooseItem.css'
 import {connect} from 'react-redux'
 import Button from '../unitComp/button/Button'
-import {isAvailable} from './../action/DrugsAction'
 import api from '../api/Api'
 
 
@@ -18,9 +17,11 @@ class ChooseItems extends Component {
     componentDidMount=()=>{
         const {cartList}=this.props
         let list=[]
-        cartList.map(drug=>list[drug['DRUG_ID']]={name:drug['DRUG_NAME'],status:false,quantity:0,price:drug['PRICE'],total:0})
+        cartList.map(drug=>list[drug['DRUG_ID']]={name:drug['DRUG_NAME'],status:false,quantity:0,price:drug['PRICE'],total:0,drugID:drug['DRUG_ID']})
         this.setState({list});
 
+        console.log(list);
+        
         list.map((row,index)=>{console.log(row['name'])})
     }
 
@@ -45,9 +46,11 @@ class ChooseItems extends Component {
     }
 
     onInc=(drugID)=>{
+        console.log(drugID);
+        
         const {orderID}=this.props
         if(this.state.list[drugID].status){
-            this.props.isAvailable({drugID}).then(res=>{
+            api.isAvailable({drugID}).then(res=>{
                 let quantity=this.state.list[drugID].quantity
                 if(quantity+1<=res){
                     api.decrement({drugID,orderID}).then(result=>{
@@ -110,8 +113,8 @@ class ChooseItems extends Component {
                             <label >{row[listIndex[2]]}</label>
                             <label >{row[listIndex[3]]}</label>
 
-                            <Button onClick={()=>this.onDec(rowIndex)} id="incdec" text=' - '/>
-                            <Button onClick={()=>this.onInc(rowIndex)} id="incdec" text=' + '/>
+                            <Button onClick={()=>this.onDec(row['drugID'])} id="incdec" text=' - '/>
+                            <Button onClick={()=>this.onInc(row['drugID'])} id="incdec" text=' + '/>
                         </div>
                     )
                 }
@@ -129,4 +132,4 @@ class ChooseItems extends Component {
 const mapStateToProps=state=>({
     cartList:state.Cart
 })
-export default  connect(mapStateToProps,{isAvailable})(ChooseItems)
+export default  connect(mapStateToProps)(ChooseItems)

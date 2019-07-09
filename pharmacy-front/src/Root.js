@@ -4,7 +4,7 @@ import './Root.css'
 
 import Navigation from './client/components/navigation/Navigation';
 import Route from './client/components/navigation/Route'
-import Footer from './client/components/unitComp/footer/Footer'
+import Footer from './client/components/page/jsx/Footer'
 
 
 // REDUX

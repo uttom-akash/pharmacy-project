@@ -3,6 +3,7 @@ import '../css/Cart.css'
 import List from '../../unitComp/list/List'
 import Modal from '../../unitComp/modal/Modal'
 import VoucharForm from '../../form/VoucharForm'
+import Restrict from '../../unitComp/restriction/Restriction'
 
 
 import {connect} from 'react-redux'
@@ -34,9 +35,8 @@ class Cart extends Component {
 
 
     componentWillMount=()=>{
-          const {userID}=this.props.match.params
-          console.log(userID);
-          
+          Restrict(this.props);
+          const {userID}=this.props.match.params          
           this.props.getCart({userID})
     }
 
