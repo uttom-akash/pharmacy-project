@@ -47,8 +47,12 @@ export default class VoucharForm extends Component {
     
     onSubmit=(ev)=>{
         ev.preventDefault();
-        // this.props.onSubmit({order:this.state.selectedlist,total:this.state.total});
-        api.confirmOrder({orderID:this.state.orderID,totalPrice:this.state.total}).then(res=>this.props.toggle())        
+        const {orderID,total,selectedlist}=this.state;
+        api.confirmOrder({orderID:orderID,totalPrice:total}).then(res=>
+            {
+                this.props.toggle()
+                api.salesOrder({orderID,selectedlist})
+            })        
     }
 
     onCancel=(ev)=>{

@@ -33,8 +33,11 @@ const api={
 
     getCurrentOrders:(data)=>axios.post('/api/current-order',data).then(res=>res.data),
     getPastOrders:(data)=>axios.post('/api/past-order',data).then(res=>res.data),
-    orderRecieved:(data)=>axios.post('/api/order-recieved',data).then(res=>res.data)
+    orderRecieved:(data)=>axios.post('/api/order-recieved',data).then(res=>res.data),
 
+    salesOrder:(data)=>axios.post('/api/sales-order',data),
+
+    search:(query)=>axios.post('/api/search',query).then(res=>res.data)
     
 }
 

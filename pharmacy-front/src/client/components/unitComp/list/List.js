@@ -1,8 +1,8 @@
 import React from 'react'
 import './List.css'
-export default function List({ header=[],list,listIndex,onClick,onClick1,clickValue,clickValue1,label,label1}) {
+export default function List({ header=[],list,listIndex,onClick,onClick1,clickValue,clickValue1,label,label1,id}) {
   return (
-      <div className="list">
+      <div className="list" id={id}>
         <div className="list-row">
             {header.map((head,index)=><label className="header" key={index}>{head}</label>)}
         </div>

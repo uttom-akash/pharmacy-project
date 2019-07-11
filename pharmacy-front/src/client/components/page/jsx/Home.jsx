@@ -4,6 +4,12 @@ import '../css/Home.css'
 import Ask from './Ask'
 import Searchbar from '../../unitComp/search/Searchbar'
 import FilterSearch from '../../form/filterSearchForm'
+import api from '../../api/Api'
+import {Search,Label} from 'semantic-ui-react'
+
+
+const resultRenderer=({title})=><Label>{title}</Label>;
+
 
 
 class Home extends Component {
@@ -14,7 +20,14 @@ class Home extends Component {
             lat: 24,
             lng: 91,
             query:"",
-            filterModal:false
+            filterModal:false,
+            isOpen:false,
+
+
+            isSearchLoading:false,
+            searchResult:[],
+            query:""
+
         }
 
         this.geoOptions = {
@@ -24,8 +37,26 @@ class Home extends Component {
         }
     }
 
+    handleSearchResultSelect=(e,{result})=>this.props.history.push(`/Drug/${result['id']}`)
+    
 
-    onChange = (ev) => this.setState({ query: ev.target.value });
+    onSearchChange = (e,{value}) => {
+    
+        clearTimeout(this.timer);
+        this.setState({ query: value });
+
+        this.timer=setTimeout(()=>{
+            if(value.length){
+                this.setState({isSearchLoading:true})
+                api.search({query:value}).then(res=>{
+                    let list=res['list'];
+                    this.setState({isSearchLoading:false,searchResult:list})
+                })
+            }
+        },1000);
+        
+    }
+
     onSetSate = (nstat) => this.setState(nstat);
 
 
@@ -131,10 +162,21 @@ class Home extends Component {
     toggleFilterSearch=()=>this.setState({filterModal:!this.state.filterModal})
 
     render() {
+        const {isSearchLoading,searchResult,query}=this.state;
         return (
             <div className="home">
-                <Ask/>                
-                <Searchbar query={this.state.query} onChange={this.onChange} id="search"/>
+                <Ask/>        
+               
+               
+                 <Search
+                    loading={isSearchLoading}
+                    onResultSelect={this.handleSearchResultSelect}
+                    onSearchChange={this.onSearchChange}
+                    results={searchResult}
+                    value={query}
+                    resultRenderer={resultRenderer}
+                    style={{width:'20rem'}}
+                />
                 <div className="home-card">
                     {/* <Card onClick={() => this.onRoute('/order')} icon="fas fa-gift" title="My Orders" description="Get your medicine at home" /> 
                     <Card onClick={() => this.onRoute('/cart')} icon="fa fa-shopping-cart" title="Cart" description="Get your medicine at home" /> */}
@@ -150,7 +192,8 @@ class Home extends Component {
                 <div className="map-container">
                     <div id="map"></div>
                 </div>
-                <FilterSearch onRoute={this.onRoute} modal={this.state.filterModal} toggle={this.toggleFilterSearch}/>
+            <FilterSearch onRoute={this.onRoute} modal={this.state.filterModal} toggle={this.toggleFilterSearch}/>
+            
             </div>
         );
     }

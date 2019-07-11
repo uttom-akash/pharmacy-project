@@ -82,6 +82,10 @@ import GetDrug from './requestHandler/adminRequest/drugs/GetDrug'
 import DrugSales from './requestHandler/adminRequest/drugs/DrugsSales'
 import CountUser from './requestHandler/adminRequest/user/CountUser'
 
+import Sales from './requestHandler/userRequest/order/Sales'
+import Search from './requestHandler/userRequest/sync/Search';
+
+
 class Requests{
     private router:any;
 
@@ -133,6 +137,8 @@ class Requests{
         this.router.post('/order-recieved',(req:any,res:any)=>new OrderRecieved().handle(req,res))
         this.router.post('/order-details',(req:any,res:any)=>new OrderDetails().handle(req,res))
 
+        this.router.post('/sales-order',(req:any,res:any)=>new Sales().handle(req,res))
+        this.router.post('/search',(req:any,res:any)=>new Search().handle(req,res))
 
 
 

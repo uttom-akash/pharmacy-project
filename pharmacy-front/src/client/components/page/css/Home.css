@@ -30,6 +30,12 @@
 }
 
 
+.home #suggestion{
+   background: white;
+   position: absolute;
+   z-index: 2;
+}
+
 
 .map-container{
    margin: 5%  0 3% 0;

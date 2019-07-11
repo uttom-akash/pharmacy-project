@@ -5,7 +5,12 @@ export default (list:any,table:string)=>{
         if(i) query=query+' and'
         else query=query+' where'
 
-        query=query+` ${list[i]['param'].toUpperCase()}=?`;   
+        query=query+` ${list[i]['param'].toUpperCase()}`;
+        
+        if(list[i]['param'].toUpperCase()==='DATE' || list[i]['param'].toUpperCase()==="PRICE")
+            query=query+`<?`
+        else
+            query=query+`=?`    
     }
 
     return query;
