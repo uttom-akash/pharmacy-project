@@ -1,0 +1,44 @@
+.sidebar-contianer{
+  display: flex;
+  align-items: center;
+  background-color:white;
+  box-shadow:0rem 0.01rem .05rem .05rem var(--shadow);
+}
+
+.sidebar-contianer .sidebar-controller{
+  background-color:whitesmoke;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar {
+  height: 100vh;
+  margin-left: 15px;
+  background-color:white;
+  overflow-x: hidden;
+  padding-top: 60px;
+  
+  -webkit-transition: 1s ease-in-out;
+  -moz-transition: 1s ease-in-out;
+  -o-transition: 1s ease-in-out;
+  transition: 1s ease-in-out;
+
+}
+
+
+
+
+#main {
+  transition: margin-left .5s; /* If you want a transition effect */
+  padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}

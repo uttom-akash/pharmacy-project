@@ -1,0 +1,39 @@
+.drug{
+    display: flex;
+}
+
+
+.drug #qty,.drug #price{
+    width: 8rem;
+}
+
+.drug label{
+    width: 8rem;
+    padding-top: 10px;
+    padding-left: 5px
+}
+
+.drug input{
+    margin:3px 3px 3px 0px; 
+}
+
+#ar{
+    padding: 1px 0px 0px 7px;
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 18px;
+    border:2px solid green;
+    border-radius: 5px;
+    margin: 3px 0 4rem 0;
+} 
+
+.drug #ar{
+    border:2px solid red;
+    margin: 0;
+}
+
+
+#ar:hover{
+    cursor: pointer;
+    background-color:black; 
+}

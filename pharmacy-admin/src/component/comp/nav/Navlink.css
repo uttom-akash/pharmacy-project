@@ -1,0 +1,17 @@
+.Link{
+    padding: .5rem .5rem .5rem .5rem;
+    text-decoration: none;
+    color: rgb(112, 111, 111)
+  }
+  .Link:hover,.Link:focus{
+      color:black;
+  }
+  
+  .selectedLink{
+    color:black;
+  }
+  
+  /* pdetails:
+  
+  
+  https://www.squarepharma.com.bd/products/AMCIVIT-SYRUP-100ML.jpg */

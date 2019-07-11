@@ -1,0 +1,15 @@
+.get-form{
+    margin: 3rem;
+}
+
+.get-form .param{
+    margin: .5rem;
+    padding: .5rem;
+}
+
+
+.get-form .param #input{
+    padding: 4px;
+    border: 1px solid black;
+    border-radius: 5px;
+}

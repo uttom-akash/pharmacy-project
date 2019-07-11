@@ -1,27 +1,32 @@
 import RequestHandler from '../../RequestHandler'
 import Hash from '../../../../processing/crypto/functionality/Hash256'
 import RandomGenerator from '../../../../processing/randomization/RandomGenerator'
+import fs from 'fs'
 
+export default class InsertEmployee extends RequestHandler{
 
-export default class Register extends RequestHandler{
-    
     handle(req: any, res: any): void {
-            const {FirstName,LastName,salary,nid,phoneNumber,address,ref_name,ref_num}=req.body;
+
+            const {firstName,lastName,salary,nid,address,contactNumber,RefName,RefNumber,profilePicture}=req.body;
             
-            let qs=`insert into Users(EMPLOYEE_ID,FIRST_NAME,LAST_NAME,SALARY,NID,MOBILE_NO,ADDRESS,REF_NAME,REF_NUM) values(?,?,?,?,?,?,?,?,?)`;
+            let qs=`insert into Employee(EMPLOYEE_ID,FIRST_NAME,LAST_NAME,SALARY,NID,ADDRESS,MOBILE_NO,REF_NAME,REF_NUM) values(?,?,?,?,?,?,?,?,?)`;
             
-            this.UniqueID().then((EmployeeID:string)=>this.pool.query(qs,[EmployeeID,FirstName,LastName,salary,nid,phoneNumber,address,ref_name,ref_num])
-            .then((result:any)=>
-                setTimeout(()=>{
-                    res.json({user :{
-                        FIRST_NAME: FirstName,
-                        LAST_NAME: LastName,
-                        ADDRESS: "",
-                        CONTACT_NUMBER:phoneNumber}}),10000 
-                }))
-            .catch((err:any)=>setTimeout(()=>res.status(400).json({error:err}),10000))
+            this.UniqueID().then((ID:string)=>this.pool.query(qs,[ID,firstName,lastName,salary,nid,address,contactNumber,RefName,RefNumber])
+            .then((result:any)=>{
+                    this.saveProfile(ID,profilePicture)
+                    res.json({result:true})
+                })
+            .catch((err:any)=>res.status(400).json({error:err}))
 )
     }
+
+
+    private saveProfile(adminID:string,profilePicture:any):void{
+        fs.createWriteStream(
+            `./src/uploads/employee/${adminID}.jpeg`
+          ).write(new Buffer(profilePicture.split(",")[1], "base64"));
+    }
+
 
     private getUserID():string{
         return Hash.getInstance().execute(RandomGenerator.getInstance().getNumber())
@@ -30,7 +35,7 @@ export default class Register extends RequestHandler{
 
     private async UniqueID(){
         
-        let query=`select count(*) as id FROM Employee where EMPLOYEE_ID=?`
+        let query=`select count(*) as id FROM Employee where Employee_ID=?`
         let unique:boolean=true
         let user_id:string=""
 

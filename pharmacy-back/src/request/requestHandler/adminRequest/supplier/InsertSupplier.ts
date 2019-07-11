@@ -5,17 +5,19 @@ import RandomGenerator from '../../../../processing/randomization/RandomGenerato
 
 
 export default class InsertSupplier extends RequestHandler{
-    
+   
+
     handle(req: any, res: any): void {
-        const {supplierName,mobileNo,address}=req.body;
+        const {name,contactNumber,address}=req.body;
         let query= `insert into Supplier values(?,?,?,?)`
         
-        this.UniqueID().then((ID:string)=>this.pool.query(query,[ID,supplierName,mobileNo,address])
+        this.UniqueID().then((ID:string)=>this.pool.query(query,[ID,contactNumber,address,name])
                                           .then((result:any)=>res.json({result}))
                                           .catch((err:any)=>res.json({error:err})))
         
     }
 
+    
 
     private getUserID():string{
         return Hash.getInstance().execute(RandomGenerator.getInstance().getNumber())

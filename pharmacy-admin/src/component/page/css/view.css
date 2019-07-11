@@ -1,0 +1,11 @@
+.view-container{
+    width:100vw;
+    height: 100vh;
+    box-shadow:0rem 0.01rem .05rem .05rem var(--shadow);
+    background-color: white;
+   
+}
+
+.view-container .control{
+    display: flex;
+}

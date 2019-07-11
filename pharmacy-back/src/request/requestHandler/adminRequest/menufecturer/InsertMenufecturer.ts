@@ -7,12 +7,12 @@ import RandomGenerator from '../../../../processing/randomization/RandomGenerato
 export default class InsertMenufecturer extends RequestHandler{
     
     handle(req: any, res: any): void {
-        const {menufacturerName,email,mobileNo,address}=req.body;
+        const {name,contactNumber,address}=req.body;
         
-        let query= `insert into Supplier values(?,?,?,?,?)`
+        let query= `insert into Manufacturer values(?,?,?,?,?)`
         
-        this.UniqueID().then((ID:string)=>this.pool.query(query,[ID,menufacturerName,email,mobileNo,address])
-                                          .then((result:any)=>res.json({result}))
+        this.UniqueID().then((ID:string)=>this.pool.query(query,[ID,name,"",contactNumber,address])
+                                          .then((result:any)=>res.json({result:true}))
                                           .catch((err:any)=>res.json({error:err})))
         
     }
@@ -25,7 +25,7 @@ export default class InsertMenufecturer extends RequestHandler{
 
     private async UniqueID(){
         
-        let query=`select count(*) as id FROM Menufacturer where MENUFACTURER_ID=?`
+        let query=`select count(*) as id FROM Manufacturer where MENUFACTURER_ID=?`
         let unique:boolean=true
         let user_id:string=""
 

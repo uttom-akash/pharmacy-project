@@ -51,6 +51,37 @@ import OrderRecieved from './requestHandler/userRequest/order/OrderRecieved'
 import OrderDetails from './requestHandler/userRequest/order/OrderDetails'
 
 
+
+// Admin
+import IsSupplierAvailable from './requestHandler/adminRequest/supplier/IsSupplierAvailable'
+import InsertSupplier from './requestHandler/adminRequest/supplier/InsertSupplier'
+
+
+import IsDrugAvailable from './requestHandler/adminRequest/drugs/IsdrugAvailable';
+import InsertSupply from './requestHandler/adminRequest/supply/InsertSupply'
+
+
+import InsertDrugs from './requestHandler/adminRequest/drugs/InsertDrugs'
+import InsertMenufecturer from './requestHandler/adminRequest/menufecturer/InsertMenufecturer'
+
+import InsertEmployee from './requestHandler/adminRequest/employee/InsertEmployee'
+import InsertUser from './requestHandler/adminRequest/user/InsertUser'
+import InsertAdmin from './requestHandler/adminRequest/admin/InsertAdmin'
+
+
+// Get
+import GetAdmin from './requestHandler/adminRequest/admin/GetAdmin'
+import GetUser from './requestHandler/adminRequest/user/GetUser'
+import GetEmployee from './requestHandler/adminRequest/employee/GetEmployee'
+import GetManufecturer from './requestHandler/adminRequest/menufecturer/GetManufecturer'
+import GetSupplier from './requestHandler/adminRequest/supplier/GetSupplier'
+import GetSupply from './requestHandler/adminRequest/supply/GetSupply'
+import GetDrug from './requestHandler/adminRequest/drugs/GetDrug'
+
+
+import DrugSales from './requestHandler/adminRequest/drugs/DrugsSales'
+import CountUser from './requestHandler/adminRequest/user/CountUser'
+
 class Requests{
     private router:any;
 
@@ -101,6 +132,54 @@ class Requests{
 
         this.router.post('/order-recieved',(req:any,res:any)=>new OrderRecieved().handle(req,res))
         this.router.post('/order-details',(req:any,res:any)=>new OrderDetails().handle(req,res))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Admin
+        this.router.post('/supplier-available',(req:any,res:any)=>new IsSupplierAvailable().handle(req,res))
+        this.router.post('/add-supplier',(req:any,res:any)=>new InsertSupplier().handle(req,res))
+        
+        this.router.post('/drug-available',(req:any,res:any)=>new IsDrugAvailable().handle(req,res))
+        this.router.post('/new-supply',(req:any,res:any)=>new InsertSupply().handle(req,res))
+
+
+        this.router.post('/new-drug',(req:any,res:any)=>new InsertDrugs().handle(req,res))
+        
+        this.router.post('/add-user',(req:any,res:any)=>new InsertUser().handle(req,res))
+        this.router.post('/add-admin',(req:any,res:any)=>new InsertAdmin().handle(req,res))
+
+        this.router.post('/add-employee',(req:any,res:any)=>new InsertEmployee().handle(req,res))
+        this.router.post('/add-manufecturer',(req:any,res:any)=>new InsertMenufecturer().handle(req,res))
+
+
+
+        // Get
+        this.router.post('/get-admin',(req:any,res:any)=>new GetAdmin().handle(req,res))
+
+        this.router.post('/get-user',(req:any,res:any)=>new GetUser().handle(req,res))
+        this.router.post('/get-employee',(req:any,res:any)=>new GetEmployee().handle(req,res))
+        this.router.post('/get-manufecturer',(req:any,res:any)=>new GetManufecturer().handle(req,res))
+
+        this.router.post('/get-supplier',(req:any,res:any)=>new GetSupplier().handle(req,res))
+        this.router.post('/get-supply',(req:any,res:any)=>new GetSupply().handle(req,res))
+        this.router.post('/get-drug',(req:any,res:any)=>new GetDrug().handle(req,res))
+
+
+
+
+        this.router.get('/drug-sale',(req:any,res:any)=>new DrugSales().handle(req,res))
+        this.router.get('/user-count',(req:any,res:any)=>new CountUser().handle(req,res))
 
     }
 

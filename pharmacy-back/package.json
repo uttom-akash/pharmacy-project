@@ -13,6 +13,7 @@
     "util.promisify": "^1.0.0",
     "validator": "^10.11.0"
   },
+
   "scripts": {
     "server": "tsc && node dist/index.js",
     "tserver": "tsc"
