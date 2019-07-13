@@ -167,7 +167,6 @@ class Home extends Component {
             <div className="home">
                 <Ask/>        
                
-               
                  <Search
                     loading={isSearchLoading}
                     onResultSelect={this.handleSearchResultSelect}

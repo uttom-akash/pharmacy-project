@@ -19,8 +19,8 @@ export default class PendingOrder extends Component {
     getPendingOrder=()=>api.getPendingOrder().then(res=>this.setState({order:res['List']}))
     
 
-    approve=(orderID)=>{
-        api.approveOrder({orderID}).then(res=>this.getPendingOrder())
+    approve=()=>{
+        this.getPendingOrder()
     }
     reject=(orderID)=>{
         api.rejectOrder({orderID}).then(res=>this.getPendingOrder())
@@ -41,7 +41,7 @@ export default class PendingOrder extends Component {
                                         onClick2={this.reject} clickKey2={'ORDER_ID'} clickText2={'Reject'}
                                         />                
                     <Modal modal={modal} onToggle={this.toggle} basic={false}>
-                            <Vouchar orderID={orderID} toggle={this.toggle}/>
+                            <Vouchar orderID={orderID} toggle={this.toggle} approve={this.approve} reject={this.reject}/>
                     </Modal>
             </div>
         )

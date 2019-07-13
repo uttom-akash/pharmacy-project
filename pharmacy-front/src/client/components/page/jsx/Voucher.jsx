@@ -1,5 +1,4 @@
 import React from 'react'
-import Modal from '../../unitComp/modal  basic/Modal'
 import {Segment, Label,Button} from 'semantic-ui-react'
 import Table from '../../unitComp/table/Table'
 

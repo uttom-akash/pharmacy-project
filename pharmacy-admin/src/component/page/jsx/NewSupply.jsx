@@ -43,7 +43,7 @@ export default class NewSupply extends Component {
                  </div>
                 
                  {!!list.length && <Listing list={list} listIndex={listIndex}/>}
-                <Modal isOpen={modal} header={'New Supply'} onToggle={this.onToggle}><SupplyForm onSubmit={this.onSubmit}/></Modal> 
+                <Modal isOpen={modal} header={'New Supply'} basic={true} onToggle={this.onToggle}><SupplyForm onSubmit={this.onSubmit}/></Modal> 
             </div>
         )
     }

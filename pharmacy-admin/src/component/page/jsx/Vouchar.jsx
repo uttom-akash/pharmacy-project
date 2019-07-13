@@ -58,14 +58,17 @@ export default class Vouchar extends Component {
         const {vouchar,duration,employee,empID}=this.state;
 
 
-        api.approveOrder({vouchar:vouchar,duration,employeeID:empID[employee]}).then(res=>{this.props.toggle()})        
+        api.approveOrder({vouchar:vouchar,duration,employeeID:empID[employee]}).then(res=>{
+            this.props.toggle()
+            this.props.approve();
+        })        
     }
 
     onCancel=(ev)=>{
         ev.preventDefault();
         const {vouchar}=this.state;
-        api.rejectOrder({orderID:vouchar['orderinfo']['ORDER_ID']})
         this.props.toggle()
+        this.props.reject(vouchar['orderinfo']['ORDER_ID'])
     }
 
     render() {
