@@ -33,7 +33,7 @@ class BrandOverview extends Component {
 }
 
 const mapStatesToProps=state=>({
-    drugs:state.Drugs.BrandOverview,
+    drugs:state.Drugs,
     user: state.User
 })
 

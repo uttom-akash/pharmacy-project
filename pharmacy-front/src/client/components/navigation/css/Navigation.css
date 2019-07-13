@@ -5,7 +5,6 @@
     align-items: center;
     justify-content: flex-end;
     box-shadow:0rem 0.01rem 1rem .05rem var(--shadow);
-    /* overflow: hidden; */
     position: fixed;
     z-index: 2;
 }
@@ -23,8 +22,13 @@
     border-radius: 50%;
 }
 
-.banner h5{
-    color: var(--navbar-font)
+.banner h3{
+    margin: 0;
+    color: var(--navbar-font);
+}
+.banner h3:hover{
+    margin: 0;
+    color: var(--navbar-font-hover);
 }
 
 #search{

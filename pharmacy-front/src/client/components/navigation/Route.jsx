@@ -34,7 +34,7 @@ export default () => {
             <Route path="/categories/:category" exact component={Categories}/>
             <Route path="/brands-overview" exact component={BrandOverview} />
             <Route path="/brands/:brand" exact component={Brands} />
-            <Route path="/filter-search/:category/:brand/:price" exact component={FilterSearch} />
+            <Route path="/filter-search" exact component={FilterSearch} />
             <Route path="/drug/:drugID" exact component={Drug} />
             
         </Switch>

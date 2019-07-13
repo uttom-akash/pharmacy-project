@@ -4,15 +4,18 @@ import RequestHandler from '../../RequestHandler'
 export default class Brands extends RequestHandler{
     
     handle(req: any, res: any): void {
+        const {brand}=req.body;
+        console.log(brand);
         
-        this.getBrandsName().then((brandsList:any)=>res.json(brandsList))
+        this.getBrandsName(brand).then((brandsList:any)=>res.json(brandsList))
     }
 
 
-    private getBrandsName(){
-        let query=`select distinct BRAND from Drugs`
+    private getBrandsName(brand:string){
 
-        return this.pool.query(query,[]).then((brandsList:[])=>brandsList);
+        let query=`select distinct BRAND from Drugs where lower(BRAND) regexp ?`
+
+        return this.pool.query(query,[`${brand.toLowerCase()}.*`]).then((brandsList:[])=>brandsList);
     }
 
 }

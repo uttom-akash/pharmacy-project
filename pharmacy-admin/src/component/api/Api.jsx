@@ -22,5 +22,14 @@ export default {
        getDrug:(data)=>axios.post('/api/get-drug',data).then(res=>res.data),
     
        drugSales:()=>axios.get('/api/drug-sale').then(res=>res.data),
-       userCount:()=>axios.get('/api/user-count').then(res=>res.data)
+       userCount:()=>axios.get('/api/user-count').then(res=>res.data),
+
+       getPendingOrder:()=>axios.get('/api/pending-order').then(res=>res.data),
+       getOrders:(data)=>axios.post('/api/get-orders',data).then(res=>res.data),
+       
+       approveOrder:(data)=>axios.post('/api/approve-order',data).then(res=>res.data),
+       rejectOrder:(data)=>axios.post('/api/reject-order',data).then(res=>res.data),
+       viewDetails:(data)=>axios.post('/api/order-details',data).then(res=>res.data),
+
+       getEmployee:(data)=>axios.post('/api/get-employee-regexp',data).then(res=>res.data)
     }

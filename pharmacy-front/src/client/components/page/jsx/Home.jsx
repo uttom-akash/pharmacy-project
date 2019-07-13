@@ -178,14 +178,11 @@ class Home extends Component {
                     style={{width:'20rem'}}
                 />
                 <div className="home-card">
-                    {/* <Card onClick={() => this.onRoute('/order')} icon="fas fa-gift" title="My Orders" description="Get your medicine at home" /> 
-                    <Card onClick={() => this.onRoute('/cart')} icon="fa fa-shopping-cart" title="Cart" description="Get your medicine at home" /> */}
                     <Card onClick={() => this.onRoute('/categories-overview')} icon="fas fa-code-branch" title="Catagories" description="Browse by catagories" />
                     <Card onClick={() => this.onRoute('/brands-overview')} icon="fas fa-briefcase-medical" title="Brands" description="Browse by brands" />
-                    <Card onClick={this.toggleFilterSearch} icon="fa fa-search-plus" title="Filter Search" description="Search medicine with extensive filter" />
+                    <Card  onClick={this.toggleFilterSearch} icon="fa fa-search-plus" title="Filter Search" description="Search medicine with extensive filter" />
 
-
-                    <Card onClick={this.onFindPharmacy} icon="fas fa-search-location" title="Nearest Pharmacy" description="Find your nearest pharmacy" />
+                    {/* <Card onClick={this.onFindPharmacy} icon="fas fa-search-location" title="Nearest Pharmacy" description="Find your nearest pharmacy" /> */}
                     <Card onClick={this.onFindMe} icon="far fa-compass" title="Location" description="Find your location" />
 
                 </div>

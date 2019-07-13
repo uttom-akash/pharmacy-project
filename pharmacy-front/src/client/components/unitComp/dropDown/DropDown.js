@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Dropdown} from 'semantic-ui-react';
 import CustomNavlink from '../../navigation/CustomNavlink'
 import {connect} from 'react-redux'
 
@@ -7,23 +7,21 @@ class DropDown extends Component {
   
   render() {
     const {dropdownOpen,dropToggle,userName,onLogout,cname,idname,user}=this.props
-    
+    const trigger=<React.Fragment><i className="far fa-user"></i><label>{userName}</label></React.Fragment> 
+                  
     return (
-      <Dropdown className={cname} id={idname}  isOpen={dropdownOpen} toggle={dropToggle}>
-      <DropdownToggle tag="span">
-      <i className="far fa-user"></i><label>{userName}</label>
-      </DropdownToggle>
-
-      <DropdownMenu>
-        <DropdownItem><CustomNavlink Cpath="/profile" Cname="Profile" classname='Link'/></DropdownItem>
-        <DropdownItem divider />
-        <DropdownItem><CustomNavlink Cpath="/order" Cname="Orders" classname='Link'/></DropdownItem>
-        <DropdownItem divider />
-        <DropdownItem><CustomNavlink Cpath={`/cart/${user.USER_ID}`} Cname="Cart" classname='Link'/></DropdownItem>
-        <DropdownItem divider />
-        <DropdownItem><div className="Link"  onClick={onLogout}>LogOut</div></DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
+      <Dropdown className={cname} id={idname} trigger={trigger} icon={null}>
+      
+          <Dropdown.Menu>
+            <Dropdown.Item><CustomNavlink Cpath="/profile" Cname="Profile" classname='Link'/></Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item><CustomNavlink Cpath="/order" Cname="Orders" classname='Link'/></Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item><CustomNavlink Cpath={`/cart/${user.USER_ID}`} Cname="Cart" classname='Link'/></Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item><div className="Link"  onClick={onLogout}>LogOut</div></Dropdown.Item>
+          </Dropdown.Menu>
+      </Dropdown>
   )
   }
 }     

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import './css/ChooseItem.css'
 import {connect} from 'react-redux'
-import Button from '../unitComp/button/Button'
-import api from '../api/Api'
-
+import {Form,Label,Button} from 'semantic-ui-react'
+import Table from '../unitComp/table/Table'
 
 class ChooseItems extends Component {
     
@@ -19,59 +17,26 @@ class ChooseItems extends Component {
         let list=[]
         cartList.map(drug=>list[drug['DRUG_ID']]={name:drug['DRUG_NAME'],status:false,quantity:0,price:drug['PRICE'],total:0,drugID:drug['DRUG_ID']})
         this.setState({list});
-
-        console.log(list);
-        
-        list.map((row,index)=>{console.log(row['name'])})
     }
 
-    onChange=(ev)=>{
-        let list=this.state.list.slice(0)
-
-        list[parseInt(ev.target.name)].status=!this.state.list[[parseInt(ev.target.name)]].status
-        this.setState({list});
-    }
     
     onIncDec=(drugID,op)=>{
-
-                let list=this.state.list.slice(0)
-        
-                list[drugID].quantity=list[drugID].quantity+op;
-                list[drugID].total=list[drugID].quantity*list[drugID].price;
-
-                let total=this.state.total;
-                total=total+list[drugID].price*op;
-
-                this.setState({list,total});
+        let list=this.state.list.slice(0)
+        if(list[drugID].quantity+1*op>=0){
+            list[drugID].quantity=list[drugID].quantity+1*op;
+            list[drugID].total=list[drugID].quantity*list[drugID].price;
+            this.state.total=this.state.total+list[drugID].price*op;
+        }
+            this.setState({list,total:this.state.total});
     }
 
     onInc=(drugID)=>{
-        console.log(drugID);
-        
-        const {orderID}=this.props
-        if(this.state.list[drugID].status){
-            api.isAvailable({drugID}).then(res=>{
-                let quantity=this.state.list[drugID].quantity
-                if(quantity+1<=res){
-                    api.decrement({drugID,orderID}).then(result=>{
-                        this.onIncDec(drugID,+1)})  
-                }else alert('Sorry..No more drugs of this are available')
-            })
-        }else alert("please check the box first")
-
+        this.onIncDec(drugID,1)
     }
 
 
     onDec=(drugID)=>{
-
-        const {orderID}=this.props
-        if(this.state.list[drugID].status){
-                let quantity=this.state.list[drugID].quantity
-                if(quantity-1>=0){
-                    api.increment({drugID,orderID}).then(result=>{
-                        this.onIncDec(drugID,-1)})  
-                }
-        }else alert("please check the box first")
+        this.onIncDec(drugID,-1)
     }
 
     
@@ -81,15 +46,12 @@ class ChooseItems extends Component {
         let {list,total}=this.state;
         let vouchar=[]
         
-        vouchar=list.filter(drug=>drug.status && drug.quantity)
+        vouchar=list.filter(drug=>drug.quantity)
         this.props.onSubmit(vouchar,total);
     
     }
 
     onCancel=(ev)=>{
-        ev.preventDefault();
-
-        api.cancelOrder({orderID:this.props.orderID})
         this.props.onSubmit([],0)
     }
 
@@ -98,33 +60,16 @@ class ChooseItems extends Component {
     render() {
         const {list,listIndex,header,total}=this.state;
         return (
-            <form className="choose-med-form" >
-
-                <div className="header">
-                    {header.map(head=><label className="head">{head}</label>)}
-                </div >
-                <div className="choose-content">
-                {
-                    list.map((row,rowIndex)=>
-                        <div className="choose-row">
-                            <input type="checkbox" name={rowIndex} checked={row['status']}  onChange={this.onChange} className="checkbox" />
-                            <label className="drug-name">{row[listIndex[0]]}</label>
-                            <label >{row[listIndex[1]]}</label>
-                            <label >{row[listIndex[2]]}</label>
-                            <label >{row[listIndex[3]]}</label>
-
-                            <Button onClick={()=>this.onDec(row['drugID'])} id="incdec" text=' - '/>
-                            <Button onClick={()=>this.onInc(row['drugID'])} id="incdec" text=' + '/>
-                        </div>
-                    )
-                }
-                <label className="total">TOTAL : {total}</label>
-                </div>  
-                <div className="choose-btn">
-                        <Button onClick={this.onSubmit} id="check-btn" text="Confirm"></Button>
-                        <Button onClick={this.onCancel} id="check-btn" text="Cancel"></Button>     
-                </div>
-            </form>
+            <Form>
+                <Table list={list} listIndex={listIndex} header={header} onClick1={this.onDec} onClick2={this.onInc} clickKey1={'drugID'} clickKey2={'drugID'} clickText1={'-'} clickText2={'+'}>
+                    <Label  color='blue' ribbon>Total :{total}</Label>
+                </Table>
+                <Button.Group>
+                        <Button onClick={this.onSubmit}  color='teal'>Confirm</Button><Button.Or/>
+                        <Button onClick={this.onCancel} color='red'>Cancel</Button>                     
+                </Button.Group>
+    
+            </Form>
         )
   }
 }

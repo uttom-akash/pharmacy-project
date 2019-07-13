@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tooltip } from 'reactstrap';
+import { Popup,Button } from 'semantic-ui-react';
 import './ToolTip.css';
 export default class ToolTip extends Component {
     state = {
@@ -11,15 +11,7 @@ export default class ToolTip extends Component {
     render() {
         const { url, icon, text, target } = this.props;
         return (
-            <div className="tool">
-                <a href={url} id={target} className="anchor">
-                    <i className={icon}></i>
-                </a>
-
-                <Tooltip isOpen={this.state.Open} autohide={false} target={target} toggle={this.toggle}>
-                    {text}
-                </Tooltip>
-            </div>
+                <Popup content={text} trigger={<Button size='mini'><i className={icon}></i></Button>}/>
         );
     }
 }

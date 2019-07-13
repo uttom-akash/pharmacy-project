@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Modal from '../../unitComp/modal/Modal'
+import Modal from '../../unitComp/modal  basic/Modal'
 import ask from '../../../assets/girl.png' 
 import "../css/Ask.css"
 
@@ -18,7 +18,7 @@ export default class Ask extends Component {
              <img onClick={this.onToggle} src={ask} alt="ask" className="ask"/>  
              <label>Ask me anything ...</label>
             </div>
-            <Modal modal={this.state.modal} toggle={this.onToggle}>
+            <Modal modal={this.state.modal} onToggle={this.onToggle}>
             <iframe
                        allow="microphone;"
                        width="350"

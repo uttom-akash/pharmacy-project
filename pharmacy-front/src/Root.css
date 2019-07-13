@@ -1,32 +1,32 @@
 :root{
-   --navbar-font:		#00BFFF;
+   --navbar-font:		#3AB7B0;
    --navbar-font-hover: #606B76;
    --navbar-font-active:#606B76;
 
 
-   --gradient-layer1:#00BFFF;
+   --gradient-layer1:#3AB7B0;
    --gradient-layer2:rgb(240, 242, 243);
    --border-color:rgb(208, 211, 211);
 
    --font-color:#606B76;
    --font-color-disabled:rgb(109, 113, 117);
-   --font-hover:#87CEFA;  
+   --font-hover:#3AB7B0;  
    --font-white:white;
-   --font-heading:#00BFFF;
+   --font-heading:#3AB7B0;
 
    
-   --search-button:#00BFFF;
-   --button:#00BFFF;
+   --search-button:#3AB7B0;
+   --button:#3AB7B0;
    --button-hover:#606B76;
 
    --shadow:rgb(208, 211, 211);
    --shadow-hover:rgb(194, 197, 197);
-   --highlighter:#00BFFF;
+   --highlighter:#3AB7B0;
   
-   --card-icon:#00BFFF;
-   --card-font-header:#00BFFF;
+   --card-icon:#3AB7B0;
+   --card-font-header:#3AB7B0;
 
-   --footer-highlighter:#00BFFF;
+   --footer-highlighter:#3AB7B0;
    --footer-font:white;
 
    --error:rgb(221, 71, 116);
@@ -50,3 +50,5 @@
     flex-direction: column;
     min-height: 90vh;
 }
+
+  

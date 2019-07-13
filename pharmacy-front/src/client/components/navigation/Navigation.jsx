@@ -12,7 +12,7 @@ import {logoutAction,register,login} from '../action/AuthActions'
 
 const banner=<React.Fragment>
                 <img src={logo} className="logo" alt='logo' />
-                {window.innerWidth>600 && <h5>Oushudh</h5>}
+                {window.innerWidth>600 && <h3>Oushudh</h3>}
             </React.Fragment>
 
 class Navigation extends Component {

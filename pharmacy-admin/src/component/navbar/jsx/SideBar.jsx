@@ -34,8 +34,10 @@ export default class SideBar extends Component {
             <div className="sidebar-contianer">
                 <div className="sidebar" style={{width:`${width}px`,overflow:"hidden"}}>
                     <List  selection verticalAlign='middle'>
-                        <ListItem icon="home" ><NavLink classname="Link" Cname={"DashBoard"} Cpath={'/'}/></ListItem>
-                        <ListItem icon="bell" ><NavLink classname="Link" Cname={"Notification"} Cpath={'/notfication'}/></ListItem>
+                        <ListItem icon="home" onClick={onClick}><NavLink classname="Link" Cname={"DashBoard"} Cpath={'/'}/></ListItem>
+                        <ListItem icon="bell" onClick={onClick}><NavLink classname="Link" Cname={"Notification"} Cpath={'/pending-order'}/></ListItem>
+                        <ListItem icon="plus" onClick={onClick}><NavLink classname="Link" Cname={"Past Orders"} Cpath={'/get-order'}/></ListItem>
+                    
                     </List>
                     <CollapseList  list={actions} handleClick={this.handleClick} activeIndex={activeIndex}/>
                 </div>

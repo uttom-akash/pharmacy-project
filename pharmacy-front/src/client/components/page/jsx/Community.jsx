@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Ask from '../../unitComp/askForm/Ask';
 import Button from '../../unitComp/button/Button';
 import Post from '../../unitComp/post/Post'
 
@@ -26,8 +25,7 @@ class Community extends Component {
             <div className="right">
 
             </div>
-            {edit && <Ask toggle={this.ontoggle} modal={edit}></Ask>}
-        </div>);
+          </div>);
     }
 }
 

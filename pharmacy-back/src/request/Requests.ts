@@ -72,6 +72,7 @@ import InsertAdmin from './requestHandler/adminRequest/admin/InsertAdmin'
 // Get
 import GetAdmin from './requestHandler/adminRequest/admin/GetAdmin'
 import GetUser from './requestHandler/adminRequest/user/GetUser'
+import GetEmployeeReg from './requestHandler/adminRequest/employee/GetEmployeeReg'
 import GetEmployee from './requestHandler/adminRequest/employee/GetEmployee'
 import GetManufecturer from './requestHandler/adminRequest/menufecturer/GetManufecturer'
 import GetSupplier from './requestHandler/adminRequest/supplier/GetSupplier'
@@ -85,6 +86,11 @@ import CountUser from './requestHandler/adminRequest/user/CountUser'
 import Sales from './requestHandler/userRequest/order/Sales'
 import Search from './requestHandler/userRequest/sync/Search';
 
+import PendingOrder from './requestHandler/adminRequest/order/PendingOrder'
+import ApproveOrder from './requestHandler/adminRequest/order/ApproveOrder'
+import RejectOrder from './requestHandler/adminRequest/order/RejectOrder'
+import GetOrders from './requestHandler/adminRequest/order/GetOrders'
+
 
 class Requests{
     private router:any;
@@ -94,6 +100,7 @@ class Requests{
     }
 
     public getRouting():void{
+
         // auth
         this.router.post('/register', (req:any, res:any)=>new Register().handle(req,res))
         this.router.post("/login",(req:any,res:any)=>new Login().handle(req,res))
@@ -114,8 +121,8 @@ class Requests{
         // Filter search
         this.router.post("/filter_search",(req:any,res:any)=>new FilterSearch().handle(req,res))
     
-        this.router.get("/categories",(req:any,res:any)=>new Categories().handle(req,res))
-        this.router.get("/brands",(req:any,res:any)=>new Brands().handle(req,res))
+        this.router.post("/categories",(req:any,res:any)=>new Categories().handle(req,res))
+        this.router.post("/brands",(req:any,res:any)=>new Brands().handle(req,res))
 
         // cart
         this.router.post('/add-cart',(req:any,res:any)=>new AddToCart().handle(req,res))
@@ -127,18 +134,22 @@ class Requests{
         this.router.post('/increment',(req:any,res:any)=>new Increment().handle(req,res))
         this.router.post('/decrement',(req:any,res:any)=>new Decrement().handle(req,res))
 
+        // order
         this.router.post('/new-order-init',(req:any,res:any)=>new NewOrderInitialize().handle(req,res))
         this.router.post('/cancel-order',(req:any,res:any)=>new CancelOrder().handle(req,res))
         this.router.post('/confirm-order',(req:any,res:any)=>new ConfirmOrder().handle(req,res))
-
         this.router.post('/current-order',(req:any,res:any)=>new CurrentOrder().handle(req,res))
         this.router.post('/past-order',(req:any,res:any)=>new PastOrder().handle(req,res))
+        this.router.post('/order-details',(req:any,res:any)=>new OrderDetails().handle(req,res))
+
 
         this.router.post('/order-recieved',(req:any,res:any)=>new OrderRecieved().handle(req,res))
         this.router.post('/order-details',(req:any,res:any)=>new OrderDetails().handle(req,res))
 
         this.router.post('/sales-order',(req:any,res:any)=>new Sales().handle(req,res))
         this.router.post('/search',(req:any,res:any)=>new Search().handle(req,res))
+
+        
 
 
 
@@ -157,6 +168,7 @@ class Requests{
         this.router.post('/add-supplier',(req:any,res:any)=>new InsertSupplier().handle(req,res))
         
         this.router.post('/drug-available',(req:any,res:any)=>new IsDrugAvailable().handle(req,res))
+
         this.router.post('/new-supply',(req:any,res:any)=>new InsertSupply().handle(req,res))
 
 
@@ -166,6 +178,7 @@ class Requests{
         this.router.post('/add-admin',(req:any,res:any)=>new InsertAdmin().handle(req,res))
 
         this.router.post('/add-employee',(req:any,res:any)=>new InsertEmployee().handle(req,res))
+        
         this.router.post('/add-manufecturer',(req:any,res:any)=>new InsertMenufecturer().handle(req,res))
 
 
@@ -175,6 +188,8 @@ class Requests{
 
         this.router.post('/get-user',(req:any,res:any)=>new GetUser().handle(req,res))
         this.router.post('/get-employee',(req:any,res:any)=>new GetEmployee().handle(req,res))
+        this.router.post('/get-employee-regexp',(req:any,res:any)=>new GetEmployeeReg().handle(req,res))
+        
         this.router.post('/get-manufecturer',(req:any,res:any)=>new GetManufecturer().handle(req,res))
 
         this.router.post('/get-supplier',(req:any,res:any)=>new GetSupplier().handle(req,res))
@@ -186,6 +201,13 @@ class Requests{
 
         this.router.get('/drug-sale',(req:any,res:any)=>new DrugSales().handle(req,res))
         this.router.get('/user-count',(req:any,res:any)=>new CountUser().handle(req,res))
+
+
+        this.router.get('/pending-order',(req:any,res:any)=>new PendingOrder().handle(req,res))
+
+        this.router.post('/get-orders',(req:any,res:any)=>new GetOrders().handle(req,res))
+        this.router.post('/approve-order',(req:any,res:any)=>new ApproveOrder().handle(req,res))
+        this.router.post('/reject-order',(req:any,res:any)=>new RejectOrder().handle(req,res))
 
     }
 

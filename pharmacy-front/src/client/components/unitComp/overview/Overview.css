@@ -4,34 +4,21 @@
 
 }
 
-.category .title{
-   color: var(--font-heading);
-   font-weight: bold;
-   overflow: hidden;
-}
 
-.category .drugs-list{
-    display: flex;
-    overflow-x: auto;
-    margin-left:5%;
-    margin-right: 5%;
-    padding-bottom: 3rem;
-}
-
-.category .drugs-list::-webkit-scrollbar-track
+.category::-webkit-scrollbar-track
 {
 	-webkit-box-shadow: inset 0 0 4px rgba(173, 172, 172, 0.521);
 	background-color: #F5F5F5;
 }
 
-.category .drugs-list::-webkit-scrollbar
+.category::-webkit-scrollbar
 {
     width: 10px;
     height: 6px;
 	background-color: #F5F5F5;
 }
 
-.category .drugs-list::-webkit-scrollbar-thumb
+.category::-webkit-scrollbar-thumb
 {
 	background-color:var(--highlighter);	
 	background-image: -webkit-gradient(linear, 0 0, 0 100%,
@@ -39,65 +26,4 @@
 					   color-stop(.5, transparent), to(transparent));
 }
 
-
-
-.drugs-list .drug{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.image-container{
-    position: relative;
-}
-
-.image-container #image{
-    width:16rem;
-    height: 12rem;
-    border: 1px solid var(--border-color);
-}
-
-.image-container .price{
-    position: absolute;
-    top: 3px;
-    background-color: var(--highlighter);
-    color: var(--font-white);
-    width: 3rem;
-    padding-left: 5px;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-
-
-.drug .name{
-    font-weight: bold;
-} 
-
-
-
-.drug .add-cart{
-    box-shadow: .01rem .01rem .4rem .05rem var(--shadow);
-    width: 4rem;
-    margin-top: auto;
-    color: var(--font-heading);
-
-}
-
-.add-cart i{
-    font-size: .8rem;
-    padding: 5px;
-    margin: 0 5px 0 10px;
-    border-right: 2px solid var(--border-color);
-}
-
-.category #more{
-    color: var(--font-heading);
-    font-weight: bold;
-}
-
-
-.category #more,.drug .add-cart,.drug .name:hover{
-    cursor: pointer;
-}
 

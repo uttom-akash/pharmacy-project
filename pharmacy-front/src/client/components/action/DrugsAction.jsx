@@ -1,5 +1,5 @@
 import api from '../api/Api'
-import {CURRENT_ORDER,PAST_ORDER,IS_AVAILABLE,GET_TO_CART,ADD_TO_CART,DRUG,CATOVERVIEW,BRANDOVERVIEW,CATEGORY,BRAND,FILTER, REMOVE_FROM_CART} from '../type/Type'
+import {FILTER_PARAM,CURRENT_ORDER,PAST_ORDER,IS_AVAILABLE,GET_TO_CART,ADD_TO_CART,DRUG,CATOVERVIEW,BRANDOVERVIEW,CATEGORY,BRAND,FILTER, REMOVE_FROM_CART} from '../type/Type'
 
 
 // action
@@ -69,6 +69,11 @@ export const currentOrderAction=(data)=>({
 export const pastOrderAction=(data)=>({
     payload:data,
     type:PAST_ORDER
+})
+
+export const setFilterAction=(data)=>({
+    payload:data,
+    type:FILTER_PARAM
 })
 
 

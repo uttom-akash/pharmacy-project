@@ -4,13 +4,15 @@ import RequestHandler from '../../RequestHandler'
 export default class Categories extends RequestHandler{
     
     handle(req: any, res: any): void {
-        
-        this.getCategories().then((categoryList:any)=>res.json(categoryList))
+        const {squery}=req.body;
+
+        this.getCategories(squery).then((categoryList:any)=>res.json(categoryList))
     }
     
-    private getCategories(){
-        let query=`select CATEGORY_ID,CATEGORY_NAME from Category`
-        return  this.pool.query(query,[])   
+    private getCategories(squery:string){
+
+        let query=`select CATEGORY_ID,CATEGORY_NAME from Category where LOWER(CATEGORY_NAME) REGEXP ?`
+        return  this.pool.query(query,[`^${squery.toLowerCase()}.*`])   
     }
 
 }

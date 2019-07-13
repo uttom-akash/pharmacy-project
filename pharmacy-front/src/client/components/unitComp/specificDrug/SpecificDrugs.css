@@ -3,60 +3,10 @@
 }
 
 .sp-drug{
-    width: 320px;
-    height: 250px;
-    padding: 5px;
-
-    border: 1px solid white;
-}
-
-#image-container{
-    position: relative;
-}
-
-#image-container img{
-    width: 240px;
-    height: 180px;
-}
-
-#image-container .price{
-    position: absolute;
-    top: 3px;
-    background-color: var(--highlighter);
-    color: var(--font-white);
-    width: 3rem;
-    padding-left: 5px;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-
-.sp-drug .add-cart{
-    box-shadow: .01rem .01rem .4rem .05rem var(--shadow);
-    width: 4rem;
-    margin-top: auto;
-    color: var(--font-heading);
-
-}
-
-.add-cart i{
-    font-size: .8rem;
-    padding: 5px;
-    margin: 0 5px 0 10px;
-    border-right: 2px solid var(--border-color);
-}
-
-#image-container:hover{
-    cursor: pointer;
-}
-
-.sp-drug:hover{
-    border: 1px solid var(--highlighter);
-}
-
-.sp-drug .add-cart:hover{
-    cursor: pointer;
-    background-color: var(--highlighter);
-    color: var(--font-white);
+    width: 260px;
+    height: 260px;
+    padding: 10px;
+    margin: 10px;
+    box-shadow: .01rem 0.01rem 0.3rem 0.03rem var(--shadow);
 }
 

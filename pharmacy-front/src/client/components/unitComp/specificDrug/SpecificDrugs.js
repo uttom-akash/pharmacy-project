@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {CellMeasurer,CellMeasurerCache,createMasonryCellPositioner,Masonry,AutoSizer,WindowScroller} from 'react-virtualized'
 import './SpecificDrugs.css'
+import {Image,Label,Button} from 'semantic-ui-react'
 
 
 export default class SpecificDrugs extends Component {
@@ -8,8 +9,8 @@ export default class SpecificDrugs extends Component {
     constructor(props){
         super(props)
         this.state={
-            columnWidth:300,
-            height:250,
+            columnWidth:280,
+            height:280,
             gutter:10
         }
 
@@ -58,15 +59,15 @@ export default class SpecificDrugs extends Component {
 
         return (
             <CellMeasurer cache={this._cache} key={key} index={index} parent={parent}>
-                    <div  style={{...style,width:columnWidth,height:height,border:"1px solid #D3D3D3"}}>
-                            <div className="sp-drug" >
-                                <div id="image-container" onClick={()=>onDrugClick(drug['DRUG_ID'])}>
-                                    <img src={drug['IMAGE_SRC']}></img><br/>
-                                    <label className="price">৳&nbsp;{drug['PRICE']}</label>
-                                    <label className="name">{drug['DRUG_NAME']}</label>
-                                </div>
-                                <div className="add-cart" onClick={()=>onAddCart(drug["DRUG_ID"]) }><i className="fas fa-shopping-cart"></i>+</div>
-                            </div>    
+                    <div  style={{...style,width:columnWidth,height:height}}>
+                                <div className="sp-drug" >
+                                    <div id="image-container" onClick={()=>onDrugClick(drug['DRUG_ID'])}>
+                                        <Label size='mini' color='teal' tag>৳&nbsp;{drug['PRICE']}</Label>
+                                        <Image size='small' src={drug['IMAGE_SRC']}/><br/>
+                                        <Label className="name">{drug['DRUG_NAME']}</Label>
+                                    </div>
+                                    <Button size='tiny' color='teal' onClick={()=>onAddCart(drug["DRUG_ID"]) } icon='cart'></Button>
+                                </div>    
                     </div>
             </CellMeasurer>
         )

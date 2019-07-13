@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import '../css/Cart.css'
-import List from '../../unitComp/list/List'
-import Modal from '../../unitComp/modal/Modal'
+import Modal from '../../unitComp/modal  basic/Modal'
 import VoucharForm from '../../form/VoucharForm'
 import Restrict from '../../unitComp/restriction/Restriction'
-
+import Table from '../../unitComp/table/Table'
 
 import {connect} from 'react-redux'
 
@@ -18,7 +17,7 @@ class Cart extends Component {
         curOrder:false,
         pastOrder:false,
         cart:false,
-        cartHeader:["  item  ","price","action"],
+        cartHeader:["product","price",'action'],
         header:["#","","/-"],
         list:[
             [1,"10-10-19",100],
@@ -26,7 +25,7 @@ class Cart extends Component {
         ],
         listIndex:[
             'DRUG_NAME',
-            'PRICE'
+            'PRICE',
         ],
         presentOrders:[
         ],
@@ -71,16 +70,13 @@ class Cart extends Component {
                     <label>New Order</label>
                     <hr/>
                     <div className="make-order" onClick={this.toggle}>Create</div>
-                    <Modal modal={modal}><VoucharForm onSubmit={this.onPlaceOrder} toggle={this.toggle} userID={user['USER_ID']} address={user['ADDRESS']} contactNumber={user['CONTACT_NUMBER']}/> </Modal> 
+                    <Modal modal={modal} onToggle={this.toggle} basic={false}><VoucharForm onSubmit={this.onPlaceOrder} toggle={this.toggle} userID={user['USER_ID']} address={user['ADDRESS']} contactNumber={user['CONTACT_NUMBER']}/> </Modal> 
                 </div>
 
                 <div className="cart-content">
                     <label>Cart</label>
                     <hr/>
-                    <List header={cartHeader} list={cartList} listIndex={listIndex} onClick={this.onClick} clickValue={"DRUG_ID"} label={'view'} onClick1={this.remove} clickValue1={"DRUG_ID"} label1={'remove'}></List>
-                    {/* <div className="less" onClick={()=>this.onClick({"cart":!cart})}>
-                        {cart ? "Less" : "More"}
-                    </div>      */}
+                    <Table header={cartHeader} list={cartList} listIndex={listIndex} onClick1={this.onClick} clickKey1={'DRUG_ID'} clickText1={'view'} onClick2={this.remove} clickKey2={"DRUG_ID"} clickText2={'remove'}/>
                 </div>
             </div>
             

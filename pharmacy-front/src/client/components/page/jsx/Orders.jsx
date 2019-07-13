@@ -1,82 +1,98 @@
 import React, { Component } from 'react'
-import List from '../../unitComp/list/List'
-import '../css/Order.css'
 import {connect} from 'react-redux'
 
 import {getCurrentOrders,getPastOrders} from '../../action/DrugsAction'
 import api from '../../api/Api'
 import Restrict from '../../unitComp/restriction/Restriction'
-
+import Table from '../../unitComp/table/Table'
+import {Segment,Label} from 'semantic-ui-react'
+import TableMenu from '../../unitComp/table menu/TableMenu'
+import Modal from '../../unitComp/modal  basic/Modal'
+import Vouchar from './Voucher' 
+import '../css/Order.css'
 
 class Orders extends Component {
     state = {
-        curOrderMore:false,
-        pastOrderMore:false,
-        header:["#","","/-"],
-        listIndex:['DATE','TIME','TOTAL_PRICE']
+        curOrderOffset:0,
+        pastOrderOffset:0,
+        header:['Date','Time','Price','status','action'],
+        listIndex:['DATE','TIME','TOTAL_PRICE'],
+        modal:false
     }
 
     componentWillMount=()=>{
         Restrict(this.props)
         this.getOrderOverview()
     }
+
     getOrderOverview=()=>{
         const USER_ID=sessionStorage.number
-        this.props.getCurrentOrders({userID:USER_ID,offset:0})
-        this.props.getPastOrders({userID:USER_ID,offset:0})
+        const {curOrderOffset,pastOrderOffset}=this.state
+        this.props.getCurrentOrders({userID:USER_ID,offset:curOrderOffset})
+        this.props.getPastOrders({userID:USER_ID,offset:pastOrderOffset})
+
     }
-   
+
+    toggle=()=>this.setState({modal:!this.state.modal})
+
     viewDetails=(orderID)=>{
-        
+        api.viewOrderDetails({orderID}).then(res=>{
+            this.setState({vouchar:res})
+            this.toggle()
+        })
     }
 
     comfirmRecieve=(orderID)=>{
         api.orderRecieved({orderID}).then(res=>this.getOrderOverview())
     }
 
-    moreCurrentOrders=()=>{};
+    moreCurrentOrders=(op)=>{
+        const USER_ID=sessionStorage.number
+        
+        const {curOrderOffset}=this.state
+        if(curOrderOffset+10*op>=0){
+            this.setState({curOrderOffset:curOrderOffset+10*op});
+            this.props.getCurrentOrders({userID:USER_ID,offset:curOrderOffset+10*op})
+        }
+    }
 
-    morePastOrders=()=>{};
+    morePastOrders=(op)=>{
+        const USER_ID=sessionStorage.number
+        const {pastOrderOffset}=this.state
+        if(pastOrderOffset+10*op>=0){
+            this.setState({pastOrderOffset:pastOrderOffset+10*op});
+            this.props.getPastOrders({userID:USER_ID,offset:pastOrderOffset+10*op})
+        }
+    };
 
     render() {
-        const {curOrderMore,pastOrderMore,listIndex,header}=this.state
+        const {listIndex,header,modal,vouchar}=this.state
+        const {order}=this.props;
 
         return (
-            <div className="order">
-                <div className="order-header"></div>
-                <div className="order-content">
-                    <label className="title">Orders</label>
-                    <hr/>
-                    {
-                        !!this.props.order.currentOrder && 
-                        
-                    <div className="curr-order">
-                        <h6>Current Orders</h6>
-                            <List  list={this.props.order.currentOrder.ORDERS} listIndex={listIndex} onClick={this.viewDetails} clickValue={'ORDER_ID'} label={'details'} onClick1={this.comfirmRecieve} clickValue1={'ORDER_ID'} label1={'recieve'}></List>
-                            
-                            <div className="less" onClick={()=>this.onClick({"curOrder":!curOrderMore})}>
-                                {curOrderMore ? "Less" : "More"}
-                            </div>
-                    </div>
-                    
-                    }
+            <div className='order'>
+                {
+                    !!order.currentOrder &&
+                    <Segment>
+                        <Label>Current Order</Label>
+                        <Table list={order.currentOrder.ORDERS} listIndex={listIndex} header={header} special={'STATUS'} onClick1={this.comfirmRecieve} onClick2={this.viewDetails} clickKey1={'ORDER_ID'} clickKey2={'ORDER_ID'} clickText1={'Ok'} clickText2={'Details'}>
+                                <TableMenu left={this.moreCurrentOrders} right={this.moreCurrentOrders}/>
+                        </Table>
+                    </Segment>
+                }
 
-                    <hr/>
-                 
-                    {
-                        !!this.props.order.pastOrder &&
-                        
-                    
-                    <div className="past-order">
-                        <h6>Past Orders</h6>
-                        <List  list={this.props.order.pastOrder.ORDERS} listIndex={listIndex} onClick={this.viewDetails} clickValue={'ORDER_ID'} label={'details'}></List>
-                            
-                            <div className="less" onClick={()=>this.onClick({"pastOrder":!pastOrderMore})}>
-                            {pastOrderMore ? "Less" : "More"}
-                            </div>
-                    </div>
-                    }
-                </div>
+                {
+                    !!order.pastOrder &&
+                    <Segment>
+                        <Label>Past Order</Label>
+                        <Table list={order.pastOrder.ORDERS} listIndex={listIndex} header={header} special={'STATUS'}  onClick2={this.viewDetails}  clickKey2={'ORDER_ID'}  clickText2={'Details'}>
+                                <TableMenu left={this.morePastOrders} right={this.morePastOrders}/>
+                        </Table>
+                    </Segment>
+                }
+                <Modal modal={modal} onToggle={this.toggle} basic={false}>
+                    <Vouchar header={['drugName','quantity','price']} vouchar={vouchar} toogle={this.toggle}/>
+                </Modal>
             </div>
         )
     }

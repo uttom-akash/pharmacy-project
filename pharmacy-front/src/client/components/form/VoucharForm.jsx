@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import ChooseItems from './ChooseItems'
-import Modal from '../unitComp/modal/Modal'
-import Button from '../unitComp/button/Button'
-import './css/VoucharForm.css'
+import Modal from '../unitComp/modal  basic/Modal'
+import {Form,Button,Label, Segment,Input } from 'semantic-ui-react'
+import Table from '../unitComp/table/Table'
 import api from '../api/Api'
 
 export default class VoucharForm extends Component {
@@ -12,28 +12,20 @@ export default class VoucharForm extends Component {
 
         this.state={
             total:0,
-            header:["item","quantity","price"],
+            header:["name","quantity","price"],
             list:{},
             selectedlist:[],
             modal:false,
             address:"nurani 6,subidbazar",
             contactNumber:'0000000000',
-            orderID:null,
             date:null,
             time:null
         }
     }
 
-    componentDidMount=()=>{
-           const {userID,address,contactNumber}=this.props
-           api.newOrderInit({userID}).then(res=>this.setState({orderID:res['ORDER_ID'],date:res['DATE'],time:res['TIME'],address,contactNumber}))
-    }
 
     toggle=()=>this.setState({modal:!this.state.modal})
      
-    // onStateChange=(param)=>{
-    //        this.setState(param);
-    // }
 
     onChoose=(selectedlist,total)=>{
         
@@ -47,75 +39,54 @@ export default class VoucharForm extends Component {
     
     onSubmit=(ev)=>{
         ev.preventDefault();
-        const {orderID,total,selectedlist}=this.state;
-        api.confirmOrder({orderID:orderID,totalPrice:total}).then(res=>
+        const {total,selectedlist}=this.state;
+        const {userID,address,contactNumber}=this.props
+        api.confirmOrder({userID,address,contactNumber,totalPrice:total,list:selectedlist}).then(res=>
             {
                 this.props.toggle()
-                api.salesOrder({orderID,selectedlist})
+                
             })        
     }
 
     onCancel=(ev)=>{
         ev.preventDefault();
-        api.cancelOrder({orderID:this.state.orderID}).then(res=>this.props.toggle())
+        this.props.toggle()
     }
 
     render() {
-        const {selectedlist,header,total,address,contactNumber,orderID,date,time}=this.state;
+        const {selectedlist,header,total,address,contactNumber,date,time}=this.state;
     return (
-      <form className="vouchar">
-          <div className="selected-list">
-              <h6>Vouchar</h6>
-              <Button onClick={this.toggle} id="choose-cart-btn" text="Choose from cart"></Button>
-              <Modal modal={this.state.modal}>
-                    <ChooseItems onSubmit={this.onChoose}  list={this.state.list} orderID={orderID}/>  
-              </Modal>
-              <div className="vouchar-list">
-                   <label>Date :{date}</label>
-                   <label>Time :{time}</label>
-                   {
-                    <table>
-                           <React.Fragment>
-                            <tr>
-                                {header.map(head=><th>{head}</th>)}
-                            </tr>
-                            {
-                                selectedlist.map(({name,quantity,price},key)=>
-                                <tr className="table-row" key={key}>
-                                    <td>{name}</td>
-                                    <td>{quantity}</td>
-                                    <td>{price}</td>
-                                </tr>
-                                ) 
-                            }                   
-                            <tr>
-                                <td colSpan="2">Total</td>
-                                <td>{total}</td>
-                            </tr>    
-                        </React.Fragment>
-                    </table>
-                   }
-              </div>
-            </div>
-            <div className="delivery-loc">
-                <h6>Delivery</h6>
-                 <code>duration:40min</code>
-                 <address>adress: <input type="text" name="address" value={address}  onChange={this.onChange}></input></address>
-            </div>
-            <div className="personal-info">
-                   <h6>Personal Info</h6>
-                   <code>Number: <input type="text" name="contactNumber" value={contactNumber} onChange={this.onChange}></input></code>
-            </div>
-            <div className="payment">
-                  <h6>Payment</h6>
-                  <label>Cash on Delivary</label>
-            </div>
-            <div className="voucher-btn">
-                        <Button onClick={this.onSubmit} id="check-btn" text="Confirm"></Button>
-                        <Button onClick={this.onCancel} id="check-btn" text="Cancel"></Button>     
-            </div>
-            
-      </form>
+            <Form>
+                <Segment  style={{width:'100%'}}>
+                        <Label size='mini' color='teal' tag>Chooser</Label><br/><br/>
+                        <Button  size='small' color='teal' onClick={this.toggle} label={'Choose from cart'}></Button>
+                        <Modal modal={this.state.modal} onToggle={this.toggle} basic={false}>
+                                <ChooseItems onSubmit={this.onChoose}  list={this.state.list}/>  
+                        </Modal>
+                </Segment>
+                
+                <Segment style={{width:'100%'}}>
+                        <Label size='mini' color='teal' tag>Drugs</Label><br/><br/>
+                        <Table header={header} list={selectedlist} listIndex={header}><Label as='a' size='mini' color='teal' ribbon>Total :{total}</Label></Table>
+                </Segment >
+                <Segment style={{width:'100%'}}>
+                        <Label size='mini' color='teal' tag>Info</Label><br/><br/>
+                        <Label>Duration : <Label.Detail>{'40min'}</Label.Detail></Label><br/>
+                        <Label>Address  : <Input type="text" name="address" value={address}  onChange={this.onChange}/> </Label><br/>
+                        <Label>Number   : <Input type="text" name="contactNumber" value={contactNumber} onChange={this.onChange}/> </Label><br/>
+                        
+                </Segment>
+                       
+                <Segment style={{width:'100%'}}>
+                        <Label size='mini' color='teal' tag>Payment</Label><br/><br/>
+                        <Label>Cash on Delivary</Label><br/>
+                </Segment>
+                <Button.Group>
+                        <Button onClick={this.onSubmit}  color='teal'>Confirm</Button><Button.Or/>
+                        <Button onClick={this.onCancel} color='red'>Cancel</Button>                     
+                </Button.Group>
+    
+            </Form>
     )
   }
 }

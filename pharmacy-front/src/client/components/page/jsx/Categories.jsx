@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {getCategoryDrugs} from '../../action/DrugsAction' 
 import Drugs from '../../unitComp/specificDrug/SpecificDrugs'
 import api from '../../api/Api'
-import {Spinner} from 'reactstrap'
 
 
 class Categories extends Component {
@@ -37,11 +36,12 @@ class Categories extends Component {
 
     render() {
         const {drugs}=this.props
+        console.log(!(!!drugs));
+        
         return (
             <div>
                {
-                   this.state.loading && !(!!drugs) ?  <Spinner type="grow" color="primary" /> :
-                   <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart}/>
+                   drugs.DRUGS_LIST && <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart}/>
                } 
                </div>
         )
@@ -50,7 +50,7 @@ class Categories extends Component {
 
 const mapStatesToProps=state=>(
     {
-        drugs:state.Drugs.Category,
+        drugs:state.Drugs,
         user:state.User
     }
 )

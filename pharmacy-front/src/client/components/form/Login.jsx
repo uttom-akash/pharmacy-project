@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "./css/Form.css";
 import validator from "validator";
-import { Spinner, Modal, ModalHeader, Button, ModalBody, ModalFooter } from "reactstrap";
-
+import Modal from '../unitComp/modal  basic/Modal' 
 
 class Login extends Component {
   state = {
@@ -49,10 +48,7 @@ class Login extends Component {
     const closeBtn = <button className="close" onClick={this.props.toggle}>&times;</button>;
 
     return (
-      <Modal isOpen={this.props.modal} centered={true} fade={true}  toggle={this.props.toggle}>
-        <ModalHeader toggle={this.props.toggle} close={closeBtn}>Login</ModalHeader>
-        <ModalBody>
-
+      <Modal modal={this.props.modal}  basic={false} onToggle={this.props.toggle}>
           <form onSubmit={this.onSubmit} className="form">
             {this.state.error.global && (
               <div className="error">
@@ -77,8 +73,8 @@ class Login extends Component {
             />
             <button className="btn">Login</button>
           </form>
+          
           <label className="no-account">Don't have an account ?.. { this.props.children}</label>
-        </ModalBody>
       </Modal>
     );
   };
@@ -86,11 +82,7 @@ class Login extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.loading ? (
-          <Spinner type="grow" className="spinner" />
-        ) : (
-            this.getView()
-          )}
+        {   this.getView()}
       </React.Fragment>
     );
   }

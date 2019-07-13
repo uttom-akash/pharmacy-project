@@ -4,23 +4,31 @@ import mysql from 'mysql'
 export default class FilterSearch extends RequestHandlers{
     
     handle(req: any, res: any): void {
-       let {category,price,brand,offset}=req.body;
+       let {categories,minPrice,maxPrice,brand}=req.body;
        
        console.log(req.body);
        
        brand='^'+brand+'.*'
-       if(!price)price=100000
        
-       this.getDrugsbymoreCategory(category,price,brand,offset).then((DrugsList:any)=>res.json(DrugsList)); 
+       if(!minPrice)minPrice=0
+       if(!maxPrice)maxPrice=1000000
+
+       this.getDrugsbymoreCategory(categories,minPrice,maxPrice,brand).then((DrugsList:any)=>res.json(DrugsList)); 
     }
 
-    private getDrugsbymoreCategory(category:number[],price:number,brand:string,offset:number){
+    private getDrugsbymoreCategory(categories:any[],minPrice:number,maxPrice:number,brand:string){
         let selectPart=`select d.DRUG_ID,d.DRUG_NAME,d.IMAGE_SRC,d.PRICE,d.BRAND from Drugs d inner join DrugCategory dc1 using(DRUG_ID)`
-        let wherePart=`where dc1.CATEGORY_ID=?`
+        let wherePart=``
+
+        if(categories.length)
+            wherePart=`where dc1.CATEGORY_ID=? and`
+        else
+            wherePart=`where `    
         
-        for(let i:number=1;i<category.length;i++){
+        
+        for(let i:number=1;i<categories.length;i++){
             let selectConcat:string=` inner join DrugCategory dc${i+1} using(DRUG_ID)`
-            let whereConcat:string=` and dc${i+1}.CATEGORY_ID=?`
+            let whereConcat:string=` dc${i+1}.CATEGORY_ID=? and `
 
 
             selectPart+=selectConcat
@@ -28,8 +36,10 @@ export default class FilterSearch extends RequestHandlers{
         }
 
 
-        const query=`${selectPart}  ${wherePart} and d.PRICE<${mysql.escape(price)} and d.BRAND regexp ${mysql.escape(brand)}  limit ${mysql.escape(offset)},15`
-        return this.pool.query(query,category).then((drugsList:any)=>drugsList)
+        const query=`${selectPart}  ${wherePart} d.PRICE>=${mysql.escape(minPrice)} and d.PRICE<=${mysql.escape(maxPrice)}  and d.BRAND regexp ${mysql.escape(brand)}`
+        console.log(query);
+        
+        return this.pool.query(query,categories).then((drugsList:any)=>drugsList)
 
     }
 

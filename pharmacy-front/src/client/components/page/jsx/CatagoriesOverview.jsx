@@ -33,7 +33,7 @@ class CatagoriesOverview extends Component {
 }
 
 const mapStatesToProps=state=>({
-    drugs:state.Drugs.CategoryOverview,
+    drugs:state.Drugs,
     user: state.User
 })
 

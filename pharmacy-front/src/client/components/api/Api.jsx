@@ -15,8 +15,8 @@ const api={
     
     getDrug:(data)=>axios.post("/api/drug",data).then(res=>res.data.drug),
     
-    getCategories:()=>axios.get('/api/categories').then(res=>res.data),
-    getBrands:()=>axios.get('/api/brands').then(res=>res.data),
+    getCategories:(data)=>axios.post('/api/categories',data).then(res=>res.data),
+    getBrands:(data)=>axios.post('/api/brands',data).then(res=>res.data),
     
     addToCart:(data)=>axios.post('/api/add-cart',data).then(res=>res.data),
     removeFromCart:(data)=>axios.post('/api/remove-cart',data).then(res=>res.data),
@@ -34,11 +34,11 @@ const api={
     getCurrentOrders:(data)=>axios.post('/api/current-order',data).then(res=>res.data),
     getPastOrders:(data)=>axios.post('/api/past-order',data).then(res=>res.data),
     orderRecieved:(data)=>axios.post('/api/order-recieved',data).then(res=>res.data),
-
+    viewOrderDetails:(data)=>axios.post('/api/order-details',data).then(res=>res.data),
+    
     salesOrder:(data)=>axios.post('/api/sales-order',data),
 
     search:(query)=>axios.post('/api/search',query).then(res=>res.data)
-    
 }
 
 

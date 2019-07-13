@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-// import "./css/Register.css";
 import "./css/Form.css";
 import validator from "validator";
-import { Spinner, Modal, ModalHeader, Button, ModalBody, ModalFooter } from "reactstrap";
 import {connect} from 'react-redux'
-
+import Modal from '../unitComp/modal  basic/Modal'
 
 class RegisterForm extends Component {
   state = {
@@ -38,8 +36,7 @@ class RegisterForm extends Component {
       FirstName,
       LastName,
       phoneNumber,
-      password,
-      confirmPassword } = this.state;
+      password} = this.state;
     
     let error = {};
     error = this.onValidate();
@@ -84,12 +81,9 @@ class RegisterForm extends Component {
       confirmPassword
     } = this.state;
 
-    const closeBtn = <button className="close" onClick={this.props.toggle}>&times;</button>;
-
     return (
-      <Modal isOpen={this.props.modal} centered={true} fade={true} toggle={this.props.toggle}>
-        <ModalHeader toggle={this.props.toggle} close={closeBtn}>Register</ModalHeader>
-        <ModalBody>
+
+      <Modal modal={this.props.modal} basic={false} onToggle={this.props.toggle}>
           <form onSubmit={this.onSubmit} className="form">
             {/* {!!this.state.profilePicture ? (
               <img src={profilePicture} alt="user-pro-pic" className="pro-pic" />
@@ -162,9 +156,6 @@ class RegisterForm extends Component {
 
             )}
           </form>
-
-          {/* { this.props.children} */}
-        </ModalBody>
       </Modal>
 
 
@@ -174,11 +165,7 @@ class RegisterForm extends Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.loading ? (
-          <Spinner type="grow" className="spinner" />
-        ) : (
-            this.getView()
-          )}
+          {this.getView()}
       </React.Fragment>
     );
   }
