@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { Dropdown} from 'semantic-ui-react';
+import { Dropdown,Label} from 'semantic-ui-react';
 import CustomNavlink from '../../navigation/CustomNavlink'
 import {connect} from 'react-redux'
 
 class DropDown extends Component {
   
   render() {
-    const {dropdownOpen,dropToggle,userName,onLogout,cname,idname,user}=this.props
+    const {userName,onLogout,cname,idname,user}=this.props
+
     const trigger=<React.Fragment><i className="far fa-user"></i><label>{userName}</label></React.Fragment> 
                   
     return (

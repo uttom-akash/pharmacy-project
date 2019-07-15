@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Geocode from "react-geocode";
-import {Icon} from 'semantic-ui-react'
+import {Button} from 'semantic-ui-react'
 
 Geocode.setApiKey("AIzaSyBk2JhnmxoEkc6lWEAW8pI6C_2BChFHmBY")
 Geocode.enableDebug()
@@ -29,6 +29,7 @@ class Maps extends Component {
         Geocode.fromLatLng(lat,lng).then(
             response => {
               this.setState({address:response.results[0].formatted_address})
+              this.props.setAddress(response.results[0].formatted_address)
             },
             error => {
               console.error(error);
@@ -47,9 +48,7 @@ class Maps extends Component {
 
     render() {
         return (
-            <div onClick={this.findUserLocation}>
-               <Icon name='location arrow'/> 
-            </div>
+            <Button size='tiny' onClick={this.findUserLocation} icon='location arrow' />
         )
     }
 }

@@ -31,5 +31,6 @@ export default {
        rejectOrder:(data)=>axios.post('/api/reject-order',data).then(res=>res.data),
        viewDetails:(data)=>axios.post('/api/order-details',data).then(res=>res.data),
 
-       getEmployee:(data)=>axios.post('/api/get-employee-regexp',data).then(res=>res.data)
+       getEmployee:(data)=>axios.post('/api/get-employee-regexp',data).then(res=>res.data),
+       setNotification:(data)=>axios.post('/api/set-notification',data).then(res=>res.data),
     }

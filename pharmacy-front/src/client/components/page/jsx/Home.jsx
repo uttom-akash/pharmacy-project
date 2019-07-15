@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import Card from '../../unitComp/Card/Card'
 import '../css/Home.css'
 import Ask from './Ask'
-import Searchbar from '../../unitComp/search/Searchbar'
 import FilterSearch from '../../form/filterSearchForm'
 import api from '../../api/Api'
-import {Search,Label} from 'semantic-ui-react'
+import SearchCom from '../../unitComp/search/Search'
+import {Label} from 'semantic-ui-react'
 
 
-const resultRenderer=({title})=><Label>{title}</Label>;
-
-
+const resultRenderer=({title,price})=><div style={{display:'flex',justifyContent:'space-between'}}>{title}<label style={{color:'#34BA45'}}>{price}</label></div>
 
 class Home extends Component {
 
@@ -24,10 +22,7 @@ class Home extends Component {
             isOpen:false,
 
 
-            isSearchLoading:false,
-            searchResult:[],
-            query:""
-
+            options:[]
         }
 
         this.geoOptions = {
@@ -37,25 +32,14 @@ class Home extends Component {
         }
     }
 
+    // search
     handleSearchResultSelect=(e,{result})=>this.props.history.push(`/Drug/${result['id']}`)
-    
 
-    onSearchChange = (e,{value}) => {
-    
-        clearTimeout(this.timer);
-        this.setState({ query: value });
-
-        this.timer=setTimeout(()=>{
-            if(value.length){
-                this.setState({isSearchLoading:true})
-                api.search({query:value}).then(res=>{
-                    let list=res['list'];
-                    this.setState({isSearchLoading:false,searchResult:list})
-                })
-            }
-        },1000);
-        
-    }
+    onSearchChange = (value) =>new Promise(
+        resolve=>{
+            api.search({query:value}).then(res=>{this.setState({options:res['list']});resolve()})
+        },
+        reject=>{})
 
     onSetSate = (nstat) => this.setState(nstat);
 
@@ -162,20 +146,11 @@ class Home extends Component {
     toggleFilterSearch=()=>this.setState({filterModal:!this.state.filterModal})
 
     render() {
-        const {isSearchLoading,searchResult,query}=this.state;
         return (
             <div className="home">
                 <Ask/>        
-               
-                 <Search
-                    loading={isSearchLoading}
-                    onResultSelect={this.handleSearchResultSelect}
-                    onSearchChange={this.onSearchChange}
-                    results={searchResult}
-                    value={query}
-                    resultRenderer={resultRenderer}
-                    style={{width:'20rem'}}
-                />
+                 <SearchCom selectResult={this.handleSearchResultSelect} queryChange={this.onSearchChange} resultRenderer={resultRenderer} options={this.state.options}/>
+                
                 <div className="home-card">
                     <Card onClick={() => this.onRoute('/categories-overview')} icon="fas fa-code-branch" title="Catagories" description="Browse by catagories" />
                     <Card onClick={() => this.onRoute('/brands-overview')} icon="fas fa-briefcase-medical" title="Brands" description="Browse by brands" />

@@ -4,6 +4,8 @@ import Drugs from './DrugsReducer'
 import Cart from './CartReducer'
 import Var from './Reducers'
 import Order from './OrderReducer'
+import OrderDrugs from './OrderDrugs'
+import Notifications from './NotificationReducer'
 
 export default combineReducers(
     {
@@ -11,5 +13,7 @@ export default combineReducers(
         Drugs,
         Cart,
         Var,
-        Order
+        Order,
+        OrderDrugs,
+        Notifications
     });

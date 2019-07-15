@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {getCategoryDrugs} from '../../action/DrugsAction' 
+import {getCategoryDrugs,addToOrderAction} from '../../action/DrugsAction' 
 import Drugs from '../../unitComp/specificDrug/SpecificDrugs'
 import api from '../../api/Api'
 
@@ -33,6 +33,7 @@ class Categories extends Component {
 
     onAddCart=(drugID)=>api.addToCart({userID:this.props.user.USER_ID,drugID})
 
+    onAddOrder=(drugs)=>this.props.addToOrderAction(drugs)
 
     render() {
         const {drugs}=this.props
@@ -41,7 +42,7 @@ class Categories extends Component {
         return (
             <div>
                {
-                   drugs.DRUGS_LIST && <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart}/>
+                   drugs.DRUGS_LIST && <Drugs drugs={drugs.DRUGS_LIST} onDrugClick={this.onDrugClick} onAddOrder={this.onAddOrder} onAddCart={this.onAddCart}/>
                } 
                </div>
         )
@@ -55,4 +56,4 @@ const mapStatesToProps=state=>(
     }
 )
 
-export default  connect(mapStatesToProps,{getCategoryDrugs})(Categories);
+export default  connect(mapStatesToProps,{getCategoryDrugs,addToOrderAction})(Categories);

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {getDrug} from '../../action/DrugsAction'
+import {getDrug,addToOrderAction} from '../../action/DrugsAction'
 import '../css/Drug.css'
 import api from '../../api/Api'
+import {Button} from 'semantic-ui-react'
 
 
 class Drug extends Component {
@@ -14,7 +15,7 @@ class Drug extends Component {
    }
 
    onAddCart=(drugID)=>api.addToCart({userID:this.props.user.USER_ID,drugID})
-
+   onAddOrder=(drugs)=>this.props.addToOrderAction(drugs)
     render() {
         const {drug}=this.props;
 
@@ -32,6 +33,7 @@ class Drug extends Component {
                     <label id="disabled">DAR :</label><label>{drug['DAR']}</label><br/>
                     <label id="disabled">Price :</label><label>{drug['PRICE']}</label><br/>
                     <div className="add-cart" onClick={()=>this.onAddCart(drug['DRUG_ID'])}><i className="fas fa-shopping-cart"></i>+</div>
+                    <Button size='tiny' color='teal' onClick={()=>this.onAddOrder({name:drug['DRUG_NAME'],price: drug['PRICE'],drugID:drug["DRUG_ID"]}) }>add to order</Button>
                 </div>
             </div>}    
         </div>);
@@ -44,5 +46,5 @@ const mapStatesToProps=state=>(
         user: state.User
     })
 
-export default connect(mapStatesToProps,{getDrug})(Drug);
+export default connect(mapStatesToProps,{getDrug,addToOrderAction})(Drug);
 

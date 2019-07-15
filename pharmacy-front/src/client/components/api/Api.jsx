@@ -38,7 +38,13 @@ const api={
     
     salesOrder:(data)=>axios.post('/api/sales-order',data),
 
-    search:(query)=>axios.post('/api/search',query).then(res=>res.data)
+    search:(query)=>axios.post('/api/search',query).then(res=>res.data),
+
+    getUnseenNotification:(data)=>axios.post('/api/get-unseen-notification',data).then(res=>res.data.notification),
+    getSeenNotification:(data)=>axios.post('/api/get-seen-notification',data).then(res=>res.data.notification),
+    getNotificationCount:(data)=>axios.post('/api/get-notification-count',data).then(res=>res.data.count),
+    observeNotification:(data)=>axios.post('/api/observe-notification',data).then(res=>res.data.notification),
+    seenNotification:(data)=>axios.post('/api/seen-notification',data).then(res=>res.data),
 }
 
 

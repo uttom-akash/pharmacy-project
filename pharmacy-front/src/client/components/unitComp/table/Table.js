@@ -1,5 +1,5 @@
 import React from 'react'
-import {Table,Menu,Icon, Button} from 'semantic-ui-react'
+import {Table,Checkbox, Button} from 'semantic-ui-react'
 
 const getConvert=(op)=>{
   if(op===0)return 'pending'
@@ -7,7 +7,7 @@ const getConvert=(op)=>{
   else return 'rejected'
 }
 
-export default ({header,list,listIndex,onClick1,onClick2,clickText1,clickText2,clickKey1,clickKey2,children,special})=>{
+export default ({header,list,listIndex,onClick1,onClick2,clickText1,clickText2,clickKey1,clickKey2,children,special,checkKey,checkToggle})=>{
   return (
     <Table celled color='teal' size="small">
    
@@ -20,9 +20,11 @@ export default ({header,list,listIndex,onClick1,onClick2,clickText1,clickText2,c
     <Table.Body>
       {
         list.map((row,index)=><Table.Row key={index}>
-            {
+            
+           {
               listIndex.map((col,index)=>
                     <Table.Cell  key={index} >
+                      {checkToggle && <Checkbox onChange={()=>checkToggle(row[checkKey])} checked={row['status']} style={{marginRight:'5px'}}/>}
                       {row[col]}
                     </Table.Cell>
               )

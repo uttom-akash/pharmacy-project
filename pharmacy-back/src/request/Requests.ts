@@ -91,6 +91,16 @@ import ApproveOrder from './requestHandler/adminRequest/order/ApproveOrder'
 import RejectOrder from './requestHandler/adminRequest/order/RejectOrder'
 import GetOrders from './requestHandler/adminRequest/order/GetOrders'
 
+// Notification
+import GetUnseenNotifications from './requestHandler/userRequest/notifications/GetUnseenNotifications'
+import GetSeenNotifications from './requestHandler/userRequest/notifications/GetSeenNotifications'
+import GetUnseenNotificationCount from './requestHandler/userRequest/notifications/GetUnseenNotificationCount'
+import ObserveNotification from './requestHandler/userRequest/notifications/ObserveNotification'
+import SeenNotification from './requestHandler/userRequest/notifications/SeenNotification'
+
+// admin
+import SetNotification from './requestHandler/adminRequest/notification/SetNotification' 
+
 
 class Requests{
     private router:any;
@@ -149,7 +159,13 @@ class Requests{
         this.router.post('/sales-order',(req:any,res:any)=>new Sales().handle(req,res))
         this.router.post('/search',(req:any,res:any)=>new Search().handle(req,res))
 
-        
+        // Notification
+        this.router.post('/get-notification-count',(req:any,res:any)=>new GetUnseenNotificationCount().handle(req,res))
+        this.router.post('/get-unseen-notification',(req:any,res:any)=>new GetUnseenNotifications().handle(req,res))
+        this.router.post('/get-seen-notification',(req:any,res:any)=>new GetSeenNotifications().handle(req,res))
+        this.router.post('/observe-notification',(req:any,res:any)=>new ObserveNotification().handle(req,res))
+        this.router.post('/seen-notification',(req:any,res:any)=>new SeenNotification().handle(req,res))
+
 
 
 
@@ -209,6 +225,10 @@ class Requests{
         this.router.post('/approve-order',(req:any,res:any)=>new ApproveOrder().handle(req,res))
         this.router.post('/reject-order',(req:any,res:any)=>new RejectOrder().handle(req,res))
 
+        // notification
+        this.router.post('/set-notification',(req:any,res:any)=>new SetNotification().handle(req,res))
+
+    
     }
 
     public getRouter():express.Application{

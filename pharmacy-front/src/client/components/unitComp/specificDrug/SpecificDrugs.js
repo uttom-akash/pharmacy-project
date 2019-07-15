@@ -2,22 +2,23 @@ import React, { Component } from 'react'
 import {CellMeasurer,CellMeasurerCache,createMasonryCellPositioner,Masonry,AutoSizer,WindowScroller} from 'react-virtualized'
 import './SpecificDrugs.css'
 import {Image,Label,Button} from 'semantic-ui-react'
-
+import SearchCom from '../search/Search'
 
 export default class SpecificDrugs extends Component {
 
     constructor(props){
         super(props)
         this.state={
-            columnWidth:280,
-            height:280,
-            gutter:10
+            columnWidth:300,
+            height:300,
+            gutter:10,
+            drugs:[]
         }
 
         this._columnCount=5
         this._cache=new CellMeasurerCache({
-            defaultHeight:320,
-            defaultWidth:250,
+            defaultHeight:300,
+            defaultWidth:300,
             fixedWidth:true
         })
 
@@ -27,7 +28,23 @@ export default class SpecificDrugs extends Component {
             columnWidth:this.state.columnWidth,
             spacer:this.state.gutter
         })
-    }    
+    } 
+
+    componentDidUpdate=(prevProps,prevState)=>{
+        console.log(prevState.drugs.length);
+        console.log(this.state.drugs.length);
+        if(prevState.drugs.length!==this.state.drugs.length){
+            console.log('in');
+            // this.forceUpdate();
+        }
+        
+        
+    }
+    
+    componentWillMount=()=>{
+        const {drugs}=this.props
+        this.setState({drugs})
+    }
 
     _getCollumnCount=(width)=>{
         const {columnWidth,gutter}=this.state
@@ -54,9 +71,11 @@ export default class SpecificDrugs extends Component {
 
     _cellRenderer=({index,key,parent,style})=>{
         const {columnWidth,height}=this.state
-        const {drugs,onDrugClick,onAddCart}=this.props
+        const {onDrugClick,onAddCart,onAddOrder}=this.props
+        const {drugs} =this.state;
         let drug=drugs[index]
-
+        console.log("re render");
+        
         return (
             <CellMeasurer cache={this._cache} key={key} index={index} parent={parent}>
                     <div  style={{...style,width:columnWidth,height:height}}>
@@ -66,18 +85,50 @@ export default class SpecificDrugs extends Component {
                                         <Image size='small' src={drug['IMAGE_SRC']}/><br/>
                                         <Label className="name">{drug['DRUG_NAME']}</Label>
                                     </div>
-                                    <Button size='tiny' color='teal' onClick={()=>onAddCart(drug["DRUG_ID"]) } icon='cart'></Button>
+                                    <Button.Group>
+                                            <Button size='tiny' color='teal' onClick={()=>onAddCart(drug["DRUG_ID"]) } icon='cart'/>
+                                            <Button.Or/>
+                                            <Button size='tiny' color='teal' onClick={()=>onAddOrder({name:drug['DRUG_NAME'],price: drug['PRICE'],drugID:drug["DRUG_ID"]}) }>add to order</Button>        
+                                    </Button.Group>
                                 </div>    
                     </div>
             </CellMeasurer>
         )
     }
 
+    // search
+    selectResult=(e,{result})=>{}
+
+    queryChange=(value)=>new Promise(resolve=>{
+        const {drugs}=this.state;
+        let re=new RegExp(`^${value}.*`,'i')
+        
+        if(!!drugs.length){
+            let selectedDrugs=drugs.filter(catDrugs=>{
+                if(!!re.exec(catDrugs['DRUG_NAME']))return  catDrugs;
+            })
+            this.setState({drugs:selectedDrugs})
+            resolve();
+        }   
+    },reject=>{})
+ 
+    
+
 
     render() {
-        const {drugs}=this.props     
+        const {drugs}=this.state
+             console.log('render');
+             
         return (
             <div className="specific-container">
+               <SearchCom
+                    queryChange={this.queryChange}
+                    selectResult={this.selectResult}
+
+                    resultRenderer={({title})=><Label>{title} Results shown below..</Label>}
+                    options={[{title:drugs.length.toString()}]}
+                />  
+
               <WindowScroller >
                 {({ height, scrollTop }) => (
                 <AutoSizer

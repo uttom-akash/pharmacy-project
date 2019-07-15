@@ -8,7 +8,8 @@ import Login from '../form/Login'
 import DropDown from '../unitComp/dropDown/DropDown' 
 
 import {connect} from 'react-redux'
-import {logoutAction,register,login} from '../action/AuthActions'
+import {logoutAction,register,login,getNotificationCount} from '../action/AuthActions'
+import {Label} from 'semantic-ui-react'
 
 const banner=<React.Fragment>
                 <img src={logo} className="logo" alt='logo' />
@@ -17,15 +18,18 @@ const banner=<React.Fragment>
 
 class Navigation extends Component {
     state = {
-        dropdownOpen:false,
         query: "",
         signinToggle: false,
         loginToggle: false,
         loggedin: false
     }
 
+    componentDidMount=()=>{
+        setInterval(()=>{
+            if(!!this.props.userID)this.props.getNotificationCount({userID:this.props.userID})
+        },2*60000)
+    }
     
-    onDropToggle=()=>this.setState({dropdownOpen:!this.state.dropdownOpen})
     onLogout=()=>{
          sessionStorage.removeItem("number");
          window.location.reload(); 
@@ -41,27 +45,30 @@ class Navigation extends Component {
     
     
     render() {
-        
+        const {userName,notifications}=this.props
+
         return (
             <div className="navigation-bar">
                 
                 <CustomNavlink  Cpath="/" classname={"banner"}>{banner}</CustomNavlink>            
+                { !!userName &&
+                    <CustomNavlink Cpath="/notifications" Cname='Notifactions' classname={"Link"}>
+                            {!!notifications.count && <Label size='tiny' color='red' circular>{notifications.count}</Label>}
+                    </CustomNavlink>
+                }
                 
-                {/* nav link */}
-                <CustomNavlink Cpath="/community" Cname='Community' classname={"Link"}/>
-                
+
                 {
-                !!this.props.userName ? 
-                    <DropDown cname="Link" idname={`auth${this.state.loginToggle}`} dropdownOpen={this.state.dropdownOpen} dropToggle={this.onDropToggle} userName={this.props.userName} onLogout={this.onLogout}></DropDown>
+                !!userName ? 
+                    <DropDown cname="Link" idname={`auth${this.state.loginToggle}`}  userName={this.props.userName} onLogout={this.onLogout}></DropDown>
                     :
                     <div className="Link" id={`auth${this.state.loginToggle}`} onClick={this.onLoginToggle}><i className="far fa-user"></i><label>Login</label></div>
                 }
 
-                {/* modal */}
-                {this.state.signinToggle && <RegisterForm register={this.props.register} modal={this.state.signinToggle} toggle={this.onSignToggle}> </RegisterForm>}
-                
+ 
 
-                
+ 
+                {this.state.signinToggle && <RegisterForm register={this.props.register} modal={this.state.signinToggle} toggle={this.onSignToggle}> </RegisterForm>}
                 {this.state.loginToggle && <Login login={this.props.login} modal={this.state.loginToggle} toggle={this.onLoginToggle}>
                    <div className="optional" id={`auth${this.state.signinToggle}`} onClick={this.onSignToggle}>Signin</div>
                 </Login>
@@ -73,7 +80,9 @@ class Navigation extends Component {
 }
 
 const mapStateToProps=state=>({
-    userName:state.User.LAST_NAME
+    userName:state.User.LAST_NAME,
+    userID:state.User.USER_ID,
+    notifications:state.Notifications
 })
 
-export default connect(mapStateToProps,{logoutAction,register,login})(Navigation);
+export default connect(mapStateToProps,{logoutAction,register,login,getNotificationCount})(Navigation);

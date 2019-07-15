@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Popup,Button } from 'semantic-ui-react';
-import './ToolTip.css';
 export default class ToolTip extends Component {
     state = {
         Open: false

@@ -3,9 +3,9 @@
 }
 
 .sp-drug{
-    width: 260px;
-    height: 260px;
-    padding: 10px;
+    width: 270px;
+    height: 270px;
+    padding: 15px;
     margin: 10px;
     box-shadow: .01rem 0.01rem 0.3rem 0.03rem var(--shadow);
 }

@@ -7,6 +7,6 @@ export default class AddToCart extends RequestHandlers{
         const {userID,drugID}=req.body
         const query='insert into Cart values(?,?,?)'
         const date=TimeStamp.getInstance()
-        this.pool.query(query,[userID,drugID,date.dateMonthYear()]).then((result:any)=>res.json({result:'ok'})).catch((err:any)=>res.status(450).json({error:err}))    
+        this.pool.query(query,[userID,drugID,date.dateMonthYear()]).then((result:any)=>res.json({id:drugID})).catch((err:any)=>res.status(450).json({error:err}))    
     }
 }

@@ -1,6 +1,5 @@
 
 export default class TimeStamp{
-    private static _instance:TimeStamp
     private date:Date 
 
     private constructor(){
@@ -9,7 +8,7 @@ export default class TimeStamp{
 
 
     public static getInstance():TimeStamp{
-        return this._instance || (this._instance = new this())
+        return new this()
     }
 
     public timeStamp():string{

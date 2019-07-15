@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {getCategoryDrugsOverview} from '../../action/DrugsAction'
+import {getCategoryDrugsOverview,addToOrderAction} from '../../action/DrugsAction'
 import api from '../../api/Api'
 
 import Overview from '../../unitComp/overview/Overview'
@@ -24,11 +24,11 @@ class CatagoriesOverview extends Component {
 
     onAddCart=(drugID)=>api.addToCart({userID:this.props.user.USER_ID,drugID})
 
-
+    onAddOrder=(drugs)=>this.props.addToOrderAction(drugs)
 
     render() {
         const {drugs} =this.props
-        return (<Overview drugs={drugs} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart} onMore={this.onMore} title='CATEGORY'/>);
+        return (<Overview drugs={drugs} onDrugClick={this.onDrugClick} onAddCart={this.onAddCart} onAddOrder={this.onAddOrder} onMore={this.onMore} title='CATEGORY'/>);
     }
 }
 
@@ -37,5 +37,5 @@ const mapStatesToProps=state=>({
     user: state.User
 })
 
-export default connect(mapStatesToProps,{getCategoryDrugsOverview})(CatagoriesOverview);
+export default connect(mapStatesToProps,{getCategoryDrugsOverview,addToOrderAction})(CatagoriesOverview);
 

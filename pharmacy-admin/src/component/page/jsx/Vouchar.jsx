@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Form,Button,Label, Segment,Input ,Dropdown} from 'semantic-ui-react'
+import {Form,Button,Label, Segment,Input ,Search} from 'semantic-ui-react'
 import Listing from '../../comp/data/Listing'
 import api from '../../api/Api'
 
@@ -12,35 +12,29 @@ export default class Vouchar extends Component {
             header:['drugName','quantity','price'],
             
             EmployeeOptions:[],
-            employee:'',
             query:'',
             isEmployeeFetching:false,
-            empID:{}
+            employeeID:null
             
         }
     }
 
     componentWillMount=()=>api.viewDetails({orderID:this.props.orderID}).then(res=>this.setState({vouchar:res}))
 
-    handleEmployeeChange=(e,{value})=>this.setState({employee:value})
+    handleEmployeeChange=(e,{result})=>this.setState({query:result['title'],employeeID:result['EMPLOYEE_ID']})
 
-    handleEmployeeSearchChange=(e,{searchQuery})=> {
+    handleEmployeeSearchChange=(e,{value})=> {
     
         clearTimeout(this.timer);
-        this.setState({query:searchQuery});
+        this.setState({query:value});
 
         this.timer=setTimeout(()=>{
-            if(searchQuery.length){
+            if(value.length){
                 this.setState({isEmployeeFetching:true})
-                api.getEmployee({employee:searchQuery}).then(res=>{
-                    let empID={}
-                    let list=res['List'].map(cat=>{
-                        empID[cat['FIRST_NAME']]=cat['EMPLOYEE_ID']
-                        return   ({key:cat['FIRST_NAME'],text:cat['FIRST_NAME'],value:cat['FIRST_NAME']})
-                    });
+                api.getEmployee({employee:value}).then(res=>
                     
-                    this.setState({isEmployeeFetching:false,EmployeeOptions:list,empID})
-                })
+                    this.setState({isEmployeeFetching:false,EmployeeOptions:res['List']})
+                )
             }
         },1000);
     }
@@ -55,11 +49,12 @@ export default class Vouchar extends Component {
     
     onSubmit=(ev)=>{
         ev.preventDefault();
-        const {vouchar,duration,employee,empID}=this.state;
+        const {vouchar,duration,employeeID}=this.state;
 
 
-        api.approveOrder({vouchar:vouchar,duration,employeeID:empID[employee]}).then(res=>{
+        api.approveOrder({vouchar:vouchar,duration,employeeID:employeeID}).then(res=>{
             this.props.toggle()
+            api.setNotification({userID:vouchar['orderinfo']['USER_ID'],header:`Order ${vouchar['orderinfo']['ORDER_ID']}`,type:'order',message:`Your order of order_ID-${vouchar['orderinfo']['ORDER_ID']} is accpeted`,image_src:''})
             this.props.approve();
         })        
     }
@@ -68,11 +63,11 @@ export default class Vouchar extends Component {
         ev.preventDefault();
         const {vouchar}=this.state;
         this.props.toggle()
-        this.props.reject(vouchar['orderinfo']['ORDER_ID'])
+        this.props.reject(vouchar['orderinfo']['ORDER_ID'],vouchar['orderinfo']['USER_ID'])
     }
 
     render() {
-        const {vouchar,duration,employee,EmployeeOptions,isEmployeeFetching,header}=this.state;
+        const {vouchar,duration,query,EmployeeOptions,isEmployeeFetching,header}=this.state;
 
     return (
             <Form>
@@ -97,17 +92,12 @@ export default class Vouchar extends Component {
                         <Label tag>Payment</Label><br/><br/>
                         <Label>Cash on Delivary</Label><br/>
                         <Label>Employee : 
-                            <Dropdown
-                            selection
-                            search={true}
-                            options={EmployeeOptions}
-                            value={employee}
-                            placeholder='employee'
-                            onChange={this.handleEmployeeChange}
+                            <Search
+                            results={EmployeeOptions}
+                            value={query}
+                            onResultSelect={this.handleEmployeeChange}
                             onSearchChange={this.handleEmployeeSearchChange}
-                            disabled={isEmployeeFetching}
                             loading={isEmployeeFetching}
-                            label={'Employee'}
                             />
                         </Label><br/>
                 </Segment>

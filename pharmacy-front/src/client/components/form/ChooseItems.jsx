@@ -2,52 +2,42 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Form,Label,Button} from 'semantic-ui-react'
 import Table from '../unitComp/table/Table'
+import {getCart} from '../action/DrugsAction'
 
 class ChooseItems extends Component {
     
     state={
         list:[],
-        listIndex:['name','quantity','price','total'],
-        header:['name','quantity','price','total'],
-        total:0
+        listIndex:['name'],
     }
     
     componentDidMount=()=>{
-        const {cartList}=this.props
-        let list=[]
-        cartList.map(drug=>list[drug['DRUG_ID']]={name:drug['DRUG_NAME'],status:false,quantity:0,price:drug['PRICE'],total:0,drugID:drug['DRUG_ID']})
-        this.setState({list});
+
+        this.props.getCart({userID:this.props.userID}).then(res=>{
+                const {cartList}=this.props
+                let list=cartList.map(drug=>({name:drug['DRUG_NAME'],drugID:drug['DRUG_ID'],price:drug['PRICE'],status:false}))           
+                this.setState({list});
+        });
     }
 
-    
-    onIncDec=(drugID,op)=>{
-        let list=this.state.list.slice(0)
-        if(list[drugID].quantity+1*op>=0){
-            list[drugID].quantity=list[drugID].quantity+1*op;
-            list[drugID].total=list[drugID].quantity*list[drugID].price;
-            this.state.total=this.state.total+list[drugID].price*op;
-        }
-            this.setState({list,total:this.state.total});
+    checkToggle=(drugID)=>{
+        const {list}=this.state;
+        let listcopy=list.map(drug=>{
+            if(drugID===drug['drugID']) return{...drug,status:!drug['status']}
+            else return drug;   
+        })
+
+        this.setState({list:listcopy})
     }
-
-    onInc=(drugID)=>{
-        this.onIncDec(drugID,1)
-    }
-
-
-    onDec=(drugID)=>{
-        this.onIncDec(drugID,-1)
-    }
-
     
     onSubmit=(ev)=>{
 
         ev.preventDefault();
-        let {list,total}=this.state;
+        let {list}=this.state;
         let vouchar=[]
-        
-        vouchar=list.filter(drug=>drug.quantity)
-        this.props.onSubmit(vouchar,total);
+        vouchar=list.filter(drug=>drug.status)
+        this.props.onSubmit(vouchar);
+        this.props.toggle();
     
     }
 
@@ -58,12 +48,10 @@ class ChooseItems extends Component {
 
 
     render() {
-        const {list,listIndex,header,total}=this.state;
+        const {list,listIndex,total}=this.state;
         return (
             <Form>
-                <Table list={list} listIndex={listIndex} header={header} onClick1={this.onDec} onClick2={this.onInc} clickKey1={'drugID'} clickKey2={'drugID'} clickText1={'-'} clickText2={'+'}>
-                    <Label  color='blue' ribbon>Total :{total}</Label>
-                </Table>
+                <Table list={list} listIndex={listIndex} header={listIndex} checkKey='drugID' checkToggle={this.checkToggle}></Table>
                 <Button.Group>
                         <Button onClick={this.onSubmit}  color='teal'>Confirm</Button><Button.Or/>
                         <Button onClick={this.onCancel} color='red'>Cancel</Button>                     
@@ -77,4 +65,4 @@ class ChooseItems extends Component {
 const mapStateToProps=state=>({
     cartList:state.Cart
 })
-export default  connect(mapStateToProps)(ChooseItems)
+export default  connect(mapStateToProps,{getCart})(ChooseItems)

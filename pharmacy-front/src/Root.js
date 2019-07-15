@@ -14,7 +14,8 @@ import {Provider} from 'react-redux'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import RootReducer from './client/components/reducers/RootReducer'
 import {fetchUser} from './client/components/action/AuthActions'
-
+import './client/components/page/jsx/NewOrder'
+import NewOrder from './client/components/page/jsx/NewOrder';
 
 const store =createStore(RootReducer,composeWithDevTools(applyMiddleware(thunk)))
 
@@ -34,6 +35,7 @@ export default () => {
                 <div className="content">
                 <Route />
                 </div>
+                <NewOrder/>
                 <Footer />
               </div>
         </BrowserRouter>
