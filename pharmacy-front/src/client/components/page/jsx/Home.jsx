@@ -5,8 +5,7 @@ import Ask from './Ask'
 import FilterSearch from '../../form/filterSearchForm'
 import api from '../../api/Api'
 import SearchCom from '../../unitComp/search/Search'
-import {Label} from 'semantic-ui-react'
-
+import Alert from '../../unitComp/alert/Alert'
 
 const resultRenderer=({title,price})=><div style={{display:'flex',justifyContent:'space-between'}}>{title}<label style={{color:'#34BA45'}}>{price}</label></div>
 
@@ -150,7 +149,6 @@ class Home extends Component {
             <div className="home">
                 <Ask/>        
                  <SearchCom selectResult={this.handleSearchResultSelect} queryChange={this.onSearchChange} resultRenderer={resultRenderer} options={this.state.options}/>
-                
                 <div className="home-card">
                     <Card onClick={() => this.onRoute('/categories-overview')} icon="fas fa-code-branch" title="Catagories" description="Browse by catagories" />
                     <Card onClick={() => this.onRoute('/brands-overview')} icon="fas fa-briefcase-medical" title="Brands" description="Browse by brands" />

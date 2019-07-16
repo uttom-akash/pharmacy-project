@@ -19,8 +19,8 @@ export default class SearchCom extends Component {
         clearTimeout(this.timer);
         this.timer=setTimeout(()=>{
             if(value.length){
-                this.setState({isSearchLoading:true})
-                this.props.queryChange(value).then(res=>this.setState({isSearchLoading:true}));
+                this.setState({isLoading:true})
+                this.props.queryChange(value).then(res=>this.setState({isLoading:false}));
             }
         },1000);
     }

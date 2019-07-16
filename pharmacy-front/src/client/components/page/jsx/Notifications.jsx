@@ -34,20 +34,21 @@ class Notifications extends Component {
             this.setState({activeItem:name})
     }
 
-    childHandleItemClick=(notification)=>{
+    childHandleItemClick=(notification,type)=>{
         
         const {userID}=this.props
 
         this.setState({childActiveItem:notification['HEADER'],activeNote:notification})
-        this.props.seenNotify({userID,notificationID:notification['NOTIFICATION_ID']})
+        if(type) this.props.seenNotify({userID,notificationID:notification['NOTIFICATION_ID']})
     }
-    getView=(notifications)=>{
+
+    getView=(notifications,type)=>{
         const {childActiveItem,activeNote} =this.state
         return (
             <Sidebar.Pushable as={Segment}>
                     <Sidebar as={Menu}   inverted vertical visible >
                                 {notifications.map((note,index)=>
-                                        <Menu.Item key={index} name={note['HEADER']} active={childActiveItem === note['HEADER']} onClick={(e,{name})=>this.childHandleItemClick(note)}>
+                                        <Menu.Item key={index} name={note['HEADER']} active={childActiveItem === note['HEADER']} onClick={(e,{name})=>this.childHandleItemClick(note,type)}>
                                             <Header as='h4'style={{color:'whitesmoke'}}>{note['HEADER']}</Header>
                                             <p style={{color:'gray',fontSize:'10px'}}>{note['DATE_TIME']}</p>
                                         </Menu.Item> 
@@ -80,7 +81,7 @@ class Notifications extends Component {
                     <Menu.Item name='Seen'   active={activeItem === 'Seen'} onClick={(e,{name})=>this.handleItemClick(name)} />
                 </Menu>
                 {
-                    activeItem==='Unseen' ? this.getView(unseenNotes):this.getView(seenNotes)
+                    activeItem==='Unseen' ? this.getView(unseenNotes,true):this.getView(seenNotes,false)
                 }
             </div>
         )

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import {getCategoryDrugsOverview,addToOrderAction} from '../../action/DrugsAction'
+import {getCategoryDrugsOverview,addToOrderAction,addCart} from '../../action/DrugsAction'
 import api from '../../api/Api'
 
 import Overview from '../../unitComp/overview/Overview'
 
 
 class CatagoriesOverview extends Component {
-    state = {}
+    
     
     componentWillMount=()=>{
        this.props.getCategoryDrugsOverview()
@@ -22,7 +22,8 @@ class CatagoriesOverview extends Component {
         this.props.history.push(`/Drug/${drugID}`)
     }
 
-    onAddCart=(drugID)=>api.addToCart({userID:this.props.user.USER_ID,drugID})
+    
+    onAddCart=(drug)=>this.props.addCart({userID:this.props.user.USER_ID,drugID:drug['DRUG_ID'],drug})
 
     onAddOrder=(drugs)=>this.props.addToOrderAction(drugs)
 
@@ -37,5 +38,5 @@ const mapStatesToProps=state=>({
     user: state.User
 })
 
-export default connect(mapStatesToProps,{getCategoryDrugsOverview,addToOrderAction})(CatagoriesOverview);
+export default connect(mapStatesToProps,{getCategoryDrugsOverview,addToOrderAction,addCart})(CatagoriesOverview);
 

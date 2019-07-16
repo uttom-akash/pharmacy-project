@@ -3,8 +3,11 @@ import {CellMeasurer,CellMeasurerCache,createMasonryCellPositioner,Masonry,AutoS
 import './SpecificDrugs.css'
 import {Image,Label,Button} from 'semantic-ui-react'
 import SearchCom from '../search/Search'
-
-export default class SpecificDrugs extends Component {
+import LoadingMessage from '../../unitComp/alert/LoadingMessage'
+import {checkoutToggleAction,loginToggleAction} from '../../action/UniverseAction'
+import {connect} from 'react-redux'
+import ConfirmUi from '../confirmUI/ConfirmUI'
+class SpecificDrugs extends Component {
 
     constructor(props){
         super(props)
@@ -12,7 +15,13 @@ export default class SpecificDrugs extends Component {
             columnWidth:300,
             height:300,
             gutter:10,
-            drugs:[]
+            drugs:[],
+
+            confirm:false,
+            loading:false,
+            message:'',
+            notUser:false
+
         }
 
         this._columnCount=5
@@ -29,17 +38,6 @@ export default class SpecificDrugs extends Component {
             spacer:this.state.gutter
         })
     } 
-
-    componentDidUpdate=(prevProps,prevState)=>{
-        console.log(prevState.drugs.length);
-        console.log(this.state.drugs.length);
-        if(prevState.drugs.length!==this.state.drugs.length){
-            console.log('in');
-            // this.forceUpdate();
-        }
-        
-        
-    }
     
     componentWillMount=()=>{
         const {drugs}=this.props
@@ -70,27 +68,26 @@ export default class SpecificDrugs extends Component {
 
 
     _cellRenderer=({index,key,parent,style})=>{
-        const {columnWidth,height}=this.state
-        const {onDrugClick,onAddCart,onAddOrder}=this.props
-        const {drugs} =this.state;
-        let drug=drugs[index]
-        console.log("re render");
+        const {columnWidth,height,drugs}=this.state
+        const {onDrugClick}=this.props
+        const len=drugs.length
+        let drug=drugs[index%len]
         
         return (
             <CellMeasurer cache={this._cache} key={key} index={index} parent={parent}>
                     <div  style={{...style,width:columnWidth,height:height}}>
-                                <div className="sp-drug" >
+                                {!!drug && <div className="sp-drug" >
                                     <div id="image-container" onClick={()=>onDrugClick(drug['DRUG_ID'])}>
                                         <Label size='mini' color='teal' tag>৳&nbsp;{drug['PRICE']}</Label>
                                         <Image size='small' src={drug['IMAGE_SRC']}/><br/>
                                         <Label className="name">{drug['DRUG_NAME']}</Label>
                                     </div>
                                     <Button.Group>
-                                            <Button size='tiny' color='teal' onClick={()=>onAddCart(drug["DRUG_ID"]) } icon='cart'/>
+                                            <Button size='tiny' color='teal' onClick={()=>this.onAddCart(drug) } icon='cart'/>
                                             <Button.Or/>
-                                            <Button size='tiny' color='teal' onClick={()=>onAddOrder({name:drug['DRUG_NAME'],price: drug['PRICE'],drugID:drug["DRUG_ID"]}) }>add to order</Button>        
+                                            <Button size='tiny' color='teal' onClick={()=>this.onAddOrder({name:drug['DRUG_NAME'],price: drug['PRICE'],drugID:drug["DRUG_ID"]}) }>add to order</Button>        
                                     </Button.Group>
-                                </div>    
+                                </div>}    
                     </div>
             </CellMeasurer>
         )
@@ -100,24 +97,60 @@ export default class SpecificDrugs extends Component {
     selectResult=(e,{result})=>{}
 
     queryChange=(value)=>new Promise(resolve=>{
-        const {drugs}=this.state;
+        const {drugs}=this.props;
         let re=new RegExp(`^${value}.*`,'i')
         
         if(!!drugs.length){
             let selectedDrugs=drugs.filter(catDrugs=>{
-                if(!!re.exec(catDrugs['DRUG_NAME']))return  catDrugs;
-            })
+                if(!!re.exec(catDrugs['DRUG_NAME']))return  true;
+                return false
+            }) 
             this.setState({drugs:selectedDrugs})
             resolve();
         }   
     },reject=>{})
  
     
+    // cart
+    
+    onAddOrder=(drug)=>{
+        const {userID,onAddOrder}=this.props
+        if(!!userID){
+                onAddOrder(drug);
+        }else{
+            this.setState({notUser:true})
+        }
+    }
+
+    onAddCart=(drug)=>{
+        const {onAddCart,userID}=this.props
+        if(!!userID){
+            this.setState({loading:true})
+            onAddCart(drug).then(res=>this.alertMessage('Add successfully ..')).catch(err=>this.alertMessage('This drugs already in cart..'))
+        }else{
+            this.setState({notUser:true})
+        }
+    }
+
+    alertMessage=(message)=>{
+        this.setState({loading:false,confirm:true,message})
+    }
+
+    onCheckout=()=>{
+        this.setState({confirm:false})
+        this.props.checkoutToggleAction()
+    }
+
+    onContinue=()=>this.setState({confirm:false})
+
+    onLogin=()=>{
+        this.setState({notUser:false})
+        this.props.loginToggleAction()
+    }
 
 
     render() {
-        const {drugs}=this.state
-             console.log('render');
+        const {drugs,loading,message,confirm,notUser}=this.state
              
         return (
             <div className="specific-container">
@@ -129,6 +162,10 @@ export default class SpecificDrugs extends Component {
                     options={[{title:drugs.length.toString()}]}
                 />  
 
+            <LoadingMessage visiblity={!loading} text={'Adding ...'}/>
+            <ConfirmUi open={confirm} text={message} click1={this.onCheckout} click2={this.onContinue} btn1={'checkout'} btn2={'continue'}/>
+            <ConfirmUi open={notUser} text={"You are not loggedin ..."} click1={this.onLogin} click2={()=>this.setState({notUser:false})} btn1={'login'} btn2={'Cancel'}/>
+               
               <WindowScroller >
                 {({ height, scrollTop }) => (
                 <AutoSizer
@@ -159,3 +196,9 @@ export default class SpecificDrugs extends Component {
         )
     }
 }
+
+const mapStateToProps=state=>({
+    userID:state.User.USER_ID
+})
+
+export default connect(mapStateToProps,{checkoutToggleAction,loginToggleAction})(SpecificDrugs);

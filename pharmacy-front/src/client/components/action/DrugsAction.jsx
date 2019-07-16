@@ -45,6 +45,12 @@ export const getCartAction=(data)=>({
     type:GET_TO_CART
 })
 
+export const removeCartAction=(data)=>({
+    payload:data,
+    type:REMOVE_FROM_CART
+})
+
+
 // export const removeCartAction=(data)=>({
 //     payload:data,
 //     type:REMOVE_FROM_CART
@@ -98,8 +104,8 @@ export const getDrug=(data)=>dispatch=>api.getDrug(data).then(drug=>dispatch(dru
 
 
 export const getCart=(data)=>dispatch=>api.getCart(data).then(drug=>dispatch(getCartAction(drug)))
-export const removeCart=(data)=>dispatch=>api.removeFromCart(data).then(drug=>dispatch(getCartAction(drug)))
-
+export const removeCart=(data)=>dispatch=>api.removeFromCart(data).then(drug=>dispatch(removeCartAction(drug)))
+export const addCart=(data)=>dispatch=>api.addToCart({userID:data['userID'],drugID:data['drugID']}).then(res=>dispatch(addCartAction(data['drug'])))
 
 export const isAvailable=(data)=>api.isAvailable(data).then(res=>res['available'])
 

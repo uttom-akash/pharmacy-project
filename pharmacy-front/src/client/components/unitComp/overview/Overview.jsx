@@ -1,12 +1,21 @@
 import React from 'react'
 import './Overview.css'
-import {Card,Button,Label,Image} from 'semantic-ui-react'
+import {Card,Button,Label,Image, Message,Icon} from 'semantic-ui-react'
 import SearchCom from '../search/Search'
+import {connect} from 'react-redux'
+import LoadingMessage from '../../unitComp/alert/LoadingMessage'
+import ConfirmUi from '../../unitComp/confirmUI/ConfirmUI'
+import {checkoutToggleAction,loginToggleAction} from '../../action/UniverseAction'
 
-export default class Overview extends React.Component{
+class Overview extends React.Component{
 
     state={
-        selectedDrugs:[]
+        selectedDrugs:[],
+        
+        confirm:false,
+        loading:false,
+        notUser:false
+        
     }
 
 
@@ -27,9 +36,46 @@ export default class Overview extends React.Component{
     },reject=>{})
  
 
+    onAddOrder=(drug)=>{
+        const {userID,onAddOrder}=this.props
+
+        if(!!userID){
+                onAddOrder(drug);
+        }else{
+            this.setState({notUser:true})
+        }
+    }
+
+    onAddCart=(drug)=>{
+        const {onAddCart,userID}=this.props
+        if(!!userID){
+            this.setState({loading:true})
+            onAddCart(drug).then(res=>this.alertMessage('Add successfully ..')).catch(err=>this.alertMessage('This drugs already in cart..'))
+        }else{
+            this.setState({notUser:true})
+        }
+    }
+    
+    alertMessage=(message)=>{
+        this.setState({loading:false,confirm:true,message})
+    }
+
+    
+
+    onCheckout=()=>{
+        this.setState({confirm:false})
+        this.props.checkoutToggleAction()
+    }
+
+    onContinue=()=>this.setState({confirm:false})
+
+    onLogin=()=>{
+        this.setState({notUser:false})
+        this.props.loginToggleAction()
+    }
 
     getView=(drugs)=>{
-        const {onDrugClick,onAddCart,onAddOrder,onMore,title}=this.props;
+        const {onDrugClick,onMore,title}=this.props;
         return(
           <React.Fragment>
               {
@@ -47,9 +93,9 @@ export default class Overview extends React.Component{
                                     </Card.Content>
                                     <Card.Content extra>
                                      <Button.Group>         
-                                            <Button size='tiny' color='teal' onClick={()=>onAddCart(drug["DRUG_ID"]) } icon='cart'/>
+                                            <Button size='tiny' color='teal' onClick={()=>this.onAddCart(drug)} icon='cart'/>
                                             <Button.Or/>
-                                            <Button size='tiny' color='teal' onClick={()=>onAddOrder({name:drug['DRUG_NAME'],price: drug['PRICE'],drugID:drug["DRUG_ID"]}) }>add to order</Button>
+                                            <Button size='tiny' color='teal' onClick={()=>this.onAddOrder({name:drug['DRUG_NAME'],price: drug['PRICE'],drugID:drug["DRUG_ID"]}) }>add to order</Button>
                                       </Button.Group>
                                     </Card.Content>
                                 </Card>
@@ -68,9 +114,7 @@ export default class Overview extends React.Component{
 
     render(){
             const {drugs}=this.props;
-            const {loading,query,selectedDrugs}=this.state;
-
-            console.log(selectedDrugs);
+            const {selectedDrugs,loading,message,confirm,notUser}=this.state
             
             return (
             <div className="cat-overview">
@@ -81,6 +125,9 @@ export default class Overview extends React.Component{
                     resultRenderer={({title})=><Label>{title} Results shown below..</Label>}
                     options={[{title:selectedDrugs.length.toString()}]}
                 />
+                <LoadingMessage visiblity={!loading} text={'Adding ...'}/>
+                <ConfirmUi open={confirm} text={message} click1={this.onCheckout} click2={this.onContinue} btn1={'checkout'} btn2={'continue'}/>
+                <ConfirmUi open={notUser} text={"You are not loggedin ..."} click1={this.onLogin} click2={()=>this.setState({notUser:false})} btn1={'login'} btn2={'Cancel'}/>
                 {
                     !!selectedDrugs.length ? this.getView(selectedDrugs) :this.getView(drugs)
                 }
@@ -89,3 +136,10 @@ export default class Overview extends React.Component{
     )}
 
 }
+
+const mapStateToProps=state=>({
+    cart:state.Cart,
+    userID:state.User.USER_ID
+})
+
+export default  connect(mapStateToProps,{checkoutToggleAction,loginToggleAction})(Overview);

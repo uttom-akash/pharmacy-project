@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 import '../css/Cart.css'
 import Restrict from '../../unitComp/restriction/Restriction'
 import Table from '../../unitComp/table/Table'
-
 import {connect} from 'react-redux'
-
-import {getCart,removeCart} from '../../action/DrugsAction'
-
-
-
+import {removeCart,getCart} from '../../action/DrugsAction'
 class Cart extends Component {
     
     state = {
@@ -30,21 +25,21 @@ class Cart extends Component {
     }
 
 
-    componentWillMount=()=>{
-          Restrict(this.props);
-          const {userID}=this.props.match.params          
-          this.props.getCart({userID})
+    componentDidMount=()=>{
+        Restrict(this.props)
+       const userID=sessionStorage.number
+       if(!!userID) this.props.getCart({userID})
     }
 
     onClick=(drugID)=>  this.props.history.push(`/Drug/${drugID}`)
     
     toggle=()=>this.setState({modal:!this.state.modal})
   
-    remove=(drugID)=>this.props.removeCart({drugID,userID:this.props.user.USER_ID})
+    remove=(drugID)=>this.props.removeCart({drugID,userID:this.props.userID})
     
     render() {
         const { curOrder,pastOrder,cart,modal,cartlist,cartHeader,listIndex}=this.state;
-        const {cartList,user} =this.props
+        const {cartList} =this.props
 
         return (
         <div className="cart">
@@ -67,9 +62,9 @@ class Cart extends Component {
 const mapStatesToProps=state=>(
     {
         cartList:state.Cart,
-        user:state.User
+        userID:state.User['USER_ID']
     }
 )
 
 
-export default connect(mapStatesToProps,{getCart,removeCart})(Cart);
+export default connect(mapStatesToProps,{removeCart,getCart})(Cart);

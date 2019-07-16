@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./css/Form.css";
 import validator from "validator";
-import {connect} from 'react-redux'
 import Modal from '../unitComp/modal  basic/Modal'
 
 class RegisterForm extends Component {

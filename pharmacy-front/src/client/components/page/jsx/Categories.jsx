@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {getCategoryDrugs,addToOrderAction} from '../../action/DrugsAction' 
+import {getCategoryDrugs,addToOrderAction,addCart} from '../../action/DrugsAction' 
 import Drugs from '../../unitComp/specificDrug/SpecificDrugs'
-import api from '../../api/Api'
 
 
 class Categories extends Component {
@@ -16,22 +15,13 @@ class Categories extends Component {
         this.setState({loading:true})
         this.props.getCategoryDrugs({categoryID:category}).then(res=>this.setState({loading:false})) 
     }
-    
-    // onMore=async ()=>{
-    //     const {category}=this.props.match.params;
-    //     console.log(this.props.drugs.More);
-        
-    //     if(this.props.drugs.MORE) await this.setState({offset:this.state.offset+15})
-    //     else if(this.state.offset-15>=0)await this.setState({offset:this.state.offset-15})
-        
-    //     this.props.getCategoryDrugs({categoryID:category,offset:this.state.offset})         
-    // }
-
+   
     onDrugClick=(drugID)=>{
         this.props.history.push(`/Drug/${drugID}`)
     }
 
-    onAddCart=(drugID)=>api.addToCart({userID:this.props.user.USER_ID,drugID})
+    
+    onAddCart=(drug)=>this.props.addCart({userID:this.props.user.USER_ID,drugID:drug['DRUG_ID'],drug})
 
     onAddOrder=(drugs)=>this.props.addToOrderAction(drugs)
 
@@ -56,4 +46,4 @@ const mapStatesToProps=state=>(
     }
 )
 
-export default  connect(mapStatesToProps,{getCategoryDrugs,addToOrderAction})(Categories);
+export default  connect(mapStatesToProps,{getCategoryDrugs,addToOrderAction,addCart})(Categories);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 
-import {getBrandDrugs,addToOrderAction} from '../../action/DrugsAction' 
+import {getBrandDrugs,addToOrderAction,addCart} from '../../action/DrugsAction' 
 import Drugs from '../../unitComp/specificDrug/SpecificDrugs'
 import api from '../../api/Api'
 
@@ -23,7 +23,8 @@ class Brands extends Component {
         this.props.history.push(`/Drug/${drugID}`)
     }
 
-    onAddCart=(drugID)=>api.addToCart({userID:this.props.user.USER_ID,drugID})
+    
+    onAddCart=(drug)=>this.props.addCart({userID:this.props.user.USER_ID,drugID:drug['DRUG_ID'],drug})
 
     onAddOrder=(drugs)=>this.props.addToOrderAction(drugs)
 
@@ -49,4 +50,4 @@ const mapStatesToProps=state=>(
     }
 )
 
-export default  connect(mapStatesToProps,{getBrandDrugs,addToOrderAction})(Brands);
+export default  connect(mapStatesToProps,{getBrandDrugs,addToOrderAction,addCart})(Brands);
