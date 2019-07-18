@@ -8,4 +8,6 @@
 
 .view-container .control{
     display: flex;
+    justify-content:flex-start;
+    margin-left: 10%;
 }

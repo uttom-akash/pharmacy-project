@@ -10,7 +10,7 @@ export default (list:any,table:string)=>{
         if(list[i]['param'].toUpperCase()==='DATE' || list[i]['param'].toUpperCase()==="PRICE")
             query=query+`<?`
         else
-            query=query+`=?`    
+            query=query+` regexp ?`    
     }
 
     return query;

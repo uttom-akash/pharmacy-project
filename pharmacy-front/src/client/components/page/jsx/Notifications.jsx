@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Menu, Header, Segment, Sidebar,Label} from 'semantic-ui-react'
+import {Menu, Header,Label} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {seenNotify} from '../../action/AuthActions'
 import api from '../../api/Api'
@@ -14,6 +14,13 @@ class Notifications extends Component {
         seenNotes:[]
     }
 
+    componentDidMount=()=>{
+        const {userID}=this.props;
+        if(!!userID)
+        api.getUnseenNotification({userID}).then(notes=>!!notes.length && this.setState({unseenNotes:notes,childActiveItem:notes[0]['HEADER'],activeNote:notes[0]}))    
+       
+    }
+
     componentDidUpdate=(prevProps)=>{
         if(prevProps.userID!==this.props.userID){
             const {userID}=this.props;
@@ -26,9 +33,9 @@ class Notifications extends Component {
 
             const {userID}=this.props
             if(name==='Unseen'){
-                api.getUnseenNotification({userID}).then(notes=>!!notes.length && this.setState({unseenNotes:notes,childActiveItem:notes[0]['HEADER'],activeNote:notes[0]}))    
+                api.getUnseenNotification({userID}).then(notes=>!!notes.length ? this.setState({unseenNotes:notes,childActiveItem:notes[0]['HEADER'],activeNote:notes[0]}):this.setState({activeNote:null}))    
             }else{
-                api.getSeenNotification({userID}).then(notes=>!!notes.length && this.setState({seenNotes:notes,childActiveItem:notes[0]['HEADER'],activeNote:notes[0]}))    
+                api.getSeenNotification({userID}).then(notes=>!!notes.length ? this.setState({seenNotes:notes,childActiveItem:notes[0]['HEADER'],activeNote:notes[0]}):this.setState({activeNote:null}))    
             }
 
             this.setState({activeItem:name})
@@ -45,29 +52,25 @@ class Notifications extends Component {
     getView=(notifications,type)=>{
         const {childActiveItem,activeNote} =this.state
         return (
-            <Sidebar.Pushable as={Segment}>
-                    <Sidebar as={Menu}   inverted vertical visible >
+            <div style={{display:'flex'}}>
+                   <Menu    vertical visible pointing secondary>
                                 {notifications.map((note,index)=>
                                         <Menu.Item key={index} name={note['HEADER']} active={childActiveItem === note['HEADER']} onClick={(e,{name})=>this.childHandleItemClick(note,type)}>
-                                            <Header as='h4'style={{color:'whitesmoke'}}>{note['HEADER']}</Header>
+                                            <Header as='h4'>{note['HEADER']}</Header>
                                             <p style={{color:'gray',fontSize:'10px'}}>{note['DATE_TIME']}</p>
                                         </Menu.Item> 
                                 )}
-                    </Sidebar>
-
-                    <Sidebar.Pusher>
-                        <Segment basic style={{height:'80vh'}}>
-                            {!!activeNote ? <React.Fragment>
-                                                        <Header as='h4'>{activeNote['HEADER']}</Header>
-                                                        <p>{activeNote['MESSAGE']}</p>
-                                                </React.Fragment>
-                                           :
-                                           
-                                           <Header as='h3'> No Message (-_-)</Header>
-                            }
-                        </Segment>
-                    </Sidebar.Pusher>
-                </Sidebar.Pushable>
+                    </Menu>
+                    {!!activeNote ? <div style={{padding:'2rem'}}>
+                                                <Header as='h4'>{activeNote['HEADER']}</Header>
+                                                <p>{activeNote['MESSAGE']}</p>
+                                    </div>
+                                    :
+                                    
+                                    <Header as='h3' style={{padding:'2rem'}}> No Message (-_-)</Header>
+                    }
+            </div>
+                 
         )
     }
 
@@ -76,7 +79,7 @@ class Notifications extends Component {
         const {activeItem,unseenNotes,seenNotes} =this.state
         return (
             <div style={{padding:'3rem'}}>
-                <Menu pointing inverted>
+                <Menu pointing >
                     <Menu.Item name='Unseen' active={activeItem === 'Unseen'} onClick={(e,{name})=>this.handleItemClick(name)}/>
                     <Menu.Item name='Seen'   active={activeItem === 'Seen'} onClick={(e,{name})=>this.handleItemClick(name)} />
                 </Menu>

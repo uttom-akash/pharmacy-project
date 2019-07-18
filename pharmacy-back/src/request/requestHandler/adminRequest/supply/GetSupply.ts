@@ -10,7 +10,14 @@ export default class GetSupply extends RequestHandler{
             let query=QueryCrafting(list,'Supply')
             console.log(query);
             
-            this.pool.query(query,list.map((param:any)=>param.value)).then((result:any)=>res.json({List:result}))
+            this.pool.query(query,this.getValue(list)).then((result:any)=>res.json({List:result}))
+    }
+
+    private getValue(list:any){
+        return list.map((param:any)=>{
+            if(param['param'].toUpperCase()==='DATE' || param['param'].toUpperCase()==="PRICE")return param.value 
+            else return `^${param.value}.*`
+        })
     }
 
 }

@@ -1,9 +1,6 @@
 import React from 'react';
-import './App.css';
-import SideBar from './component/navbar/jsx/SideBar'
-import Route from './component/navbar/jsx/Route'
+import SideBar from './component/navbar/jsx/Sidebar'
 import {BrowserRouter} from 'react-router-dom'
-import {Icon} from 'semantic-ui-react'
     
 
 class App extends React.Component {
@@ -18,16 +15,8 @@ class App extends React.Component {
     const {width}=this.state
     return (
       <BrowserRouter>
-      <div>
-      <div className="title-bar"></div>  
-      <div className="App">
-          <SideBar onClick={this.onCollapse} width={width}/>
-          <div id="main">
-            <Route/>
-          </div>   
-     </div>
-      </div>
-     </BrowserRouter>
+        <SideBar/>
+      </BrowserRouter>
     );
   }
 }

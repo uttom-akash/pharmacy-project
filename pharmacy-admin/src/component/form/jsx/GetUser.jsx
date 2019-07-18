@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Checkbox,Button,Segment,Dimmer,Loader} from 'semantic-ui-react'
+import {Checkbox,Button,Segment,Dimmer,Loader,Form} from 'semantic-ui-react'
 import '../css/Get.css'
 
 export default class GetUser extends Component {
@@ -20,12 +20,13 @@ export default class GetUser extends Component {
     
     inputChange=(index,ev)=>{
         let params=this.state.params.slice(0);
-        params[index].value=ev.target.value;
+        params[index].value=ev.target.value.trim();
         this.setState({params})
     }
 
     onSubmit=(ev)=>{
         ev.preventDefault();
+        
         this.setState({loading:true})
         let params=this.state.params.filter(param=>param.status && param.value.length)
         this.props.onSubmit({list:params}).then(res=>this.setState({loading:false}))
@@ -36,11 +37,10 @@ export default class GetUser extends Component {
         return (
             <div className="get-form">
 
-                <Segment>
                         <Dimmer active={loading} inverted>
                             <Loader size='large'>Loading</Loader>
                         </Dimmer>
-                        <form onSubmit={this.onSubmit}>
+                        <Form onSubmit={this.onSubmit}>
                                 {
                                     params.map((param,index)=>
                                             <div key={index} className="param">
@@ -54,10 +54,8 @@ export default class GetUser extends Component {
 
                                     )
                                 }
-                                <Button>Query</Button>
-                        </form>
-                </Segment>
- 
+                            <Button>Query</Button>
+                        </Form>
             </div>
         )
     }

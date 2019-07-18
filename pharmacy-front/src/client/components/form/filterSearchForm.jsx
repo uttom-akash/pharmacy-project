@@ -131,7 +131,7 @@ class FilterSearch extends React.Component {
                         label={'brand'}
                     />
                     {noResult && <Message error header="sorry. No Drugs available by your filtering"/>}
-                    <Button label="submit"/>
+                    <Button>submit</Button>
             </Form>
             {noResult && <Message error header="sorry. No Drugs available by your filtering"/>}        
          </Modal>)    

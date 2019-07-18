@@ -25,11 +25,13 @@ class Login extends Component {
     if (Object.keys(error).length === 0) {
       this.setState({ loading: true });
       this.props.login({phoneNumber, password }).then(user=>{
+        console.log("user : ",user);
         this.setState({ loading: false})
-        this.props.toggle();
+        this.props.toggle("",{name:'login'});
       }).catch(err => {
-        error.global = err.response.data.error;
-        this.setState({ loading: false, error });
+        console.log(err);
+        error.global = err
+        this.setState({ loading: false});
       });
     }
   };

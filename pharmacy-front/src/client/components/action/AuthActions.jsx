@@ -53,16 +53,19 @@ export const getNotificationCount=(data)=>dispatch=>getNotify(data,dispatch)
 export const login=(data)=>dispatch=>api.login(data).then(user=>{
     dispatch(loginAction(user))
     getNotify({userID:user['USER_ID']},dispatch)
+    return user;
 });
 export const register=(data)=>dispatch=>api.register(data).then(user=>{
     dispatch(registerAction(user))
     getNotify({userID:user['USER_ID']},dispatch)
+    return user;
 });
 
 
 export const fetchUser=(data)=>dispatch=>api.fetchUser(data).then(user=>{
     dispatch(fetchUserAction(user))
     getNotify({userID:user['USER_ID']},dispatch)
+    return user
 });
 
 

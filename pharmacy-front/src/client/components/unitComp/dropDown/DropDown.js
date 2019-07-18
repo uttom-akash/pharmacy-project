@@ -1,26 +1,22 @@
 import React, { Component } from 'react'
-import { Dropdown,Label} from 'semantic-ui-react';
-import CustomNavlink from '../../navigation/CustomNavlink'
+import { Dropdown,Label, Icon} from 'semantic-ui-react';
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 class DropDown extends Component {
   
   render() {
-    const {userName,onLogout,cname,idname,user}=this.props
+    const {userName,onLogout,userID,onClick}=this.props
 
-    const trigger=<React.Fragment><i className="far fa-user"></i><label>{userName}</label></React.Fragment> 
-                  
+    const trigger=<span style={{fontSize:'1.1rem',color:'#38B5AD'}}><Icon name='user' /> {userName}
+                  </span> 
     return (
-      <Dropdown className={cname} id={idname} trigger={trigger} icon={null}>
-      
+      <Dropdown  trigger={trigger} item >
           <Dropdown.Menu>
-            <Dropdown.Item><CustomNavlink Cpath="/profile" Cname="Profile" classname='Link'/></Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item><CustomNavlink Cpath="/order" Cname="Orders" classname='Link'/></Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item><CustomNavlink Cpath={`/cart/${user.USER_ID}`} Cname="Cart" classname='Link'/></Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item><div className="Link"  onClick={onLogout}>LogOut</div></Dropdown.Item>
+            <Dropdown.Item onClick={()=>onClick('login',"/profile")} text="Profile"/>
+            <Dropdown.Item onClick={()=>onClick('login',"/order")} text="Order"/>
+            <Dropdown.Item onClick={()=>onClick('login',`/cart/${userID}`)} text='Cart'/>
+            <Dropdown.Item onClick={onLogout}>LogOut</Dropdown.Item>
           </Dropdown.Menu>
       </Dropdown>
   )

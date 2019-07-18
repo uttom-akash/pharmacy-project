@@ -102,6 +102,9 @@ import SeenNotification from './requestHandler/userRequest/notifications/SeenNot
 import SetNotification from './requestHandler/adminRequest/notification/SetNotification' 
 
 
+// supply admin
+import AvailableSupplierPrice from './requestHandler/adminRequest/supply/AvailableSupplierPrice'
+
 class Requests{
     private router:any;
 
@@ -227,6 +230,8 @@ class Requests{
 
         // notification
         this.router.post('/set-notification',(req:any,res:any)=>new SetNotification().handle(req,res))
+        this.router.post('/available-supplier-price',(req:any,res:any)=>new AvailableSupplierPrice().handle(req,res))
+        
 
     
     }

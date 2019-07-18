@@ -8,34 +8,33 @@ export default class OrderDetails extends RequestHandlers{
         
         this.orderInfo(orderID).then((orderinfo:any)=>{
             this.getDrugsID(orderID).then((drugs:any)=>{
-                console.log(drugs);
-                
-                let drugsList=drugs.map((drugID:any)=>{
-                        let query=`select DRUG_NAME,PRICE from Drugs where DRUG_ID=?`
-                        return this.pool.query(query,[drugID['DRUG_ID']]).then((drug:any)=>({
-                            drugName:drug[0]['DRUG_NAME'],
-                            quantity:drugID['QUANTITY'],
-                            price :drug[0]['PRICE'],
-                            drugID:drugID['DRUG_ID']
-                        }))
-                    })
-
                     let    query=`select FIRST_NAME,LAST_NAME from Users where USER_ID=?`
-                    
-                    this.pool.query(query,[orderinfo['USER_ID']]).then((user:any)=>
-                    Promise.all(drugsList).then(drugsList=>res.json({user:user[0],orderinfo,drugsList})))
+
+                    this.pool.query(query,[orderinfo['USER_ID']]).then((user:any)=>{
+                    Promise.all(drugs).then(drugsList=>res.json({user:user[0],orderinfo,drugsList}))
+                        })
                 })
 
         })
 
     }
+
     private orderInfo(orderID:any){
             let query=`select * from Orders where ORDER_ID=?`;
             return this.pool.query(query,[orderID]).then((resp:any)=>resp[0]);
     }
 
     private  getDrugsID(orderID:any){
-        let query=`select DRUG_ID,QUANTITY from OrderedDrugs where ORDER_ID=?`;
-            return this.pool.query(query,[orderID]);
+        let query=`select d.DRUG_ID,d.DRUG_NAME,d.PRICE,ds.SUPPLIER_PRICE,ds.QUANTITY from DrugSales ds inner join Drugs d using(DRUG_ID) where ORDER_ID=?`;
+
+        return this.pool.query(query,[orderID]).then((drugs:any)=>{
+            return drugs.map((drug:any)=>({
+                drugName:drug['DRUG_NAME'],
+                quantity:drug['QUANTITY'],
+                price :drug['PRICE'],
+                supplierPrice:drug['SUPPLIER_PRICE'],
+                drugID:drug['DRUG_ID']
+            }))
+        });
     }
 }

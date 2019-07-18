@@ -33,4 +33,5 @@ export default {
 
        getEmployee:(data)=>axios.post('/api/get-employee-regexp',data).then(res=>res.data),
        setNotification:(data)=>axios.post('/api/set-notification',data).then(res=>res.data),
+       supplierPrice:(data)=>axios.post('/api/available-supplier-price',data).then(res=>res.data),
     }
