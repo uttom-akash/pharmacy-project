@@ -1,17 +1,29 @@
 .dashboard{
-    width:100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+    background-color: whitesmoke;
+    padding: 7px;
     display: flex;
-    justify-content: flex-start;
     flex-wrap: wrap;
-    
 }
 
-.dashboard div{
-    box-shadow:0rem 0.01rem .05rem .05rem var(--shadow);
-    width: 38rem;
-    height: 28rem;
-    margin: 5px 5px 5px 5px;
+
+.main-card{
+    width:49%;
+    height:40rem;
+    padding: 3%;
+    margin:0.5%;
     background-color: white;
-   
+    box-shadow: 0.01rem 0.01rem 0.2rem 0.02rem rgb(161, 160, 160); 
+}
+
+.main-card h3{
+    display: inline;
+    margin-right: 70%;
+}
+
+.main-card .sub-card{
+    margin-top: 15px;
+    width: 90%;
+    height: 22rem;
 }

@@ -11,7 +11,8 @@ import  AddSupplier from '../../page/jsx/AddSupplier'
 import NewSupply from '../../page/jsx/NewSupply'
 import NewDrug from '../../page/jsx/NewDrug'
 import GetOrder from '../../page/jsx/GetOrders'
-
+import SalesReport from '../../analysis/jsx/SalesReport'
+import ProfitReport from '../../analysis/jsx/ProfitReport'
 export default () => {
     return (
         <Switch>
@@ -26,6 +27,12 @@ export default () => {
             <Route path="/add-supplier" exact component={AddSupplier} />
             <Route path="/new-supply" exact component={NewSupply} />
             <Route path="/new-drug" exact component={NewDrug} />
+
+            <Route path="/sales-report" exact component={SalesReport} />
+            <Route path="/profit-report" exact component={ProfitReport} />
+
+
+
         </Switch>
     )
 }

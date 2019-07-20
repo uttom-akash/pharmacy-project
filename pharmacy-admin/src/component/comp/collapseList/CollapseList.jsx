@@ -7,7 +7,7 @@ export default function CollapseList({list,header,onClick}) {
         <Dropdown floating item text={header} >
                      <Dropdown.Menu>
                          {
-                             list.map(item=><Dropdown.Item text={item.name} onClick={()=>onClick(header,item.path)}></Dropdown.Item>)
+                             list.map((item,index)=><Dropdown.Item key={index} text={item.name} onClick={()=>onClick(header,item.path)}></Dropdown.Item>)
                          }
                     </Dropdown.Menu>
         </Dropdown>

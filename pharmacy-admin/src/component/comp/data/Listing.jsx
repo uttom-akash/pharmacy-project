@@ -1,7 +1,7 @@
 import React from 'react'
 import {Table, Button} from 'semantic-ui-react'
 
-export default function Listing({list,listIndex=[],inputComp,onClick1,onClick2,onClick3,clickText1,clickText2,clickText3,clickKey1,clickKey2,clickKey3,children}) {
+export default function Listing({list,listIndex=[],header,inputComp,onClick1,onClick2,onClick3,clickText1,clickText2,clickText3,clickKey1,clickKey2,clickKey3,children}) {
     return (
         <div>
           <Table celled>
@@ -9,6 +9,7 @@ export default function Listing({list,listIndex=[],inputComp,onClick1,onClick2,o
                 <Table.Header>
                     <Table.Row>
                         {
+                            !!header ? header.map((header,index)=><Table.HeaderCell key={index}>{header}</Table.HeaderCell>):
                             listIndex.map((header,index)=><Table.HeaderCell key={index}>{header}</Table.HeaderCell>)
                         }
                     </Table.Row>

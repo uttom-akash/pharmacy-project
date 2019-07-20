@@ -19,13 +19,14 @@ class SideBar extends Component {
         const {actions,activeItem}=this.state
         return (
             <div>
+                <div style={{width:'100vw',height:'1.5rem',backgroundColor:'black'}}></div>
                 <Menu
                     icon='labeled'
                     inverted
                     vertical
                     visible
                     width='thin'
-                    style={{height:'100vh',position:'fixed'}}
+                    style={{height:'100vh',position:'fixed',margin:'0',borderRadius:'0'}}
                     pointing
                 >
                     <Menu.Item  name='dashboard' icon='home' active={activeItem==='dashboard'} onClick={(e,{name})=>this.onActive(name,'/')} />

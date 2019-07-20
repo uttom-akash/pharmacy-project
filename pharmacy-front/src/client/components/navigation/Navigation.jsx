@@ -64,13 +64,13 @@ class Navigation extends Component {
 
         return (
             <div className="navigation-bar">        
-                 <Menu stackable pointing style={{position:'fixed',width:'100vw',zIndex:'2'}}>
+                 <Menu  pointing style={{display:'flex',position:'fixed',width:'100vw',zIndex:'2'}}>
                     <Menu.Item>
                         <img src={logo} />
                     </Menu.Item>
                     <Menu.Item name='oushudh' active={active==='oushudh'} onClick={(e,{name})=>this.handleClick(name,'/')} style={{fontSize:'1.1rem',color:'#38B5AD'}}/>
                     { !!userName &&
-                        <Menu.Item position='right' name='notify' active={active==='notify'} onClick={(e,{name})=>this.handleClick(name,'notifications')} style={{fontSize:'1.1rem',color:'#38B5AD'}}>
+                        <Menu.Item position='right' name='notify' active={active==='notify'} onClick={(e,{name})=>this.handleClick(name,'/notifications')} style={{fontSize:'1.1rem',color:'#38B5AD'}}>
                             Notifactions{!!notifications.count && <Label size='tiny' color='red' circular>{notifications.count}</Label>}
                         </Menu.Item>
                     }

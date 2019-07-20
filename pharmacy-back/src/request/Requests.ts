@@ -72,7 +72,6 @@ import InsertAdmin from './requestHandler/adminRequest/admin/InsertAdmin'
 // Get
 import GetAdmin from './requestHandler/adminRequest/admin/GetAdmin'
 import GetUser from './requestHandler/adminRequest/user/GetUser'
-import GetEmployeeReg from './requestHandler/adminRequest/employee/GetEmployeeReg'
 import GetEmployee from './requestHandler/adminRequest/employee/GetEmployee'
 import GetManufecturer from './requestHandler/adminRequest/menufecturer/GetManufecturer'
 import GetSupplier from './requestHandler/adminRequest/supplier/GetSupplier'
@@ -101,9 +100,31 @@ import SeenNotification from './requestHandler/userRequest/notifications/SeenNot
 // admin
 import SetNotification from './requestHandler/adminRequest/notification/SetNotification' 
 
+// analysis
+import SalesBydays from './requestHandler/adminRequest/analysis/SalesBydays'
+import ProfitByDays from './requestHandler/adminRequest/analysis/ProfitByDays'
 
 // supply admin
 import AvailableSupplierPrice from './requestHandler/adminRequest/supply/AvailableSupplierPrice'
+
+
+// Search
+
+import SearchEmployee from './requestHandler/adminRequest/autoCompletion/SearchEmployee'
+import SearchLoaction from './requestHandler/adminRequest/autoCompletion/SearchLoaction'
+import SearchManufacturer from './requestHandler/adminRequest/autoCompletion/SearchManufacturer'
+import SearchProduct from './requestHandler/adminRequest/autoCompletion/SearchProduct'
+import SearchSupplier from './requestHandler/adminRequest/autoCompletion/SearchSupplier'
+import SearchUser from './requestHandler/adminRequest/autoCompletion/SearchUser'
+
+
+
+// sales 
+import SalesByProduct from './requestHandler/adminRequest/sales report/SalesByProduct'
+import SalesByEmployee from './requestHandler/adminRequest/sales report/SalesByEmployee'
+import SalesByUser from './requestHandler/adminRequest/sales report/SalesByUser'
+import SalesBySupplier from './requestHandler/adminRequest/sales report/SalesBySupplier'
+import SalesByManufacturer from './requestHandler/adminRequest/sales report/SalesByManufacturer'
 
 class Requests{
     private router:any;
@@ -206,11 +227,9 @@ class Requests{
         this.router.post('/get-admin',(req:any,res:any)=>new GetAdmin().handle(req,res))
 
         this.router.post('/get-user',(req:any,res:any)=>new GetUser().handle(req,res))
-        this.router.post('/get-employee',(req:any,res:any)=>new GetEmployee().handle(req,res))
-        this.router.post('/get-employee-regexp',(req:any,res:any)=>new GetEmployeeReg().handle(req,res))
-        
+        this.router.post('/get-employee',(req:any,res:any)=>new GetEmployee().handle(req,res))  
         this.router.post('/get-manufecturer',(req:any,res:any)=>new GetManufecturer().handle(req,res))
-
+        
         this.router.post('/get-supplier',(req:any,res:any)=>new GetSupplier().handle(req,res))
         this.router.post('/get-supply',(req:any,res:any)=>new GetSupply().handle(req,res))
         this.router.post('/get-drug',(req:any,res:any)=>new GetDrug().handle(req,res))
@@ -231,6 +250,29 @@ class Requests{
         // notification
         this.router.post('/set-notification',(req:any,res:any)=>new SetNotification().handle(req,res))
         this.router.post('/available-supplier-price',(req:any,res:any)=>new AvailableSupplierPrice().handle(req,res))
+        
+        this.router.post('/sales-by-days',(req:any,res:any)=>new SalesBydays().handle(req,res))
+        this.router.post('/profit-by-days',(req:any,res:any)=>new ProfitByDays().handle(req,res))
+                
+        this.router.post('/search-employee',(req:any,res:any)=>new SearchEmployee().handle(req,res))
+        this.router.post('/search-location',(req:any,res:any)=>new SearchLoaction().handle(req,res))
+        this.router.post('/search-manufacturer',(req:any,res:any)=>new SearchManufacturer().handle(req,res))
+        this.router.post('/search-product',(req:any,res:any)=>new SearchProduct().handle(req,res))
+        this.router.post('/search-supplier',(req:any,res:any)=>new SearchSupplier().handle(req,res))
+        this.router.post('/search-user',(req:any,res:any)=>new SearchUser().handle(req,res))
+        
+        this.router.post('/search-user',(req:any,res:any)=>new SearchUser().handle(req,res))
+        this.router.post('/search-user',(req:any,res:any)=>new SearchUser().handle(req,res))
+        this.router.post('/search-user',(req:any,res:any)=>new SearchUser().handle(req,res))
+        this.router.post('/search-user',(req:any,res:any)=>new SearchUser().handle(req,res))
+        this.router.post('/search-user',(req:any,res:any)=>new SearchUser().handle(req,res))
+        
+
+        this.router.post('/sales-employee',(req:any,res:any)=>new SalesByEmployee().handle(req,res))
+        this.router.post('/sales-manufacturer',(req:any,res:any)=>new SalesByManufacturer().handle(req,res))
+        this.router.post('/sales-product',(req:any,res:any)=>new SalesByProduct().handle(req,res))
+        this.router.post('/sales-supplier',(req:any,res:any)=>new SalesBySupplier().handle(req,res))
+        this.router.post('/sales-user',(req:any,res:any)=>new SalesByUser().handle(req,res))
         
 
     

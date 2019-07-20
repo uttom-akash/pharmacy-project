@@ -11,7 +11,7 @@ export default class SearchCom extends Component {
 
     onResultSelect=(e,{result})=>{
         const {query}=this.props
-        this.setState({query:result[query]})
+        this.setState({query:result['title']})
         this.props.selectResult(e,{result})
     }
     onSearchQueryChange = (e,{value}) => {
@@ -34,13 +34,14 @@ export default class SearchCom extends Component {
         const {options,resultRenderer}=this.props;
         return (   
         <Search
-            size='tiny'
+            size='mini'
             loading={isLoading}
             onResultSelect={this.onResultSelect}
             onSearchChange={this.onSearchQueryChange}
             results={options}
             value={query}
             resultRenderer={resultRenderer}
+            style={{display:'inline'}}
         />
      
         )

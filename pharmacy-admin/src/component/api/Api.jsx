@@ -31,7 +31,26 @@ export default {
        rejectOrder:(data)=>axios.post('/api/reject-order',data).then(res=>res.data),
        viewDetails:(data)=>axios.post('/api/order-details',data).then(res=>res.data),
 
-       getEmployee:(data)=>axios.post('/api/get-employee-regexp',data).then(res=>res.data),
        setNotification:(data)=>axios.post('/api/set-notification',data).then(res=>res.data),
        supplierPrice:(data)=>axios.post('/api/available-supplier-price',data).then(res=>res.data),
+       saleByDays:(data)=>axios.post('/api/sales-by-days',data).then(res=>res.data),
+       profitByDays:(data)=>axios.post('/api/profit-by-days',data).then(res=>res.data),
+
+       getEmployee:(data)=>axios.post('/api/get-employee-regexp',data).then(res=>res.data),
+       
+       searchEmployee:(data)=>axios.post('/api/search-employee',data).then(res=>res.data),
+       searchLocation:(data)=>axios.post('/api/search-location',data).then(res=>res.data),
+       searchManufacturer:(data)=>axios.post('/api/search-manufacturer',data).then(res=>res.data),
+       searchProduct:(data)=>axios.post('/api/search-product',data).then(res=>res.data),
+       searchSupplier:(data)=>axios.post('/api/search-Supplier',data).then(res=>res.data),
+       searchUser:(data)=>axios.post('/api/search-User',data).then(res=>res.data),
+
+
+       salesEmployee:(data)=>axios.post('/api/sales-employee',data).then(res=>res.data),
+       salesManufacturer:(data)=>axios.post('/api/sales-manufacturer',data).then(res=>res.data),
+       salesProduct:(data)=>axios.post('/api/sales-product',data).then(res=>res.data),
+       salesSupplier:(data)=>axios.post('/api/sales-supplier',data).then(res=>res.data),
+       salesUser:(data)=>axios.post('/api/sales-user',data).then(res=>res.data),
+
+       
     }
