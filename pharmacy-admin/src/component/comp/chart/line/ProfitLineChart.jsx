@@ -62,7 +62,7 @@ export default class ProfitLineChart extends Component {
             <Statistic size='mini' label={'profit'} value={total} horizontal/><br/>	
             <Input size='small' name={'date'} label={'date'} placeholder={'yyyy-mm-dd'} onChange={this.onChange} value={date}/>
             <Input size='small' name={'days'} label={'days'} onChange={this.onChange} value={days}/>
-            <Button size='small' onClick={this.onSubmit}>show</Button>
+            <Button size='small' color='black' onClick={this.onSubmit}>show</Button>
             <div className='sub-card'>
               <PureLineChart title1={profitTitle1} data1={profitOnward} title2={profitTitle2} data2={profitPrevious} label={profitLabel}/>
             </div>

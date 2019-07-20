@@ -42,7 +42,7 @@ export default class AddMenufecturer extends Component {
                 </div>   
                 {!!list.length && <Listing list={list} listIndex={listIndex}/>}
                
-                 <Modal isOpen={modal} header={'Add Manufecturer'} onToggle={this.onToggle}><SupplierForm onSubmit={this.onSubmit}/></Modal>
+                 <Modal isOpen={modal} basic={true} header={'Add Manufecturer'} onToggle={this.onToggle}><SupplierForm onSubmit={this.onSubmit}/></Modal>
                 
             </div>
         )

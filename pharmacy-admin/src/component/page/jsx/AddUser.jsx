@@ -41,7 +41,7 @@ export default class AddUser extends Component {
                     <GetUser params={params} onSubmit={this.onGetUsers}/>    
                 </div>  
                 {!!list.length && <Listing list={list} listIndex={listIndex}/>}
-                <Modal isOpen={modal} header={'Add User'} onToggle={this.onToggle}><Form onSubmit={this.onSubmit}/></Modal>
+                <Modal isOpen={modal} basic={true} header={'Add User'} onToggle={this.onToggle}><Form onSubmit={this.onSubmit}/></Modal>
                 
             </div>
         )

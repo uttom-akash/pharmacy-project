@@ -41,7 +41,7 @@ export default class AddSupplier extends Component {
                     <GetUser params={params} onSubmit={this.onGetSupplier}/>
                 </div>
                 {!!list.length && <Listing list={list} listIndex={listIndex}/>}
-                <Modal isOpen={modal} header={'Add Supplier'} onToggle={this.onToggle}><SupplierForm onSubmit={this.onSubmit}/></Modal>
+                <Modal isOpen={modal} basic={true} header={'Add Supplier'} onToggle={this.onToggle}><SupplierForm onSubmit={this.onSubmit}/></Modal>
                  
             </div>
         )

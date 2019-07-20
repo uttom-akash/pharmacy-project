@@ -8,15 +8,15 @@ import {Form,Input,Button} from 'semantic-ui-react'
 export default class GetOrder extends Component {
     state={
         order:[],
-        listIndex:['ORDER_ID','DATE','TIME','ADDRESS','TOTAL_PRICE'],
+        listIndex:['ORDER_ID','DATE','TIME','ADDRESS','SALES_PRICE'],
         modal:false,
         orderID:'',
         date:'',
-        limit:''
+        days:''
     }
 
 
-    getOrder=(date,limit)=>api.getOrders({date,limit}).then(res=>this.setState({order:res['List']}))
+    getOrder=(date,days)=>api.getOrders({date,days}).then(res=>this.setState({order:res['List']}))
     
 
     approve=(orderID)=>{
@@ -35,18 +35,18 @@ export default class GetOrder extends Component {
 
     onSubmit=(ev)=>{
         ev.preventDefault();
-        const {date,limit}=this.state
-        this.getOrder(date,limit)
+        const {date,days}=this.state
+        this.getOrder(date,days)
     }
 
     onChange=(ev)=>this.setState({[ev.target.name]:ev.target.value})
     render() {
-        const {order,listIndex,modal,orderID,date,limit}=this.state
+        const {order,listIndex,modal,orderID,date,days}=this.state
         return (
             <div className="notification">
                     <Form onSubmit={this.onSubmit}>
                             <Input type="text" name='date' placeholder='yyyy-mm-dd' label='Date' value={date} onChange={this.onChange}></Input><br/>
-                            <Input type="number" name='limit' placeholder='limt' label='Limit' value={limit}  onChange={this.onChange}></Input><br/>
+                            <Input type="number" name='days' placeholder='days (-/+ )' label='days' value={days}  onChange={this.onChange}></Input><br/>
                             <Button label='Query'></Button>
                     </Form>
                     
@@ -54,7 +54,7 @@ export default class GetOrder extends Component {
                                         onClick1={this.viewDetails} clickKey1={'ORDER_ID'} clickText1={'Details'}
                                         />
         }                 
-                    <Modal modal={modal} onToggle={this.toggle} basic={false}>
+                    <Modal modal={modal} basic={true} onToggle={this.toggle} basic={false}>
                             <Vouchar orderID={orderID} toggle={this.toggle}/>
                     </Modal>
             </div>

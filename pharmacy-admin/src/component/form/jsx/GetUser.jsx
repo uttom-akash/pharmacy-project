@@ -25,7 +25,7 @@ export default class GetUser extends Component {
     }
 
     onSubmit=(ev)=>{
-        ev.preventDefault();
+        ev.preventDefault()
         
         this.setState({loading:true})
         let params=this.state.params.filter(param=>param.status && param.value.length)
@@ -37,7 +37,7 @@ export default class GetUser extends Component {
         return (
             <div className="get-form">
 
-                        <Dimmer active={loading} inverted>
+                        <Dimmer active={loading}>
                             <Loader size='large'>Loading</Loader>
                         </Dimmer>
                         <Form onSubmit={this.onSubmit}>

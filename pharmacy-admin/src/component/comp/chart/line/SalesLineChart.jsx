@@ -57,7 +57,7 @@ export default class SalesLineChart extends Component {
     return (
       <div>
             <h3>Sales</h3>
-            <Button basic color='black' onClick={()=>this.props.onClick('/sales-report')}>View Report</Button><br/>
+            <Button basic color='black' size='mini' onClick={()=>this.props.onClick('/sales-report')}>View Report</Button><br/>
             <Statistic size='mini' label={'sales'} value={total} horizontal/><br/>	
             <Input color='black' size='small' name={'date'} label={'date'} placeholder={'yyyy-mm-dd'} onChange={this.onChange} value={date}/>
             <Input color='black' size='small' name={'days'} label={'days'} onChange={this.onChange} value={days}/>

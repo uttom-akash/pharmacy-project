@@ -14,16 +14,17 @@ export default class SearchCom extends Component {
         this.setState({query:result['title']})
         this.props.selectResult(e,{result})
     }
+    
     onSearchQueryChange = (e,{value}) => {
         value=value.trim()
         this.setState({ query: value });
 
         clearTimeout(this.timer);
         this.timer=setTimeout(()=>{
-            if(value.length){
+            
                 this.setState({isLoading:true})
                 this.props.queryChange(value).then(res=>this.setState({isLoading:false}));
-            }
+            
         },1000);
     }
 

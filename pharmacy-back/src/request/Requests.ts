@@ -126,6 +126,14 @@ import SalesByUser from './requestHandler/adminRequest/sales report/SalesByUser'
 import SalesBySupplier from './requestHandler/adminRequest/sales report/SalesBySupplier'
 import SalesByManufacturer from './requestHandler/adminRequest/sales report/SalesByManufacturer'
 
+
+import DrugsOverview from './requestHandler/adminRequest/drug report/DrugsOverview'
+import DrugsReport from './requestHandler/adminRequest/drug report/DrugsReport'
+
+// top ten
+import TopTenUsers from './requestHandler/adminRequest/analysis/top ten/TopUser'
+import TopTenDrugs from './requestHandler/adminRequest/analysis/top ten/TopDrugs'
+
 class Requests{
     private router:any;
 
@@ -273,8 +281,12 @@ class Requests{
         this.router.post('/sales-product',(req:any,res:any)=>new SalesByProduct().handle(req,res))
         this.router.post('/sales-supplier',(req:any,res:any)=>new SalesBySupplier().handle(req,res))
         this.router.post('/sales-user',(req:any,res:any)=>new SalesByUser().handle(req,res))
-        
 
+        this.router.post('/drugs-overview',(req:any,res:any)=>new DrugsOverview().handle(req,res))
+        this.router.post('/drugs-report',(req:any,res:any)=>new DrugsReport().handle(req,res))
+       
+        this.router.post('/top-ten-user',(req:any,res:any)=>new TopTenUsers().handle(req,res))
+        this.router.post('/top-ten-drug',(req:any,res:any)=>new TopTenDrugs().handle(req,res))
     
     }
 

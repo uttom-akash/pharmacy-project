@@ -8,8 +8,7 @@ export default class GetSupply extends RequestHandler{
             const {list}=req.body;
             
             let query=QueryCrafting(list,'Supply')
-            console.log(query);
-            
+            query=query+' limit 50'
             this.pool.query(query,this.getValue(list)).then((result:any)=>res.json({List:result}))
     }
 

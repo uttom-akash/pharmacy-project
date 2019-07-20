@@ -10,11 +10,22 @@
 
 .main-card{
     width:49%;
-    height:40rem;
+    height:45rem;
     padding: 3%;
     margin:0.5%;
     background-color: white;
-    box-shadow: 0.01rem 0.01rem 0.2rem 0.02rem rgb(161, 160, 160); 
+    border-radius: 3px;
+    box-shadow: 0.01rem 0.01rem 0.3rem 0.03rem rgb(161, 160, 160); 
+}
+
+.main-card-double{
+    width:49%;
+    height:65rem;
+    padding: 3%;
+    margin:0.5%;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0.01rem 0.01rem 0.3rem 0.03rem rgb(161, 160, 160); 
 }
 
 .main-card h3{
@@ -22,8 +33,19 @@
     margin-right: 70%;
 }
 
+.main-card-double h3{
+    display: inline;
+    margin-right: 70%;
+}
+
 .main-card .sub-card{
     margin-top: 15px;
-    width: 90%;
-    height: 22rem;
+    width: 100%;
+    height: 26rem;
+}
+
+.main-card-double .sub-card{
+    margin-top: 10px;
+    width: 100%;
+    height: 26rem;
 }

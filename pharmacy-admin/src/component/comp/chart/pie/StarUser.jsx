@@ -17,8 +17,8 @@ export default class TrendingDrugs extends Component {
     }
 
     getApiData=(date,days,limit)=>{
-        api.topTenDrug({date,days,limit}).then(res=>{
-          let list=res['drugs']
+        api.topTenUser({date,days,limit}).then(res=>{
+          let list=res['users']
           let label=[],data=[]
           let total=res['total'],other=total;
           
@@ -28,7 +28,7 @@ export default class TrendingDrugs extends Component {
                           data.push(((item.sales*100)/total).toPrecision(3))})
           label.push('other')
           data.push( ((other*100)/total).toPrecision(3) )                
-          this.setState({title:`Top ${limit} drugs`,label,data,total})
+          this.setState({title:`Top ${limit} Users`,label,data,total})
         })
     }
 
@@ -49,11 +49,11 @@ export default class TrendingDrugs extends Component {
         const {total,date,days,limit,title,label,data}=this.state
         return (
             <React.Fragment>
-                <h3>Trending Drugs</h3>
+                <h3>Star User</h3>
                 <Statistic size='mini' label={'sales'} value={total} horizontal/><br/>	
-                <Input color='black' size='small' name={'date'} label={'date'} placeholder={'yyyy-mm-dd'} onChange={this.onChange} value={date}/><br/>
-                <Input color='black' size='small' name={'days'} label={'days'} onChange={this.onChange} value={days}/><br/>
-                <Input color='black' size='small' name={'limit'} label={'limit'} onChange={this.onChange} value={limit}/><br/>
+                <Input color='black' size='small' name={'date'} label={'date'} placeholder={'yyyy-mm-dd'} onChange={this.onChange} value={date}/>
+                <Input color='black' size='small' name={'days'} label={'days'} onChange={this.onChange} value={days}/>
+                <Input color='black' size='small' name={'limit'} label={'limit'} onChange={this.onChange} value={limit}/>
                 <Button color='black' size='small' onClick={this.onSubmit}>show</Button>
                 
                 <div className='sub-card'>

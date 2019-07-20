@@ -36,7 +36,7 @@ export default {
        saleByDays:(data)=>axios.post('/api/sales-by-days',data).then(res=>res.data),
        profitByDays:(data)=>axios.post('/api/profit-by-days',data).then(res=>res.data),
 
-       getEmployee:(data)=>axios.post('/api/get-employee-regexp',data).then(res=>res.data),
+       getEmployee:(data)=>axios.post('/api/get-employee',data).then(res=>res.data),
        
        searchEmployee:(data)=>axios.post('/api/search-employee',data).then(res=>res.data),
        searchLocation:(data)=>axios.post('/api/search-location',data).then(res=>res.data),
@@ -52,5 +52,9 @@ export default {
        salesSupplier:(data)=>axios.post('/api/sales-supplier',data).then(res=>res.data),
        salesUser:(data)=>axios.post('/api/sales-user',data).then(res=>res.data),
 
+       drugStatesOverview:(data)=>axios.post('/api/drugs-overview',data).then(res=>res.data),
+       drugStatesReport:(data)=>axios.post('/api/drugs-report',data).then(res=>res.data),
        
+       topTenDrug:(data)=>axios.post('/api/top-ten-drug',data).then(res=>res.data),
+       topTenUser:(data)=>axios.post('/api/top-ten-user',data).then(res=>res.data),
     }

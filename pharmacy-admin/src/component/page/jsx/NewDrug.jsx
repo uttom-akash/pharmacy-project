@@ -45,7 +45,7 @@ export default class NewDrug extends Component {
                     <GetUser params={params} onSubmit={this.onGetDrugs}/>
                 </div> 
                 {!!list.length && <Listing list={list} listIndex={listIndex}/>}
-               <Modal isOpen={modal} header={'Add Drug'} onToggle={this.onToggle}><DrugForm onSubmit={this.onSubmit}/></Modal>
+               <Modal isOpen={modal} basic={true} header={'Add Drug'} onToggle={this.onToggle}><DrugForm onSubmit={this.onSubmit}/></Modal>
             </div>
         )
     }

@@ -12,27 +12,38 @@ export default class PurePieChart extends Component {
     getColor=(options)=>randomColor(options)
 
     componentDidMount=()=>{
+        const {title,label,data}=this.props
+        let color1=this.getColor({count:label.length,luminosity: 'light',hue: 'green'})
+        let color2=this.getColor({count:label.length,luminosity: 'dark',hue: 'green'})
         this.pieChart=new Chart(this.ref.current,{
             type:'doughnut',
             data:{
-                labels:['a','b','c'],
+                labels:label,
                 datasets:[
                     {
-                        label:'Trending Drugs',
-                        data:[10,30,60],
-                        backgroundColor:this.getColor({count:3,hue:'purple'})
+                        label:title,
+                        data:data,
+                        backgroundColor:color1,
+                        hoverBackgroundColor:color2
                     }
                 ]
             },
             options:{
-                maintainAspectRatio:false
+                maintainAspectRatio:false,
+                cutoutPercentage:60
             }
         })
     }
 
     componentDidUpdate=()=>{
-        this.pieChart.data.labels=['a','b','c']
-        this.pieChart.data.datasets[0].data=[10,50,40]
+
+        const {title,label,data}=this.props
+        let color1=this.getColor({count:label.length,luminosity: 'light',hue: 'green'})
+        
+        this.pieChart.data.labels=label
+        this.pieChart.data.datasets[0].data=data
+        this.pieChart.data.datasets[0].label=title
+        this.pieChart.data.datasets[0].backgroundColor=color1
         this.pieChart.update()
     }
 

@@ -1,15 +1,24 @@
 import RequestHandler from '../../RequestHandler'
+import TimeStamp from '../../../../processing/timestamp/TimeStamp'
 
 export default class GetOrders extends RequestHandler{
 
     handle(req: any, res: any): void {
-            const {date,limit}=req.body;
-            let lim=parseInt(limit,10);
-            if(!lim)lim=100;
+            let {date,days}=req.body;
+            
+            let dateObject=TimeStamp.getInstance()
+            dateObject.setDays(days,date)
+            let enddate=dateObject.dateMonthYear()
 
-            let query=`select * from Orders where DATE>? limit ?`
+            if(days<0){
+                let temp=date;
+                date=enddate;
+                enddate=temp
+            }
+
+            let query=`select * from Orders where DATE>=? and DATE<?`
             console.log(query);
-            this.pool.query(query,[date,lim]).then((result:any)=>res.json({List:result}))
+            this.pool.query(query,[date,enddate]).then((result:any)=>res.json({List:result,startDate:date,endDate:enddate}))
     }
 
 }

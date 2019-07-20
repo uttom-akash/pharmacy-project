@@ -18,7 +18,7 @@ export default class SalesByDays extends RequestHandler{
             }
             
             let query=`select  sum(SALES_PRICE) as sales,DATE as date from Orders where DATE>=? and DATE<? group by DATE order by DATE`
-            this.pool.query(query,[date,enddate]).then((result:any)=>res.json({list:result,startDate:date,enddate,total:result.reduce((a:any,b:any)=>({sales: a.sales+b.sales}))['sales']}))
+            this.pool.query(query,[date,enddate]).then((result:any)=>res.json({list:result,startDate:date,enddate,total:result.concat([{profit:0}]).reduce((a:any,b:any)=>({sales: a.sales+b.sales}))['sales']}))
             
     }
 }

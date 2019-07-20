@@ -39,9 +39,9 @@ export default function Listing({list,listIndex=[],header,inputComp,onClick1,onC
                         )
                     }
                 </Table.Body>
-                <Table.Footer>
+    <Table.Footer>
       <Table.Row>
-        <Table.HeaderCell colSpan='3'>
+        <Table.HeaderCell>
           {children}
         </Table.HeaderCell>
       </Table.Row>

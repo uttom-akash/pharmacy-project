@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import {Button} from 'semantic-ui-react'
-import FileInput from '../../comp/form/FileInput'
 import '../css/UserForm.css'
 import '../css/NewSupply.css'
 import api from '../../api/Api'
+import SupplierSearch from '../../comp/search/SupplierSearch'
+import ProductSearch from '../../comp/search/ProductSearch'
 
 export default class SupplyForm extends Component {
 
@@ -30,21 +31,19 @@ export default class SupplyForm extends Component {
         this.input=ev.target.name
         this.index=index
 
-        clearTimeout(this.timeOut);
-
         this.settingDrugs(ev.target.name,ev.target.value,index);
-        
+    }
 
-        if(this.input==='name'){
-
+    onDrugAdd=({product})=>{
+        clearTimeout(this.timeOut);
         this.timeOut=setTimeout(()=>
-            api.isDrug({drugName:this.drugName}).then(res=>{
-                if(res['id']!=="-1"){
-                    this.settingDrugs("drugID",res['id'],this.index);
-                }
-                else alert("this drug is not available,please insert drug first")
-            }),2000)
-        }
+        api.isDrug({drugID:product}).then(res=>{
+            if(res['id']!=="-1"){
+                this.settingDrugs("drugID",res['id'],this.index);
+            }
+            else alert("this drug is not available,please insert drug first")
+        }),2000)
+        
     }
 
     onRemove=(index)=>{
@@ -73,13 +72,11 @@ export default class SupplyForm extends Component {
         let error = {};
         error = this.onValidate();
         this.setState({ error });
-
+        console.log(this.state);
+        
         if(Object.keys(error).length === 0) {
                     this.setState({ loading: true });
-                    this.props.onSubmit(this.state).then(user=>{
-                                                    this.setState({ loading: false})
-                                                    this.props.toggle();
-                                                }).catch(err => {
+                    this.props.onSubmit(this.state).then(user=>this.setState({ loading: false})).then(res=>this.props.toggle()).catch(err => {
                                                     error.global = err;
                                                     this.setState({ loading: false, error });
                                                 });
@@ -87,31 +84,25 @@ export default class SupplyForm extends Component {
     };
 
     onValidate = () => {
-        const { supplierName,supplierID} = this.state;
+        const { supplierID,supplyDate} = this.state;
         let error = {};
-        if (!supplierName) error.password = "supplier name cant blank..";
+        if (!supplyDate) error.password = "supplier name cant blank..";
         if (!supplierID) error.phoneNumber = "supplier is not valid..";
 
         return error;
     };
 
-    onSupplierChange=(ev)=>{
-        this.name=ev.target.value;
-        
-        this.setState({ [ev.target.name]: ev.target.value });
-  
+    onSupplierChange=({supplier})=>{
+        console.log(supplier);
         
         clearTimeout(this.timeOut);
 
         this.timeOut=setTimeout(()=>
-        api.isSupplier({supplierName:this.name}).then(res=>{
-            if(res['id']!=="-1")this.setState({ supplierID: res['id']});
+        api.isSupplier({supplierID:supplier}).then(res=>{
+            if(res['id']!=="-1")this.setState({ supplierID:supplier});
             else alert("this supplier is not available,please insert supplier first")
-        }),2000)
-
-
-        
-    }
+        }),2000)        
+}
 
     
     render() {
@@ -119,13 +110,14 @@ export default class SupplyForm extends Component {
         return (
             <div className="user-form">
             <form onSubmit={this.onSubmit}>
-                <input type="text" placeholder="Supplier Name" name="supplierName" value={supplierName} onChange={this.onSupplierChange}/>
+                <SupplierSearch selectSupplier={this.onSupplierChange}/>            
                 <input type="text" placeholder="Supply Date" name="supplyDate" value={supplyDate} onChange={this.onChange}/>
                 
                 {
                     drugs.map((drug,index)=>
                         <div className="drug">
-                            <input type="text" placeholder="Drug Name" name="name" value={drug.name} onChange={(ev)=>this.onDrugChange(ev,index)}/>
+                            <ProductSearch selectProduct={this.onDrugAdd}/>
+                            {/* <input type="text" placeholder="Drug Name" name="name" value={drug.name} onChange={(ev)=>this.onDrugChange(ev,index)}/> */}
                             <input id="qty" type="text" placeholder="Quantity" name="quantity" value={drug.quantity} onChange={(ev)=>this.onDrugChange(ev,index)}/>
                             <input id="price" type="text" placeholder="Price" name="price" value={drug.price} onChange={(ev)=>this.onDrugChange(ev,index)}/>
                             <label>{drug.quantity*drug.price}</label>        

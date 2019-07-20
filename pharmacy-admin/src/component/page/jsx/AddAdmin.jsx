@@ -43,7 +43,7 @@ export default class AddAdmin extends Component {
                 </div>
                 {!!list.length && <Listing list={list} listIndex={listIndex}/>}
                
-                 <Modal isOpen={modal} header={'Add Admin'} onToggle={this.onToggle}><Form onSubmit={this.onSubmit}/></Modal>
+                 <Modal isOpen={modal} basic={true} header={'Add Admin'} onToggle={this.onToggle}><Form onSubmit={this.onSubmit}/></Modal>
             </div>
         )
     }

@@ -19,14 +19,14 @@ class SideBar extends Component {
         const {actions,activeItem}=this.state
         return (
             <div>
-                <div style={{width:'100vw',height:'1.5rem',backgroundColor:'black'}}></div>
+                <div style={{width:'100vw',height:'1.5rem',backgroundColor:'black',position:'fixed',zIndex:'2'}}></div>
                 <Menu
                     icon='labeled'
                     inverted
                     vertical
                     visible
                     width='thin'
-                    style={{height:'100vh',position:'fixed',margin:'0',borderRadius:'0'}}
+                    style={{height:'100vh',position:'fixed',margin:'0',borderRadius:'0',zIndex:'3'}}
                     pointing
                 >
                     <Menu.Item  name='dashboard' icon='home' active={activeItem==='dashboard'} onClick={(e,{name})=>this.onActive(name,'/')} />
@@ -34,7 +34,7 @@ class SideBar extends Component {
                     <Menu.Item  name='orders' active={activeItem==='orders'} onClick={(e,{name})=>this.onActive(name,'/get-order')}/>
                     <CollapseList list={actions} header={'Task'} onClick={this.onActive}/>     
                 </Menu>
-                <div style={{marginLeft:'9rem',paddingTop:'1rem'}}>
+                <div style={{marginLeft:'9rem',paddingTop:'2rem'}}>
                     <Route/>
                 </div>
             </div>

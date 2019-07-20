@@ -48,7 +48,7 @@ export default class AddEmplyee extends Component {
                 </div> 
 
                  {!!list.length && <Listing list={list} listIndex={listIndex}/>}
-                 <Modal isOpen={modal} header={'Add Employee'} onToggle={this.onToggle}><EmplyeeForm onSubmit={this.onSubmit}/></Modal>
+                 <Modal isOpen={modal} basic={true} header={'Add Employee'} onToggle={this.onToggle}><EmplyeeForm onSubmit={this.onSubmit}/></Modal>
                  
             </div>
         )

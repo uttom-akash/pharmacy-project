@@ -17,10 +17,7 @@ export default class NewSupply extends Component {
     }
 
     onToggle=()=>this.setState({modal:!this.state.modal})
-    onSubmit=(data)=>api.newSupply(data)(res=>{
-        this.onToggle();
-        return res;
-    })
+    onSubmit=(data)=>api.newSupply(data)
     
     onGetSupply=(data)=>api.getSupply(data).then(data=>{
         let list=data['List']
@@ -43,7 +40,7 @@ export default class NewSupply extends Component {
                  </div>
                 
                  {!!list.length && <Listing list={list} listIndex={listIndex}/>}
-                <Modal isOpen={modal} header={'New Supply'} basic={true} onToggle={this.onToggle}><SupplyForm onSubmit={this.onSubmit}/></Modal> 
+                <Modal isOpen={modal} basic={true} header={'New Supply'} basic={true} onToggle={this.onToggle}><SupplyForm onSubmit={this.onSubmit} toggle={this.onToggle}/></Modal> 
             </div>
         )
     }

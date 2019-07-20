@@ -13,6 +13,7 @@ import NewDrug from '../../page/jsx/NewDrug'
 import GetOrder from '../../page/jsx/GetOrders'
 import SalesReport from '../../analysis/jsx/SalesReport'
 import ProfitReport from '../../analysis/jsx/ProfitReport'
+import DrugStates from '../../analysis/jsx/DrugsStates'
 export default () => {
     return (
         <Switch>
@@ -30,6 +31,7 @@ export default () => {
 
             <Route path="/sales-report" exact component={SalesReport} />
             <Route path="/profit-report" exact component={ProfitReport} />
+            <Route path="/drug-states" exact component={DrugStates} />
 
 
 
