@@ -54,7 +54,7 @@ export default class GetOrder extends Component {
                                         onClick1={this.viewDetails} clickKey1={'ORDER_ID'} clickText1={'Details'}
                                         />
         }                 
-                    <Modal modal={modal} basic={true} onToggle={this.toggle} basic={false}>
+                    <Modal isOpen={modal} basic={true} onToggle={this.toggle} basic={false}>
                             <Vouchar orderID={orderID} toggle={this.toggle}/>
                     </Modal>
             </div>

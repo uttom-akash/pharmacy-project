@@ -15,7 +15,7 @@ class ChooseItems extends Component {
 
         this.props.getCart({userID:this.props.userID}).then(res=>{
                 const {cartList}=this.props
-                let list=cartList.map(drug=>({name:drug['DRUG_NAME'],drugID:drug['DRUG_ID'],price:drug['PRICE'],status:false}))           
+                let list=cartList.map(drug=>({name:drug['DRUG_NAME'],drugID:drug['DRUG_ID'],price:drug['PRICE'],discount:drug['DISCOUNT'],status:false}))           
                 this.setState({list});
         });
     }

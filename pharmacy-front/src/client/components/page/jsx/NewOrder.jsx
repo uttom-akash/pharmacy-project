@@ -5,17 +5,21 @@ import Modal from '../../unitComp/modal  basic/Modal'
 import VoucharForm from '../../form/VoucharForm'
 import {connect} from 'react-redux'
 import {checkoutToggleAction} from '../../action/UniverseAction'
-
-const style={position:'fixed',top:'6.6rem',right:'1rem'}
+import ConfirmUi from '../../unitComp/confirmUI/ConfirmUI'
+import api from '../../api/Api';
+const style={position:'fixed',top:'8rem',right:'1rem'}
 
 class NewOrder extends Component {
 
     state={
         drugsOption:[],
-        open:true
+        open:true,
+        confirm:false,
+        message:'Order is Placed...'
     }
 
     
+    ok=()=>this.setState({confirm:false})
 
     componentDidUpdate=(prevProps,prevState)=>{
         if(prevProps.orderDrugs.length!==this.props.orderDrugs.length){
@@ -26,11 +30,17 @@ class NewOrder extends Component {
     }
     onClick=()=>this.setState({open:!this.state.open})
 
-    toggle=()=>this.props.checkoutToggleAction()
+    toggle=()=>{
+        this.props.checkoutToggleAction()
+    }
 
+    confirmOrder=(data)=>api.confirmOrder(data).then(res=>{
+        this.toggle()
+        this.setState({confirm:true})
+    })
     render() {
         const {user,orderDrugs}=this.props;
-        const {drugsOption,open}=this.state
+        const {drugsOption,open,confirm,message}=this.state
         const {checkout}=this.props.checkout
 
         return (
@@ -45,7 +55,8 @@ class NewOrder extends Component {
                         </Button.Group>
                       </Draggable>
                   </div>
-                  <Modal modal={checkout} onToggle={this.toggle} basic={false}><VoucharForm  toggle={this.toggle} list={orderDrugs} userID={user['USER_ID']} address={user['ADDRESS']} contactNumber={user['CONTACT_NUMBER']}/> </Modal> 
+                  <Modal modal={checkout} onToggle={this.toggle} basic={false}><VoucharForm confirmOrder={this.confirmOrder} toggle={this.toggle} list={orderDrugs} userID={user['USER_ID']} address={user['ADDRESS']} contactNumber={user['CONTACT_NUMBER']}/> </Modal> 
+                  <ConfirmUi open={confirm} text={message} click1={this.ok} click2={this.ok} btn1={'cancel'} btn2={'ok'}/>
                 </div>
 
             </div>

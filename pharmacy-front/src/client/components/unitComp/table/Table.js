@@ -1,5 +1,5 @@
 import React from 'react'
-import {Table,Checkbox, Button} from 'semantic-ui-react'
+import {Table,Checkbox, Button, Input} from 'semantic-ui-react'
 
 const getConvert=(op)=>{
   if(op===0)return 'pending'
@@ -7,7 +7,7 @@ const getConvert=(op)=>{
   else return 'rejected'
 }
 
-export default ({header,list,listIndex,onClick1,onClick2,clickText1,clickText2,clickKey1,clickKey2,children,special,checkKey,checkToggle})=>{
+export default ({header,list,listIndex,input,inputValue,onClick1,onClick2,clickText1,clickText2,clickKey1,clickKey2,children,special,checkKey,checkToggle})=>{
   return (
     <Table celled color='teal' size="small">
    
@@ -34,6 +34,9 @@ export default ({header,list,listIndex,onClick1,onClick2,clickText1,clickText2,c
                       {getConvert(row[special])}
               </Table.Cell>
             }
+            {
+              input && <Input name='quantity' label='qty'  onChange={(ev)=>input(row['drugID'],ev.target.value)} style={{width:'4rem'}}/>
+            }
             <Table.Cell>
               <Button.Group size='mini'>
                   {onClick1 && <Button color='teal' onClick={()=>onClick1(row[clickKey1])}>{clickText1}</Button>}
@@ -48,7 +51,7 @@ export default ({header,list,listIndex,onClick1,onClick2,clickText1,clickText2,c
 
     <Table.Footer>
       <Table.Row>
-        <Table.HeaderCell colSpan='3'>
+        <Table.HeaderCell colSpan='5'>
           {children}
         </Table.HeaderCell>
       </Table.Row>

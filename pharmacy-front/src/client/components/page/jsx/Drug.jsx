@@ -86,7 +86,7 @@ class Drug extends Component {
                     <Button.Group>
                             <Button size='tiny' color='teal' onClick={()=>this.onAddCart(drug) } icon='cart'/>
                             <Button.Or/>
-                            <Button size='tiny' color='teal' onClick={()=>this.onAddOrder({name:drug['DRUG_NAME'],price: drug['PRICE'],drugID:drug["DRUG_ID"]}) }>add to order</Button>        
+                            <Button size='tiny' color='teal' onClick={()=>this.onAddOrder({name:drug['DRUG_NAME'],price: drug['PRICE'],drugID:drug["DRUG_ID"],discount:drug['DISCOUNT']}) }>add to order</Button>        
                     </Button.Group></div>
             </div>
             }    

@@ -8,6 +8,7 @@ import SearchCom from '../unitComp/search/Search'
 import Maps from '../page/jsx/Maps'
 
 
+const getConvert=(value)=>parseFloat(value,10).toFixed(2)
 
 export default class VoucharForm extends Component {
     
@@ -16,7 +17,8 @@ export default class VoucharForm extends Component {
 
         this.state={
             total:0,
-            header:["name","quantity","price",'total'],
+            discount:0,
+            header:["name","quantity","price",'discount','total'],
             list:{},
             selectedlist:[],
             modal:false,
@@ -31,20 +33,33 @@ export default class VoucharForm extends Component {
     componentWillMount=()=>{
         const {list}=this.props
         let modlist=[]
-        list.map(drug=>modlist[drug['drugID']]={name:drug['name'],quantity:0,price:drug['price'],total:0,drugID:drug['drugID']})
+        list.map(drug=>modlist[drug['drugID']]={name:drug['name'],quantity:0,price:drug['price'],total:0,drugID:drug['drugID'],discount:drug['discount']})
         this.setState({selectedlist:modlist})
     }
 
-    onIncDec=(drugID,op)=>{
+    onIncDec=(drugID,quantity)=>{
         let list=this.state.selectedlist.slice(0)
+        console.log(drugID);
+        
       
-        if(list[drugID].quantity+1*op>=0){
-            list[drugID].quantity=list[drugID].quantity+1*op;
-            list[drugID].total=list[drugID].quantity*list[drugID].price;
-            this.state.total=this.state.total+list[drugID].price*op;
+        if(quantity>=0){
+            const {total,discount}=this.state
+
+            let temp=list[drugID].quantity
+
+            list[drugID].quantity=quantity
+            list[drugID].total=getConvert(list[drugID].quantity*list[drugID].price);
+            
+
+            let total1=(total+(quantity-temp)*list[drugID].price);
+            let discount1=(discount+(quantity-temp)*list[drugID].discount);
+            
+            console.log(this.state.total,this.state.total+(quantity-temp)*list[drugID].price,temp);
+            this.setState({selectedlist:list,total:total1,discount:discount1});
+   
         }
-            this.setState({selectedlist:list,total:this.state.total});
-    }
+}
+
 
     onInc=(drugID)=>{
         this.onIncDec(drugID,1)
@@ -70,7 +85,7 @@ export default class VoucharForm extends Component {
 
     onChoose=(selectedlist)=>{
         let list=[]
-        selectedlist.map(drug=>list[drug['drugID']]={name:drug['name'],quantity:0,price:drug['price'],total:0,drugID:drug['drugID']})
+        selectedlist.map(drug=>list[drug['drugID']]={name:drug['name'],quantity:0,price:drug['price'],total:0,drugID:drug['drugID'],discount:drug['discount']})
         list= this.merge(this.state.selectedlist,list)
         this.setState({selectedlist:list})
         
@@ -89,11 +104,7 @@ export default class VoucharForm extends Component {
         let vouchar=[]
         vouchar=selectedlist.filter(drug=>drug.quantity)
         
-        api.confirmOrder({userID,address,contactNumber,totalPrice:total,list:vouchar}).then(res=>
-            {
-                this.props.toggle()
-                
-            })        
+        this.props.confirmOrder({userID,address,contactNumber,totalPrice:total,list:vouchar})
     }
 
     onCancel=(ev)=>{
@@ -104,7 +115,7 @@ export default class VoucharForm extends Component {
 
 // Search
 
-        selectResult=(e,{result})=>this.onChoose([{drugID:result['id'],name:result['title'],price:parseInt(result['price'].substr(1),10)}]);
+        selectResult=(e,{result})=>this.onChoose([{discount:result['discount'],drugID:result['id'],name:result['title'],price:parseInt(result['price'].substr(1),10)}]);
 
         queryChange=(value)=>new Promise(resolve=>{
                     api.search({query:value}).then(res=>{this.setState({options:res['list']});resolve()})
@@ -114,10 +125,10 @@ export default class VoucharForm extends Component {
 
 // setting address from maps
         setAddress=(address)=>this.setState({address})
-
+// clickKey1={'drugID'} clickKey2={'drugID'} clickText1={'-'} clickText2={'+'}
 
     render() {
-        const {selectedlist,header,total,address,contactNumber,date,time,options}=this.state;
+        const {selectedlist,header,total,address,contactNumber,date,time,options,discount}=this.state;
     return (
             <Form>
                 <Segment  style={{width:'100%'}}>
@@ -130,8 +141,10 @@ export default class VoucharForm extends Component {
                                 <ChooseItems onSubmit={this.onChoose}  toggle={this.toggle} userID={this.props.userID}/>  
                         </Modal>
 
-                        <Table list={selectedlist} listIndex={header} header={header} onClick1={this.onDec} onClick2={this.onInc} clickKey1={'drugID'} clickKey2={'drugID'} clickText1={'-'} clickText2={'+'}>
-                            <Label  color='blue' ribbon='right' size='tiny'>Total :{total}</Label>
+                        <Table list={selectedlist} listIndex={header} header={header}  input={this.onIncDec}  >
+                            <Label  color='blue'>Total :{getConvert(total)}</Label>
+                            <Label  color='blue'>Discount :{getConvert(discount)}</Label>
+                            <Label  color='blue'>Payable :{getConvert(total- discount)}</Label>
                         </Table>
                 
                 </Segment >

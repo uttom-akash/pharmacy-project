@@ -12,7 +12,7 @@ export default class CategoryDrugs extends RequestHandlers{
     }
 
     private getDrugs(categoryID:number){
-        const query=`select DRUG_ID,DRUG_NAME,IMAGE_SRC,PRICE from Drugs inner join DrugCategory dc using(DRUG_ID) where dc.CATEGORY_ID=?`
+        const query=`select DRUG_ID,DRUG_NAME,IMAGE_SRC,PRICE,DISCOUNT from Drugs inner join DrugCategory dc using(DRUG_ID) where dc.CATEGORY_ID=?`
 
 
         return this.pool.query(query,[categoryID])

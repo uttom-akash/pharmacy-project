@@ -16,7 +16,7 @@ export default class SalesBySupplier extends RequestHandler{
                 date=enddate;
                 enddate=temp
             }
-            let query=`select SUPPLIER_NAME as title,sum(ds.QUANTITY) quantity,sum(ds.TOTAL_MRP_PRICE) mrp_price,sum(ds.QUANTITY*ds.SUPPLIER_PRICE) sup_price from DrugSales ds inner join Supply s  using(DRUG_ID) inner join Supplier si using(SUPPLIER_ID) where ds.SALES_DATE>=? and ds.SALES_DATE<?  group by SUPPLIER_ID order by quantity desc`
+            let query=`select SUPPLIER_NAME as title,sum(ds.QUANTITY) quantity,sum(ds.TOTAL_MRP_PRICE) mrp_price,sum(ds.QUANTITY*ds.SUPPLIER_PRICE) sup_price from DrugSales ds inner join Supply s  using(DRUG_ID) inner join Supplier si using(SUPPLIER_ID) where ds.SALES_DATE>=? and ds.SALES_DATE<=?  group by SUPPLIER_ID order by quantity desc`
             this.pool.query(query,[date,enddate]).then((result:any)=>res.json({list:result,startDate:date,enddate}))
     }
 }

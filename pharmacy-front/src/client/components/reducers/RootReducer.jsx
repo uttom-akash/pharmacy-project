@@ -6,6 +6,7 @@ import Universe from './UniverseReducers'
 import Order from './OrderReducer'
 import OrderDrugs from './OrderDrugs'
 import Notifications from './NotificationReducer'
+import Filter from './FilterReducers'
 
 export default combineReducers(
     {
@@ -15,5 +16,6 @@ export default combineReducers(
         Universe,
         Order,
         OrderDrugs,
-        Notifications
+        Notifications,
+        Filter
     });

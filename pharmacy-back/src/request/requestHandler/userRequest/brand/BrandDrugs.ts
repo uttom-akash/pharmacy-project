@@ -14,7 +14,7 @@ export default class BrandDrugs extends RequestHandlers{
     // }    
 
     private getDrug(brand:string){
-        const query=`select DRUG_ID,DRUG_NAME,IMAGE_SRC,PRICE from Drugs where BRAND=?`
+        const query=`select DRUG_ID,DRUG_NAME,IMAGE_SRC,PRICE,DISCOUNT from Drugs where BRAND=?`
 
         return this.pool.query(query,[brand]).then((drugslist:any)=>drugslist)
     }

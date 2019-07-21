@@ -41,7 +41,7 @@ export default class PendingOrder extends Component {
                                         onClick1={this.viewDetails} clickKey1={'ORDER_ID'} clickText1={'Details'}
                                         onClick2={this.reject} clickKey2={'ORDER_ID'} clickText2={'Reject'}
                                         />                
-                <Modal modal={modal} onToggle={this.toggle} basic={false}>
+                <Modal isOpen={modal} onToggle={this.toggle} basic={false}>
                             <Vouchar orderID={orderID} toggle={this.toggle} approve={this.approve} reject={this.reject}/>
                     </Modal>
             </div>

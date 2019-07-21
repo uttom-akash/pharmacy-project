@@ -3,7 +3,7 @@
    width: 100%;
    height: auto;
    min-height: 100%;
-   
+   padding-top: 2rem;   
    background-image:url(../../../assets/backgroundblue.png);
    background-position:top right;
    background-repeat: no-repeat;
@@ -11,33 +11,16 @@
 
    display: flex;
    flex-direction: column;
-   justify-content: center;
+   justify-content: space-around;
    align-items: center;
 }
 
-.search-container{
-   margin-top: 10%;
-   margin-left: auto;
-   background-color: white;
+.home .discount{
+   margin-top: 3rem;
+   
 }
 
-.home-card{
-   margin-top: 20%;
-   display: flex;
-   justify-content: center;
-   flex-wrap: wrap;
-   height: 100%;
-}
-
-
-.home #suggestion{
-   background: white;
-   position: absolute;
-   z-index: 2;
-}
-
-
-.map-container{
+.home .map-container{
    margin: 5%  0 3% 0;
    width: 100%;
    height: 18.2rem;
@@ -47,13 +30,13 @@
    align-items: center;
 }
 
-#map{
+.home .map-container #map{
    width: 80%;
    height: 18rem;
 }
 
 
-.ask-container{
+.home .ask-container{
    margin: 0 0 0 10%;
    margin-top: 4rem;
    align-self: flex-start;

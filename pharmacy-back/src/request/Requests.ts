@@ -96,6 +96,8 @@ import GetSeenNotifications from './requestHandler/userRequest/notifications/Get
 import GetUnseenNotificationCount from './requestHandler/userRequest/notifications/GetUnseenNotificationCount'
 import ObserveNotification from './requestHandler/userRequest/notifications/ObserveNotification'
 import SeenNotification from './requestHandler/userRequest/notifications/SeenNotification'
+import TrendingDrugs from './requestHandler/userRequest/drugs/TrendingDrugs'
+import DiscountedDrugs from './requestHandler/userRequest/drugs/DiscountedDrugs'
 
 // admin
 import SetNotification from './requestHandler/adminRequest/notification/SetNotification' 
@@ -153,7 +155,7 @@ class Requests{
         
 
         // categories
-        this.router.get("/categories_overview",(req:any,res:any)=>new CategoriesOverview().handle(req,res))
+        this.router.post("/categories_overview",(req:any,res:any)=>new CategoriesOverview().handle(req,res))
         this.router.post("/category_drugs",(req:any,res:any)=>new CategoryDrugs().handle(req,res))
     
         // Brands
@@ -198,6 +200,8 @@ class Requests{
         this.router.post('/observe-notification',(req:any,res:any)=>new ObserveNotification().handle(req,res))
         this.router.post('/seen-notification',(req:any,res:any)=>new SeenNotification().handle(req,res))
 
+        this.router.post('/discounted-drugs',(req:any,res:any)=>new DiscountedDrugs().handle(req,res))
+        this.router.post('/trending-drugs',(req:any,res:any)=>new TrendingDrugs().handle(req,res))
 
 
 

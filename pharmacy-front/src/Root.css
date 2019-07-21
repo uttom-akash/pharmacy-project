@@ -35,7 +35,7 @@
 
 
 
-.root{
+.app-root{
     width: 100%;
     height: auto;
     position: relative;
@@ -43,9 +43,9 @@
 }
 
 
-.root .content{
-    padding-top: 2.4rem;
-    padding-bottom: 3rem;
+.app-root .app-content{
+    padding-top: 6rem;
+    padding-bottom: 1rem;
     width: 100%;
     display: flex;
     flex-direction: column;

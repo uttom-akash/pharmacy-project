@@ -21,8 +21,10 @@ export default class Vouchar extends Component {
 
     componentWillMount=()=>api.viewDetails({orderID:this.props.orderID}).then(res=>this.setState({vouchar:res}))
 
-    handleEmployeeChange=(e,{result})=>this.setState({query:result['title'],employeeID:result['EMPLOYEE_ID']})
-
+    handleEmployeeChange=(e,{result})=>{
+        this.setState({query:result['title'],employeeID:result['id']})
+        console.log(result);
+    }
     handleEmployeeSearchChange=(e,{value})=> {
     
         clearTimeout(this.timer);
@@ -31,7 +33,7 @@ export default class Vouchar extends Component {
         this.timer=setTimeout(()=>{
             if(value.length){
                 this.setState({isEmployeeFetching:true})
-                api.getEmployee({employee:value}).then(res=>
+                api.searchEmployee({name:value}).then(res=>
                     
                     this.setState({isEmployeeFetching:false,EmployeeOptions:res['List']})
                 )

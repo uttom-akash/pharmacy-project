@@ -18,7 +18,7 @@ export default class TopTenDrugs extends RequestHandler{
             }
             
 
-        let query=`select sum(ds.TOTAL_MRP_PRICE) sales,d.DRUG_NAME name from DrugSales ds inner join Drugs d using(DRUG_ID) where SALES_DATE>=? and SALES_DATE<? group by DRUG_ID order by sales desc limit ?`
+        let query=`select sum(ds.TOTAL_MRP_PRICE) sales,d.DRUG_NAME name from DrugSales ds inner join Drugs d using(DRUG_ID) where SALES_DATE>=? and SALES_DATE<=? group by DRUG_ID order by sales desc limit ?`
         this.pool.query(query,[date,enddate,limit]).then((drugs:any)=>{
             query=`select sum(SALES_PRICE) total from Orders where DATE>=? and DATE<?`
             this.pool.query(query,[date,enddate]).then((sales:any)=>res.json({drugs,total:sales[0]['total']}))

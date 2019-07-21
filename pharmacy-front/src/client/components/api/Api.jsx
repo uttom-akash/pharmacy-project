@@ -5,7 +5,7 @@ const api={
     register:(data)=>axios.post("/api/register",data).then(res=>{sessionStorage.number=res.data.user.USER_ID;return res.data.user}),
     fetchUser:(data)=>axios.post("/api/fetch_user",data).then(res=>{sessionStorage.number=res.data.user.USER_ID;return res.data.user}),
     
-    getCategoryDrugsOverview:()=>axios.get('/api/categories_overview').then(res=>res.data),
+    getCategoryDrugsOverview:(data)=>axios.post('/api/categories_overview',data).then(res=>res.data),
     getCategoryDrugs:(data)=>axios.post("/api/category_drugs",data).then(res=>res.data),
     
     getBrandDrugsOverview:()=>axios.get('/api/brand_overview').then(res=>res.data),
@@ -45,6 +45,11 @@ const api={
     getNotificationCount:(data)=>axios.post('/api/get-notification-count',data).then(res=>res.data.count),
     observeNotification:(data)=>axios.post('/api/observe-notification',data).then(res=>res.data.notification),
     seenNotification:(data)=>axios.post('/api/seen-notification',data).then(res=>res.data),
+
+
+    getTrendingDrugs:(data)=>axios.post('/api/trending-drugs',data).then(res=>res.data),
+    getDiscountedDrugs:(data)=>axios.post('/api/discounted-drugs',data).then(res=>res.data),
+
 }
 
 

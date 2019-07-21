@@ -10,7 +10,7 @@ class CatagoriesOverview extends Component {
     
     
     componentWillMount=()=>{
-       this.props.getCategoryDrugsOverview()
+       this.props.getCategoryDrugsOverview({limit:3})
     }
 
 

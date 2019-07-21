@@ -29,11 +29,11 @@ export default () => {
   return (
     <Provider store={store}>
         <BrowserRouter>
-              <div className="root">
+              <div className="app-root">
                 
                 
                 <Navigation />
-                <div className="content">
+                <div className="app-content">
                 <Route />
                 </div>
                 <NewOrder/>

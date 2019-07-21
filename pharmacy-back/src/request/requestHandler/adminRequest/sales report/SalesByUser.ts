@@ -17,7 +17,7 @@ export default class SalesByUser extends RequestHandler{
                 enddate=temp
             }
 
-           let query=`select  concat(u.FIRST_NAME," ",u.LAST_NAME) as title,sum(o.SALES_PRICE) as mrp_price,sum(o.SUPPLIER_PRICE) as sup_price from Orders o inner join Users u using(USER_ID) where DATE>=? and DATE<?  group by USER_ID order by mrp_price desc`
+           let query=`select  concat(u.FIRST_NAME," ",u.LAST_NAME) as title,sum(o.SALES_PRICE) as mrp_price,sum(o.SUPPLIER_PRICE) as sup_price from Orders o inner join Users u using(USER_ID) where DATE>=? and DATE<=?  group by USER_ID order by mrp_price desc`
             this.pool.query(query,[date,enddate]).then((result:any)=>res.json({list:result,startDate:date,enddate}))
             
     }

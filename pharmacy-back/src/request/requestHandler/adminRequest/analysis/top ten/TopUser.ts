@@ -19,7 +19,7 @@ export default class TopTenUsers extends RequestHandler{
             }
             
 
-        let query=`select u.LAST_NAME name,sum(o.SALES_PRICE) sales  from Users u inner join Orders o using(USER_ID) where DATE>=? and DATE<? group by USER_ID order by sales desc limit ?`
+        let query=`select u.LAST_NAME name,sum(o.SALES_PRICE) sales  from Users u inner join Orders o using(USER_ID) where DATE>=? and DATE<=? group by USER_ID order by sales desc limit ?`
         this.pool.query(query,[date,enddate,limit]).then((users:any)=>{
             query=`select sum(SALES_PRICE) total from Orders where DATE>=? and DATE<?`
             this.pool.query(query,[date,enddate]).then((sales:any)=>res.json({users,total:sales[0]['total']}))

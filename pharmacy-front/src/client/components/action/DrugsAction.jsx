@@ -95,7 +95,7 @@ export const removeFromOrderAction=(data)=>({
 
 
 // async action
-export const getCategoryDrugsOverview=()=>dispatch=>api.getCategoryDrugsOverview().then(drugs=>dispatch(catOverviewAction(drugs)))
+export const getCategoryDrugsOverview=(data)=>dispatch=>api.getCategoryDrugsOverview(data).then(drugs=>dispatch(catOverviewAction(drugs)))
 export const getCategoryDrugs=(data)=>dispatch=>api.getCategoryDrugs(data).then(drugs=>dispatch(categoryDrugAction(drugs)))
 export const getBrandDrugsOverview=()=>dispatch=>api.getBrandDrugsOverview().then(drugs=>dispatch(brandOverviewAction(drugs)))
 export const getBrandDrugs=(data)=>dispatch=>api.getBrandDrugs(data).then(drugs=>dispatch(brandDrugAction(drugs)))

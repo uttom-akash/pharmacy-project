@@ -10,17 +10,25 @@ import {logoutAction,register,login,getNotificationCount} from '../action/AuthAc
 import {loginToggleAction} from '../action/UniverseAction'
 import {Label, Menu} from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
+import FilterSearch from '../form/filterSearchForm'
 
 
 class Navigation extends Component {
     state = {
         query: "",
         signinToggle: false,
-        active:'oushudh'
+        active:'oushudh',
+        subActive:'',
+        filterModal:false
     }
 
     handleClick=(name,path)=>{
         this.setState({active:name})
+        this.props.history.push(path)
+    }
+
+    subHandleClick=(name,path)=>{
+        this.setState({subActive:name})
         this.props.history.push(path)
     }
 
@@ -46,20 +54,54 @@ class Navigation extends Component {
          window.location.reload(); 
     }
 
+    onFilterToggle=()=>{
+        this.setState({filterModal:!this.state.filterModal})
+    }
     onSignToggle = () =>{
+            const {loginOpen}=this.props
                this.setState({ signinToggle: !this.state.signinToggle});
-               this.props.loginToggleAction()
-        }
+               if(loginOpen) this.props.loginToggleAction()
+    }
     
     onLoginToggle = (e,{name}) =>{
         this.handleClick(e,{name})
         this.props.loginToggleAction();
     }
     
+    onRoute = (path) => this.props.history.push(path)
+
+
+    onShowMap = () => {
+        const { lat, lng } = this.state;
+        let place = { lat: lat, lng: lng };
+        let map = new window.google.maps.Map(
+            document.getElementById('map'), { zoom: 4, center: place });
+        let marker = new window.google.maps.Marker({ position: place, map: map });
+        return map;
+    }
+
+
+
+    locateMyPlace = () => {
+
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition((position) => {
+                this.setState({ lat: position.coords.latitude, lng: position.coords.longitude })
+                resolve();
+            }, () => {
+                reject();
+            }, this.geoOptions);
+        })
+    }
+    
+    onFindMe = () => {
+        this.locateMyPlace().then(() => this.onShowMap()
+        );
+    }
 
 
     render() {
-        const {userName,notifications,loginOpen,userID,history}=this.props
+        const {userName,notifications,loginOpen,userID,history,subActive}=this.props
         const {signinToggle,active}=this.state
 
         return (
@@ -85,6 +127,15 @@ class Navigation extends Component {
                     </Menu.Item>
                 </Menu>
 
+                <Menu color='teal' size='small'  inverted style={{display:'flex',justifyContent:'center',position:'fixed',width:'100vw',zIndex:'2',marginTop:'4rem'}}>
+                    <Menu.Item active={subActive==='Category'}  name='Category' icon={'code branch'}  onClick={(e,{name})=>this.subHandleClick(name,'/categories-overview')}/>
+                    <Menu.Item active={subActive==='Brands'}  name='Brands' icon={'briefcase'}  onClick={(e,{name})=>this.subHandleClick(name,'/brands-overview')}/>
+                    <Menu.Item active={subActive==='Filter search'}  name='Filter search' icon={'filter'}  onClick={(e,{name})=>this.onFilterToggle()}/>
+                    <Menu.Item active={subActive==='Location'}  name='Location' icon={'location arrow'}  onClick={(e,{name})=>this.onFindMe()}/>  
+                </Menu>
+
+
+                <FilterSearch onRoute={this.onRoute} modal={this.state.filterModal} toggle={this.onFilterToggle}/>
                 {signinToggle && <RegisterForm register={this.props.register} modal={signinToggle} toggle={this.onSignToggle}> </RegisterForm>}
                 {loginOpen && <Login login={this.props.login} modal={loginOpen} toggle={this.onLoginToggle}>
                    <div className="optional" id={`auth${signinToggle}`} onClick={this.onSignToggle}>Signin</div>

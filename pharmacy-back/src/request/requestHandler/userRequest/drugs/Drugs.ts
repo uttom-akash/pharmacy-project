@@ -10,7 +10,7 @@ export default class Drugs extends RequestHandlers{
 
 
     private getDrug(DRUG_ID:number){
-        const query=`select DRUG_ID,DRUG_NAME,BRAND_NAME,MENUFACTURER_ID,BRAND,DAR,PRICE,IMAGE_SRC from Drugs where DRUG_ID=?`
+        const query=`select DRUG_ID,DISCOUNT,DRUG_NAME,BRAND_NAME,MENUFACTURER_ID,BRAND,DAR,PRICE,IMAGE_SRC from Drugs where DRUG_ID=?`
         
         
         return this.pool.query(query,[DRUG_ID]).then((drug:any)=>({
@@ -21,7 +21,8 @@ export default class Drugs extends RequestHandlers{
             BRAND:drug[0]['BRAND'],
             DAR:drug[0]['DAR'],
             PRICE:drug[0]['PRICE'],
-            IMAGE_SRC:drug[0]['IMAGE_SRC']
+            IMAGE_SRC:drug[0]['IMAGE_SRC'],
+            DISCOUNT:drug[0]['DISCOUNT']
         }))
     }
 

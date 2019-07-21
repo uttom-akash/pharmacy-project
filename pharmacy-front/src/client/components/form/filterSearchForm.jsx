@@ -89,6 +89,7 @@ class FilterSearch extends React.Component {
                             this.setState({noResult:false,loading:false})
                             this.props.onRoute('/filter-search')
                         }
+                        this.props.toggle();
                     })
                     .catch(err=>{}) 
 

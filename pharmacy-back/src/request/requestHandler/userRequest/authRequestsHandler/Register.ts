@@ -15,6 +15,7 @@ export default class Register extends RequestHandler{
             .then((result:any)=>
                 
                     res.json({user :{
+                        USER_ID:userID,
                         FIRST_NAME: FirstName,
                         LAST_NAME: LastName,
                         ADDRESS: "",
